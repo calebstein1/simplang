@@ -15,4 +15,4 @@ $(TARGET): $(OBJ)
 
 obj/%.o: src/%.c
 	mkdir -p obj
-	cc -c $< -o $@
+	cc -c $< -o $@ $(CFLAGS)
