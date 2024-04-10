@@ -31,7 +31,7 @@ long g_stack[GLOBAL_STACK_SIZE] = {};
 long *sp = &(g_stack[0]);
 
 long *parse_arg() {
-    char *tmp = strtok(NULL, " \n");
+    char *tmp = strtok(NULL, " \n\t");
 
     if (tmp[0] == 'r') {
         tmp = &(tmp[1]);
