@@ -49,6 +49,7 @@ long *parse_arg() {
 }
 
 int main(int argc, char **argv) {
+    long *bp = sp;
     operation op = {};
     struct stat script_stat = {};
 
@@ -108,7 +109,6 @@ int main(int argc, char **argv) {
             op.a2 = parse_arg();
 
             *op.a1 = *op.a2;
-            sp -= 2;
             break;
         case ADD:
             op.a1 = parse_arg();
@@ -116,7 +116,6 @@ int main(int argc, char **argv) {
             op.a3 = parse_arg();
 
             *op.a1 = *op.a2 + *op.a3;
-            sp -= 3;
             break;
         case SUBTR:
             op.a1 = parse_arg();
@@ -124,7 +123,6 @@ int main(int argc, char **argv) {
             op.a3 = parse_arg();
 
             *op.a1 = *op.a2 - *op.a3;
-            sp -= 3;
             break;
         case MUL:
             op.a1 = parse_arg();
@@ -132,7 +130,6 @@ int main(int argc, char **argv) {
             op.a3 = parse_arg();
 
             *op.a1 = *op.a2 * *op.a3;
-            sp -= 3;
             break;
         case DIV:
             op.a1 = parse_arg();
@@ -140,13 +137,11 @@ int main(int argc, char **argv) {
             op.a3 = parse_arg();
 
             *op.a1 = *op.a2 / *op.a3;
-            sp -= 3;
             break;
         case PRINT:
             op.a1 = parse_arg();
 
             printf("%ld\n", *op.a1);
-            sp -= 1;
             break;
         case DONE:
             break;
@@ -154,6 +149,8 @@ int main(int argc, char **argv) {
             printf("Unknown command: %s\n", op.lit);
             return -1;
         }
+
+        sp = bp;
     } while (op.opcode != DONE);
 
     return 0;
