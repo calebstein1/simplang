@@ -40,7 +40,7 @@ long *parse_arg() {
             printf("Invalid register number\n");
             exit(-1);
         }
-        sp = &(g_registers[target_reg]);
+        return &(g_registers[target_reg]);
     } else {
         *sp = atoi(tmp);
     }
