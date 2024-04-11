@@ -63,6 +63,39 @@ void eval_op(operation *op) {
                 j_sp--;
             }
             break;
+        case ENDLPNE:
+            if (j_sp == j_bp) {
+                break;
+            }
+            parse_two_args(op);
+            if (*(long *)op->a1 == *(long *)op->a2) {
+                loop_backwards(op);
+            } else {
+                j_sp--;
+            }
+            break;
+        case ENDLPLT:
+            if (j_sp == j_bp) {
+                break;
+            }
+            parse_two_args(op);
+            if (*(long *)op->a1 >= *(long *)op->a2) {
+                loop_backwards(op);
+            } else {
+                j_sp--;
+            }
+            break;
+        case ENDLPLE:
+            if (j_sp == j_bp) {
+                break;
+            }
+            parse_two_args(op);
+            if (*(long *)op->a1 > *(long *)op->a2) {
+                loop_backwards(op);
+            } else {
+                j_sp--;
+            }
+            break;
         case PRINT_S:
             parse_one_arg(op);
             printf("%s\n", *(char **)op->a1);

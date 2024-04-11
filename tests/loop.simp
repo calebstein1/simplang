@@ -5,7 +5,7 @@ beglp
     asgn r7 0
     beglp
         incr r7
-    endlpeq r7 8
+    endlplt 8 r7
     incr r1
 endlpeq r1 20
 print r0

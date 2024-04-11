@@ -23,6 +23,12 @@ void get_opcode(operation *op) {
         op->opcode = BEGLP;
     } else if (memcmp(op->lit, "endlpeq", 7) == 0) {
         op->opcode = ENDLPEQ;
+    } else if (memcmp(op->lit, "endlpne", 7) == 0) {
+        op->opcode = ENDLPNE;
+    } else if (memcmp(op->lit, "endlplt", 7) == 0) {
+        op->opcode = ENDLPLT;
+    } else if (memcmp(op->lit, "endlple", 7) == 0) {
+        op->opcode = ENDLPLE;
     } else if (memcmp(op->lit, "print_s", 7) == 0) {
         op->opcode = PRINT_S;
     } else if (memcmp(op->lit, "print", 5) == 0) {

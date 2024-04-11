@@ -55,7 +55,7 @@ There are no dependencies outside of the C standard library.
 
 `beglp` - begins a loop
 
-`endlpeq <a1> <a2>` - ends execution of a loop if the values of a1 and a2 are equal, otherwise jump back to `beglp`
+`(endlpeq, endlpne, endlplt, endlple) <a1> <a2>` - ends execution of a loop based on the condition comparing a1 and a2, otherwise jump back to `beglp`
 
 `print <a1>` - prints the integer value stored in the register specified by a1
 
