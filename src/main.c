@@ -5,19 +5,18 @@
 #include <sys/stat.h>
 
 #include "defs.h"
-#include "args.h"
+#include "eval.h"
 #include "opcode.h"
-#include "loop.h"
 
 long g_registers[MAX_REGISTERS] = {};
 long g_stack[GLOBAL_STACK_SIZE] = {};
 char *j_stack[GLOBAL_STACK_SIZE] = {};
-long *e_sp = &(g_stack[0]);
-char **j_sp = &(j_stack[0]);
+long *e_sp, *e_bp;
+char **j_sp, **j_bp;
 
 int main(int argc, char **argv) {
-    long *e_bp = e_sp;
-    char **j_bp = j_sp;
+    e_sp = e_bp = &(g_stack[0]);
+    j_sp = j_bp = &(j_stack[0]);
     operation op = {};
     struct stat script_stat = {};
 
@@ -54,63 +53,7 @@ int main(int argc, char **argv) {
     do {
         op.lit = strtok(NULL, " \n\t");
         get_opcode(&op);
-
-        switch (op.opcode) {
-        case ASGN:
-            parse_two_args(&op);
-            *op.a1 = *op.a2;
-            break;
-        case ADD:
-            parse_three_args(&op);
-            *op.a1 = *op.a2 + *op.a3;
-            break;
-        case SUBTR:
-            parse_three_args(&op);
-            *op.a1 = *op.a2 - *op.a3;
-            break;
-        case MUL:
-            parse_three_args(&op);
-            *op.a1 = *op.a2 * *op.a3;
-            break;
-        case DIV:
-            parse_three_args(&op);
-            *op.a1 = *op.a2 / *op.a3;
-            break;
-        case INCR:
-            parse_one_arg(&op);
-            (*op.a1)++;
-            break;
-        case DECR:
-            parse_one_arg(&op);
-            (*op.a1)--;
-            break;
-        case BEGLP:
-            *j_sp = op.lit;
-            j_sp++;
-            break;
-        case ENDLPEQ:
-            if (j_sp == j_bp) {
-                break;
-            }
-            parse_two_args(&op);
-            if (*op.a1 != *op.a2) {
-                loop_backwards(&op);
-            } else {
-                j_sp--;
-            }
-            break;
-        case PRINT:
-            parse_one_arg(&op);
-            printf("%ld\n", *op.a1);
-            break;
-        case DONE:
-            break;
-        default:
-            printf("Unknown command: %s\n", op.lit);
-            return -1;
-        }
-
-        e_sp = e_bp;
+        eval_op(&op);
     } while (op.opcode != DONE);
 
     return 0;
