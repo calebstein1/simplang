@@ -10,10 +10,13 @@
 
 long g_registers[MAX_REGISTERS] = {};
 long g_stack[GLOBAL_STACK_SIZE] = {};
-long *sp = &(g_stack[0]);
+char *j_stack[GLOBAL_STACK_SIZE] = {};
+long *e_sp = &(g_stack[0]);
+char **j_sp = &(j_stack[0]);
 
 int main(int argc, char **argv) {
-    long *bp = sp;
+    long *e_bp = e_sp;
+    char **j_bp = j_sp;
     operation op = {};
     struct stat script_stat = {};
 
@@ -80,6 +83,33 @@ int main(int argc, char **argv) {
             parse_one_arg(&op);
             (*op.a1)--;
             break;
+        case BEGLP:
+            *j_sp = op.lit;
+            j_sp++;
+            break;
+        case ENDLPEQ:
+            if (j_sp == j_bp) {
+                break;
+            }
+            parse_two_args(&op);
+            if (*op.a1 != *op.a2) {
+                int i = 0;
+                for (; i < 3; i++) {
+                    while (*op.lit) {
+                        op.lit++;
+                    }
+                    *op.lit = ' ';
+                }
+                for (; op.lit >= *(j_sp - 1); op.lit--) {
+                    if (!*op.lit) {
+                        *op.lit = ' ';
+                    }
+                }
+                strtok(++op.lit, " \n\t");
+            } else {
+                j_sp--;
+            }
+            break;
         case PRINT:
             parse_one_arg(&op);
             printf("%ld\n", *op.a1);
@@ -91,7 +121,7 @@ int main(int argc, char **argv) {
             return -1;
         }
 
-        sp = bp;
+        e_sp = e_bp;
     } while (op.opcode != DONE);
 
     return 0;

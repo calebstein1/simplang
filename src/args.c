@@ -18,10 +18,10 @@ long *parse_arg() {
         }
         return &(g_registers[target_reg]);
     } else {
-        *sp = atoi(tmp);
+        *e_sp = atoi(tmp);
     }
 
-    return sp++;
+    return e_sp++;
 }
 
 void parse_one_arg(operation *op) {

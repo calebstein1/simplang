@@ -1,0 +1,8 @@
+SIMPLANG
+asgn r0 5
+beglp
+add r0 r0 10
+incr r1
+endlpeq r1 20
+print r0
+done

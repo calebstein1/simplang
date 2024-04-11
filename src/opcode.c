@@ -17,6 +17,10 @@ void get_opcode(operation *op) {
         op->opcode = INCR;
     } else if (memcmp(op->lit, "decr", 4) == 0) {
         op->opcode = DECR;
+    } else if (memcmp(op->lit, "beglp", 5) == 0) {
+        op->opcode = BEGLP;
+    } else if (memcmp(op->lit, "endlpeq", 7) == 0) {
+        op->opcode = ENDLPEQ;
     } else if (memcmp(op->lit, "print", 5) == 0) {
         op->opcode = PRINT;
     } else if (memcmp(op->lit, "done", 4) == 0) {

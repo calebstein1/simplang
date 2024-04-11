@@ -1,8 +1,8 @@
 #ifndef SIMPSCRIPT_DEFS_H
 #define SIMPSCRIPT_DEFS_H
 
-#define MAX_REGISTERS 4
-#define GLOBAL_STACK_SIZE 1024
+#define MAX_REGISTERS 8
+#define GLOBAL_STACK_SIZE 16
 
 typedef enum {
     ASGN,
@@ -12,6 +12,8 @@ typedef enum {
     DIV,
     INCR,
     DECR,
+    BEGLP,
+    ENDLPEQ,
     PRINT,
     DONE,
 } instructions_e;
