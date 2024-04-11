@@ -1,16 +1,17 @@
-# SimpLang
+# Simplang
 
 _If you're going to simp for anything on the Internet, it may as well be a crappy math language you found on GitHub_
 
-SimpLang is a simple and lightweight, interpreted scripting language for performing arithmetic operations.
+Simplang is a simple and lightweight, interpreted scripting language for performing arithmetic operations.
 
-At the moment, the only supported data type is a signed 64-bit int, and the only supported operations are addition, subtraction, multiplication, and division (truncates down to the nearest int).
+At the moment, the only supported data type is a signed 64-bit int.
+Simplang supports the four main arithmetic operations at the moment, as well increment/decrement and do-while loops.
 
 ## Usage
 
-SimpLang uses registers to store variables, and by default there are four registers available.
+Simplang uses registers to store variables, and by default there are 8 registers available.
 
-Here's an example SimpLang file:
+Here's an example Simplang file:
 
 ```
 SIMPLANG
@@ -23,7 +24,7 @@ done
 
 Running this script will print 9.
 
-All SimpLang scripts need to begin with `SIMPLANG` on the first line and end with `done` on the last line.
+All Simplang scripts need to begin with `SIMPLANG` on the first line and end with `done` on the last line.
 
 There are more examples that you can run in the tests/ directory.
 
