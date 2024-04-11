@@ -17,6 +17,7 @@ typedef enum {
     INCR,
     DECR,
     BEGLP,
+    CONT,
     ENDLPEQ,
     ENDLPNE,
     ENDLPLT,

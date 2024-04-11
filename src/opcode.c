@@ -25,6 +25,8 @@ void get_opcode(operation *op) {
         op->opcode = DECR;
     } else if (memcmp(op->lit, "beglp", 5) == 0) {
         op->opcode = BEGLP;
+    } else if (memcmp(op->lit, "cont", 4) == 0) {
+        op->opcode = CONT;
     } else if (memcmp(op->lit, "endlpeq", 7) == 0) {
         op->opcode = ENDLPEQ;
     } else if (memcmp(op->lit, "endlpne", 7) == 0) {

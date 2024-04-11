@@ -16,9 +16,11 @@ beglp
 
     iflt 100 r1
         print_s s5
+        cont
     endif
     ifle r1 0
         print_s s5
+        cont
     endif
     iflt r1 r0
         print_s s3

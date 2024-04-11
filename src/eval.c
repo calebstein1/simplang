@@ -61,6 +61,11 @@ void eval_op(operation *op) {
                 exit(-1);
             }
             break;
+        case CONT:
+            if (j_sp == j_bp) {
+                break;
+            }
+            loop_backwards(op);
         case ENDLPEQ:
             if (j_sp == j_bp) {
                 break;
