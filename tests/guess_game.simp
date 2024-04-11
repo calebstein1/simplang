@@ -1,0 +1,37 @@
+SIMPLANG
+ldstr s0 "Congratulations, you guessed it in "
+ldstr s1 " guesses!"
+ldstr s2 "Enter your guess: "
+ldstr s3 "Your guess was too low, try again"
+ldstr s4 "Your guess was too high, try again"
+ldstr s5 "Remember, the range of the random number is 1 to 100 inclusive"
+ldstr s6 "Welcome to Guess the Number, see how many guesses it takes to guess a number between 1 and 100!"
+rand r0 100
+incr r0
+
+print_s s6
+beglp
+    printn_s s2
+    geti r1
+
+    iflt 100 r1
+        print_s s5
+    endif
+    ifle r1 0
+        print_s s5
+    endif
+    iflt r1 r0
+        print_s s3
+    endif
+    iflt r0 r1
+        print_s s4
+    endif
+
+    incr r2
+endlpeq r0 r1
+
+printn_s s0
+printn r2
+print_s s1
+
+done

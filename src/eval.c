@@ -25,6 +25,11 @@ void eval_op(operation *op) {
             *op->a1 = malloc(strlen((char *)op->a2) + 1);
             strcpy(*(char **)op->a1, (char *)op->a2);
             break;
+        case GETI:
+            parse_one_arg(op);
+            fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
+            *(long *)op->a1 = atoi(s_buff);
+            break;
         case ADD:
             parse_three_args(op);
             *(long *)op->a1 = *(long *)op->a2 + *(long *)op->a3;

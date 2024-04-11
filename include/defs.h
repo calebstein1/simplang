@@ -9,6 +9,7 @@ typedef enum {
     ASGN,
     RAND,
     LDSTR,
+    GETI,
     ADD,
     SUBTR,
     MUL,

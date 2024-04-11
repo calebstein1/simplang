@@ -1,0 +1,8 @@
+SIMPLANG
+ldstr s0 "Enter a number: "
+ldstr s1 "You entered "
+printn_s s0
+geti r0
+printn_s s1
+print r0
+done

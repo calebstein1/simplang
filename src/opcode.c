@@ -9,6 +9,8 @@ void get_opcode(operation *op) {
         op->opcode = RAND;
     } else if (memcmp(op->lit, "ldstr", 5) == 0) {
         op->opcode = LDSTR;
+    } else if (memcmp(op->lit, "geti", 4) == 0) {
+        op->opcode = GETI;
     } else if (memcmp(op->lit, "add", 3) == 0) {
         op->opcode = ADD;
     } else if (memcmp(op->lit, "subtr", 5) == 0) {
