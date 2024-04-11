@@ -1,0 +1,9 @@
+SIMPLANG
+ldstr s0 "I'm going to be printed five times"
+ldstr s1 "I'll be printed once, at the end"
+beglp
+    print_s s0
+    incr r0
+endlpeq r0 5
+print_s s1
+done
