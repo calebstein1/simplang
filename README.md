@@ -37,3 +37,19 @@ make
 
 This will produce a `simplang` binary in the bin/ directory.
 There are no dependencies outside of the C standard library.
+
+## Reference
+
+`asgn <a1> <a2>` - stores the value specified by a2 in the register specified by a1
+
+`(add, subtr, mul, div) <a1> <a2> <a3>` - perform the arithmetic operation specified on a2 and a3 in that order, then store the result in the register specified by a1
+
+`(incr, decr) <a1>` - increment or decrement the value stored at the register specified by a1
+
+`beglp` - begins a loop
+
+`endlpeq <a1> <a2>` - ends execution of a loop if the values of a1 and a2 are equal, otherwise jump back to `beglp`
+
+`print <a1>` - prints the value of a1
+
+`done` - ends execution of the program
