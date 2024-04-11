@@ -5,6 +5,8 @@
 void get_opcode(operation *op) {
     if (memcmp(op->lit, "asgn", 4) == 0) {
         op->opcode = ASGN;
+    } else if (memcmp(op->lit, "ldstr", 5) == 0) {
+        op->opcode = LDSTR;
     } else if (memcmp(op->lit, "add", 3) == 0) {
         op->opcode = ADD;
     } else if (memcmp(op->lit, "subtr", 5) == 0) {
@@ -21,6 +23,8 @@ void get_opcode(operation *op) {
         op->opcode = BEGLP;
     } else if (memcmp(op->lit, "endlpeq", 7) == 0) {
         op->opcode = ENDLPEQ;
+    } else if (memcmp(op->lit, "print_s", 7) == 0) {
+        op->opcode = PRINT_S;
     } else if (memcmp(op->lit, "print", 5) == 0) {
         op->opcode = PRINT;
     } else if (memcmp(op->lit, "done", 4) == 0) {

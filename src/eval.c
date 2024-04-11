@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "defs.h"
 #include "args.h"
@@ -13,6 +14,11 @@ void eval_op(operation *op) {
         case ASGN:
             parse_two_args(op);
             *(long *)op->a1 = *(long *)op->a2;
+            break;
+        case LDSTR:
+            parse_two_args(op);
+            *op->a1 = malloc(strlen((char *)op->a2) + 1);
+            strcpy(*(char **)op->a1, (char *)op->a2);
             break;
         case ADD:
             parse_three_args(op);
@@ -56,14 +62,18 @@ void eval_op(operation *op) {
                 j_sp--;
             }
             break;
+        case PRINT_S:
+            parse_one_arg(op);
+            printf("%s\n", *(char **)op->a1);
+            break;
         case PRINT:
             parse_one_arg(op);
             printf("%ld\n", *(long *)op->a1);
             break;
         case DONE:
             for (; i < MAX_REGISTERS; i++) {
-                if (s_registers[i]) {
-                    free(s_registers[i]);
+                if (*(s_registers + i)) {
+                    free(*(s_registers + i));
                 }
             }
             break;

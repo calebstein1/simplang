@@ -35,6 +35,7 @@ void *parse_arg() {
                 s_buff[i++] = *tmp++;
             }
             s_buff[i] = 0x0;
+            strtok(tmp, " \n\t");
         } else {
             *e_sp = atoi(tmp);
             if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {

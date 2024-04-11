@@ -7,6 +7,7 @@
 
 typedef enum {
     ASGN,
+    LDSTR,
     ADD,
     SUBTR,
     MUL,
@@ -15,15 +16,16 @@ typedef enum {
     DECR,
     BEGLP,
     ENDLPEQ,
+    PRINT_S,
     PRINT,
     DONE,
 } instructions_e;
 
 typedef struct {
     instructions_e opcode;
-    void *a1;
-    void *a2;
-    void *a3;
+    void **a1;
+    void **a2;
+    void **a3;
     char *lit;
 } operation;
 
