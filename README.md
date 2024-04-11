@@ -4,8 +4,7 @@ _If you're going to simp for anything on the Internet, it may as well be a crapp
 
 Simplang is a simple and lightweight, interpreted scripting language for performing arithmetic operations.
 
-At the moment, the only supported data type is a signed 64-bit int.
-Simplang supports the four main arithmetic operations at the moment, as well increment/decrement and do-while loops.
+Simplang supports 64-bit signed integers, string literals, the four main arithmetic operations, increment/decrement, and do-while loops.
 
 ## Usage
 
@@ -16,6 +15,8 @@ Here's an example Simplang script:
 
 ```
 SIMPLANG
+ldstr s0 "Welcome to Simplang!"
+print_s s0
 asgn r1 6
 asgn r2 3
 add r0 r1 r2
@@ -23,10 +24,11 @@ print r0
 done
 ```
 
-Running this script will print 9.
+Running this script will print "Welcome to Simplang!" and the first line and 9 on the second.
 
 All Simplang scripts need to begin with `SIMPLANG` on the first line and end with `done` on the last line.
-Simplang uses registers to store variables, and by default there are 8 registers available.
+Simplang uses registers to store variables, and by default there are 8 registers available for each type.
+Registers `r0` - `r7` are used for integers and `s0` - `s7` are used for strings.
 
 There are more examples that you can run in the tests/ directory.
 
@@ -45,6 +47,8 @@ There are no dependencies outside of the C standard library.
 
 `asgn <a1> <a2>` - stores the value specified by a2 in the register specified by a1
 
+`ldstr <a1> <a2>` - stores the string literal specified by a2 in the register specified by a1
+
 `(add, subtr, mul, div) <a1> <a2> <a3>` - perform the arithmetic operation specified on a2 and a3 in that order, then store the result in the register specified by a1
 
 `(incr, decr) <a1>` - increment or decrement the value stored at the register specified by a1
@@ -53,6 +57,8 @@ There are no dependencies outside of the C standard library.
 
 `endlpeq <a1> <a2>` - ends execution of a loop if the values of a1 and a2 are equal, otherwise jump back to `beglp`
 
-`print <a1>` - prints the value of a1
+`print <a1>` - prints the integer value stored in the register specified by a1
+
+`print_s <a1>` - prints the string value stored in the register specified by a1, print_s cannot print string literals directly
 
 `done` - ends execution of the program
