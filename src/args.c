@@ -20,7 +20,8 @@ void *parse_arg() {
 
         return *tmp == 'r' ? &(g_registers[target_reg]) : &(s_registers[target_reg]);
     } else {
-        if (*(tmp++) == '"') {
+        if (*tmp == '"') {
+            tmp++;
             str_lit = true;
             int i = 0;
             while (*tmp != '"') {
@@ -34,8 +35,6 @@ void *parse_arg() {
                 s_buff[i++] = *tmp++;
             }
             s_buff[i] = 0x0;
-            printf("%s\n", s_buff);
-            exit(0);
         } else {
             *e_sp = atoi(tmp);
             if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
