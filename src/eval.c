@@ -15,6 +15,10 @@ void eval_op(operation *op) {
             parse_two_args(op);
             *(long *)op->a1 = *(long *)op->a2;
             break;
+        case RAND:
+            parse_two_args(op);
+            *(long *)op->a1 = rand() % *(long *)op->a2;
+            break;
         case LDSTR:
             parse_two_args(op);
             if (*op->a1) free(*op->a1);

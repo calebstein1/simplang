@@ -5,6 +5,8 @@
 void get_opcode(operation *op) {
     if (memcmp(op->lit, "asgn", 4) == 0) {
         op->opcode = ASGN;
+    } else if (memcmp(op->lit, "rand", 4) == 0) {
+        op->opcode = RAND;
     } else if (memcmp(op->lit, "ldstr", 5) == 0) {
         op->opcode = LDSTR;
     } else if (memcmp(op->lit, "add", 3) == 0) {

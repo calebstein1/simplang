@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <time.h>
 
 #include "defs.h"
 #include "eval.h"
@@ -18,6 +20,7 @@ long *e_sp, *e_bp;
 char **j_sp, **j_bp;
 
 int main(int argc, char **argv) {
+    srand(time(NULL));
     e_sp = e_bp = &(g_stack[0]);
     j_sp = j_bp = &(j_stack[0]);
     operation op = {};
