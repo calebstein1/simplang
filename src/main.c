@@ -42,8 +42,8 @@ int main(int argc, char **argv) {
     read (fd, script, script_stat.st_size);
     close(fd);
 
-    if (memcmp(strtok(script, "\n"), "SIMPSCRIPT", 11) != 0) {
-        printf("Not a SIMPSCRIPT file\n");
+    if (memcmp(strtok(script, "\n"), "SIMPLANG", 8) != 0) {
+        printf("Not a SIMPLANG file\n");
         return -1;
     }
 

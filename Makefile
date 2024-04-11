@@ -1,4 +1,4 @@
-TARGET = bin/simpscript
+TARGET = bin/simplang
 SRC = $(wildcard src/*.c)
 OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 CFLAGS=-Iinclude
