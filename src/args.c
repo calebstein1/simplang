@@ -1,31 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 #include "defs.h"
 #include "args.h"
 #include "globals.h"
 
-long *parse_arg() {
+void *parse_arg() {
+    bool str_lit = false;
     char *tmp = strtok(NULL, " \n\t");
 
-    if (tmp[0] == 'r') {
-        tmp = &(tmp[1]);
-        int target_reg = atoi(tmp);
+    if (*tmp == 'r' || *tmp == 's') {
+        int target_reg = atoi(tmp + 1);
         if (target_reg >= MAX_REGISTERS) {
             printf("Invalid register number\n");
             exit(-1);
         }
-        return &(g_registers[target_reg]);
+
+        return *tmp == 'r' ? &(g_registers[target_reg]) : &(s_registers[target_reg]);
     } else {
-        *e_sp = atoi(tmp);
-    }
-    if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
-        printf("Eval stack overflow\n");
-        exit(-1);
+        if (*(tmp++) == '"') {
+            str_lit = true;
+            int i = 0;
+            while (*tmp != '"') {
+                if (!*tmp) {
+                    *tmp = ' ';
+                }
+                if (i >= GLOBAL_BUFF_SIZE - 1) {
+                    printf("String buffer overflow\n");
+                    exit(-1);
+                }
+                s_buff[i++] = *tmp++;
+            }
+            s_buff[i] = 0x0;
+            printf("%s\n", s_buff);
+            exit(0);
+        } else {
+            *e_sp = atoi(tmp);
+            if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
+                printf("Eval stack overflow\n");
+                exit(-1);
+            }
+        }
     }
 
-    return e_sp++;
+    return str_lit ? s_buff : e_sp++;
 }
 
 void parse_one_arg(operation *op) {

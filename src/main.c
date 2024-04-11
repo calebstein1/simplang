@@ -10,6 +10,8 @@
 #include "repl.h"
 
 long g_registers[MAX_REGISTERS] = {};
+char *s_registers[MAX_REGISTERS] = {};
+char s_buff[GLOBAL_BUFF_SIZE] = {};
 long g_stack[GLOBAL_STACK_SIZE] = {};
 char *j_stack[GLOBAL_STACK_SIZE] = {};
 long *e_sp, *e_bp;

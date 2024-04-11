@@ -8,6 +8,7 @@
 #include "loop.h"
 
 void eval_op(operation *op) {
+    int i = 0;
     switch (op->opcode) {
         case ASGN:
             parse_two_args(op);
@@ -60,6 +61,11 @@ void eval_op(operation *op) {
             printf("%ld\n", *op->a1);
             break;
         case DONE:
+            for (; i < MAX_REGISTERS; i++) {
+                if (s_registers[i]) {
+                    free(s_registers[i]);
+                }
+            }
             break;
         default:
             printf("Unknown command: %s\n", op->lit);

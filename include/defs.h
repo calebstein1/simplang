@@ -3,6 +3,7 @@
 
 #define MAX_REGISTERS 8
 #define GLOBAL_STACK_SIZE 16
+#define GLOBAL_BUFF_SIZE 1024
 
 typedef enum {
     ASGN,
