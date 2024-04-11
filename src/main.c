@@ -7,6 +7,7 @@
 #include "defs.h"
 #include "args.h"
 #include "opcode.h"
+#include "loop.h"
 
 long g_registers[MAX_REGISTERS] = {};
 long g_stack[GLOBAL_STACK_SIZE] = {};
@@ -93,19 +94,7 @@ int main(int argc, char **argv) {
             }
             parse_two_args(&op);
             if (*op.a1 != *op.a2) {
-                int i = 0;
-                for (; i < 3; i++) {
-                    while (*op.lit) {
-                        op.lit++;
-                    }
-                    *op.lit = ' ';
-                }
-                for (; op.lit >= *(j_sp - 1); op.lit--) {
-                    if (!*op.lit) {
-                        *op.lit = ' ';
-                    }
-                }
-                strtok(++op.lit, " \n\t");
+                loop_backwards(&op);
             } else {
                 j_sp--;
             }
