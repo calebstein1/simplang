@@ -1,8 +1,13 @@
 SIMPLANG
 asgn r0 5
 beglp
-add r0 r0 10
-incr r1
+    add r0 r0 10
+    asgn r7 0
+    beglp
+        incr r7
+    endlpeq r7 8
+    incr r1
 endlpeq r1 20
 print r0
+print r7
 done
