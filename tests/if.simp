@@ -1,0 +1,9 @@
+SIMPLANG
+ldstr s0 "They're equal!"
+ldstr s1 "Now we're past the if block"
+asgn r0 6
+ifeq r0 6
+    print_s s0
+endif
+print_s s1
+done

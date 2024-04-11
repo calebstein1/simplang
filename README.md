@@ -4,7 +4,7 @@ _If you're going to simp for anything on the Internet, it may as well be a crapp
 
 Simplang is a simple and lightweight, interpreted scripting language for performing arithmetic operations.
 
-Simplang supports 64-bit signed integers, string literals, the four main arithmetic operations, increment/decrement, and do-while loops.
+Simplang supports 64-bit signed integers, string literals, the four main arithmetic operations, increment/decrement, if statements (no nested if blocks yet), and do-while loops (with nested loop support).
 
 ## Usage
 
@@ -56,6 +56,10 @@ There are no dependencies outside of the C standard library.
 `beglp` - begins a loop
 
 `(endlpeq, endlpne, endlplt, endlple) <a1> <a2>` - ends execution of a loop based on the condition comparing a1 and a2, otherwise jump back to `beglp`
+
+`(ifeq, ifne, iflt, ifle) <a1> <a2>` - executes the following code block based on the condition comparing a1 and a2, otherwise jump ahead to the next `endif`
+
+`endif` - signifies the end of an if block
 
 `print <a1>` - prints the integer value stored in the register specified by a1
 

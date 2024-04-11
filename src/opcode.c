@@ -29,6 +29,16 @@ void get_opcode(operation *op) {
         op->opcode = ENDLPLT;
     } else if (memcmp(op->lit, "endlple", 7) == 0) {
         op->opcode = ENDLPLE;
+    } else if (memcmp(op->lit, "ifeq", 4) == 0) {
+        op->opcode = IFEQ;
+    } else if (memcmp(op->lit, "ifne", 4) == 0) {
+        op->opcode = IFNE;
+    } else if (memcmp(op->lit, "iflt", 4) == 0) {
+        op->opcode = IFLT;
+    } else if (memcmp(op->lit, "ifle", 4) == 0) {
+        op->opcode = IFLE;
+    } else if (memcmp(op->lit, "endif", 5) == 0) {
+        op->opcode = ENDIF;
     } else if (memcmp(op->lit, "print_s", 7) == 0) {
         op->opcode = PRINT_S;
     } else if (memcmp(op->lit, "print", 5) == 0) {

@@ -96,6 +96,40 @@ void eval_op(operation *op) {
                 j_sp--;
             }
             break;
+        case IFEQ:
+            parse_two_args(op);
+            if (*(long *)op->a1 != *(long *)op->a2) {
+                while (memcmp(op->lit, "endif", 5) != 0) {
+                    op->lit = strtok(NULL, " \n\t");
+                }
+            }
+            break;
+        case IFNE:
+            parse_two_args(op);
+            if (*(long *)op->a1 == *(long *)op->a2) {
+                while (memcmp(op->lit, "endif", 5) != 0) {
+                    op->lit = strtok(NULL, " \n\t");
+                }
+            }
+            break;
+        case IFLT:
+            parse_two_args(op);
+            if (*(long *)op->a1 >= *(long *)op->a2) {
+                while (memcmp(op->lit, "endif", 5) != 0) {
+                    op->lit = strtok(NULL, " \n\t");
+                }
+            }
+            break;
+        case IFLE:
+            parse_two_args(op);
+            if (*(long *)op->a1 > *(long *)op->a2) {
+                while (memcmp(op->lit, "endif", 5) != 0) {
+                    op->lit = strtok(NULL, " \n\t");
+                }
+            }
+            break;
+        case ENDIF:
+            break;
         case PRINT_S:
             parse_one_arg(op);
             printf("%s\n", *(char **)op->a1);
