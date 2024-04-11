@@ -21,9 +21,9 @@ typedef enum {
 
 typedef struct {
     instructions_e opcode;
-    long *a1;
-    long *a2;
-    long *a3;
+    void *a1;
+    void *a2;
+    void *a3;
     char *lit;
 } operation;
 

@@ -12,31 +12,31 @@ void eval_op(operation *op) {
     switch (op->opcode) {
         case ASGN:
             parse_two_args(op);
-            *op->a1 = *op->a2;
+            *(long *)op->a1 = *(long *)op->a2;
             break;
         case ADD:
             parse_three_args(op);
-            *op->a1 = *op->a2 + *op->a3;
+            *(long *)op->a1 = *(long *)op->a2 + *(long *)op->a3;
             break;
         case SUBTR:
             parse_three_args(op);
-            *op->a1 = *op->a2 - *op->a3;
+            *(long *)op->a1 = *(long *)op->a2 - *(long *)op->a3;
             break;
         case MUL:
             parse_three_args(op);
-            *op->a1 = *op->a2 * *op->a3;
+            *(long *)op->a1 = *(long *)op->a2 * *(long *)op->a3;
             break;
         case DIV:
             parse_three_args(op);
-            *op->a1 = *op->a2 / *op->a3;
+            *(long *)op->a1 = *(long *)op->a2 / *(long *)op->a3;
             break;
         case INCR:
             parse_one_arg(op);
-            (*op->a1)++;
+            (*(long *)op->a1)++;
             break;
         case DECR:
             parse_one_arg(op);
-            (*op->a1)--;
+            (*(long *)op->a1)--;
             break;
         case BEGLP:
             *j_sp = op->lit;
@@ -50,7 +50,7 @@ void eval_op(operation *op) {
                 break;
             }
             parse_two_args(op);
-            if (*op->a1 != *op->a2) {
+            if (*(long *)op->a1 != *(long *)op->a2) {
                 loop_backwards(op);
             } else {
                 j_sp--;
@@ -58,7 +58,7 @@ void eval_op(operation *op) {
             break;
         case PRINT:
             parse_one_arg(op);
-            printf("%ld\n", *op->a1);
+            printf("%ld\n", *(long *)op->a1);
             break;
         case DONE:
             for (; i < MAX_REGISTERS; i++) {
