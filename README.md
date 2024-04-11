@@ -4,7 +4,7 @@ _If you're going to simp for anything on the Internet, it may as well be a crapp
 
 Simplang is a simple and lightweight, interpreted scripting language for performing arithmetic operations.
 
-Simplang supports 64-bit signed integers, string literals, the four main arithmetic operations, increment/decrement, if statements (no nested if blocks yet), and do-while loops (with nested loop support).
+Simplang supports 64-bit signed integers, string literals, user input, the four main arithmetic operations, increment/decrement, if statements (no nested if blocks yet), and do-while loops (with nested loop support).
 
 ## Usage
 
@@ -51,11 +51,15 @@ There are no dependencies outside of the C standard library.
 
 `ldstr <a1> <a2>` - stores the string literal specified by a2 in the register specified by a1
 
+`geti <a1>` - gets an integer from the user and stores it in the register specified by a1
+
 `(add, subtr, mul, div) <a1> <a2> <a3>` - perform the arithmetic operation specified on a2 and a3 in that order, then store the result in the register specified by a1
 
 `(incr, decr) <a1>` - increment or decrement the value stored at the register specified by a1
 
 `beglp` - begins a loop
+
+`cont` - jump back to the beginning of the current loop
 
 `(endlpeq, endlpne, endlplt, endlple) <a1> <a2>` - ends execution of a loop based on the condition comparing a1 and a2, otherwise jump back to `beglp`
 
