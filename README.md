@@ -61,8 +61,8 @@ There are no dependencies outside of the C standard library.
 
 `endif` - signifies the end of an if block
 
-`print <a1>` - prints the integer value stored in the register specified by a1
+`(print, printn) <a1>` - prints the integer value stored in the register specified by a1, the n variant omits the trailing newline
 
-`print_s <a1>` - prints the string value stored in the register specified by a1, print_s cannot print string literals directly
+`(print_s, printn_s) <a1>` - prints the string value stored in the register specified by a1, print_s cannot print string literals directly, the n varirant omits the trailing newline
 
 `done` - ends execution of the program
