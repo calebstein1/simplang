@@ -39,7 +39,10 @@ void eval_op(operation *op) {
             break;
         case BEGLP:
             *j_sp = op->lit;
-            j_sp++;
+            if (++j_sp > j_bp + GLOBAL_STACK_SIZE) {
+                printf("Jump stack overflow\n");
+                exit(-1);
+            }
             break;
         case ENDLPEQ:
             if (j_sp == j_bp) {

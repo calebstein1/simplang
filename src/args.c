@@ -20,6 +20,10 @@ long *parse_arg() {
     } else {
         *e_sp = atoi(tmp);
     }
+    if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
+        printf("Eval stack overflow\n");
+        exit(-1);
+    }
 
     return e_sp++;
 }
