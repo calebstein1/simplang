@@ -9,9 +9,10 @@ Simplang supports the four main arithmetic operations at the moment, as well inc
 
 ## Usage
 
-Simplang uses registers to store variables, and by default there are 8 registers available.
+Simplang supports executing script files or operating as a repl interactively.
+To execute a script, run `simplang <script file>`, and to use the repl, just run `simplang` with no arguments.
 
-Here's an example Simplang file:
+Here's an example Simplang script:
 
 ```
 SIMPLANG
@@ -25,6 +26,7 @@ done
 Running this script will print 9.
 
 All Simplang scripts need to begin with `SIMPLANG` on the first line and end with `done` on the last line.
+Simplang uses registers to store variables, and by default there are 8 registers available.
 
 There are more examples that you can run in the tests/ directory.
 
