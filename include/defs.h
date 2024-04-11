@@ -24,7 +24,9 @@ typedef enum {
     IFLT,
     IFLE,
     ENDIF,
+    PRINTN_S,
     PRINT_S,
+    PRINTN,
     PRINT,
     DONE,
 } instructions_e;

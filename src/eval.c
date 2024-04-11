@@ -130,9 +130,17 @@ void eval_op(operation *op) {
             break;
         case ENDIF:
             break;
+        case PRINTN_S:
+            parse_one_arg(op);
+            printf("%s", *(char **)op->a1);
+            break;
         case PRINT_S:
             parse_one_arg(op);
             printf("%s\n", *(char **)op->a1);
+            break;
+        case PRINTN:
+            parse_one_arg(op);
+            printf("%ld", *(long *)op->a1);
             break;
         case PRINT:
             parse_one_arg(op);

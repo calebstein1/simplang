@@ -39,8 +39,12 @@ void get_opcode(operation *op) {
         op->opcode = IFLE;
     } else if (memcmp(op->lit, "endif", 5) == 0) {
         op->opcode = ENDIF;
+    } else if (memcmp(op->lit, "printn_s", 8) == 0) {
+        op->opcode = PRINTN_S;
     } else if (memcmp(op->lit, "print_s", 7) == 0) {
         op->opcode = PRINT_S;
+    } else if (memcmp(op->lit, "printn", 6) == 0) {
+        op->opcode = PRINTN;
     } else if (memcmp(op->lit, "print", 5) == 0) {
         op->opcode = PRINT;
     } else if (memcmp(op->lit, "done", 4) == 0) {
