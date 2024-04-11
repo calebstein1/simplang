@@ -1,5 +1,5 @@
 SIMPLANG
-ASGN r1 60
-ADD r0 9 r1
-PRINT r0
-DONE
+asgn r1 60
+add r0 9 r1
+print r0
+done

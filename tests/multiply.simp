@@ -1,6 +1,6 @@
 SIMPLANG
-ASGN r1 7
-ASGN r2 8
-MUL r0 r1 r2
-PRINT r0
-DONE
+asgn r1 7
+asgn r2 8
+mul r0 r1 r2
+print r0
+done

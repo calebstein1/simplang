@@ -1,4 +1,4 @@
 SIMPLANG
-DIV r0 6 3
-PRINT r0
-DONE
+div r0 6 3
+print r0
+done

@@ -14,16 +14,16 @@ Here's an example SimpLang file:
 
 ```
 SIMPLANG
-ASGN r1 6
-ASGN r2 3
-ADD r0 r1 r2
-PRINT r0
-DONE
+asgn r1 6
+asgn r2 3
+add r0 r1 r2
+print r0
+done
 ```
 
 Running this script will print 9.
 
-All SimpLang scripts need to begin with `SIMPLANG` on the first line and end with `DONE` on the last line.
+All SimpLang scripts need to begin with `SIMPLANG` on the first line and end with `done` on the last line.
 
 There are more examples that you can run in the tests/ directory.
 
