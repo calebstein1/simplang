@@ -7,6 +7,7 @@
 #include "defs.h"
 #include "eval.h"
 #include "opcode.h"
+#include "repl.h"
 
 long g_registers[MAX_REGISTERS] = {};
 long g_stack[GLOBAL_STACK_SIZE] = {};
@@ -21,8 +22,8 @@ int main(int argc, char **argv) {
     struct stat script_stat = {};
 
     if (argc == 1) {
-        printf("Need to specify a file\n");
-        return -1;
+        launch_repl(&op);
+        return 0;
     } else if (argc > 2) {
         printf("Please specify exactly one file\n");
         return -1;
