@@ -1,0 +1,10 @@
+SIMPLANG
+asgn r0 3
+incr r0
+incr r0
+print r0
+decr r0
+decr r0
+decr r0
+print r0
+done

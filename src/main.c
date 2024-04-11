@@ -72,6 +72,14 @@ int main(int argc, char **argv) {
             parse_three_args(&op);
             *op.a1 = *op.a2 / *op.a3;
             break;
+        case INCR:
+            parse_one_arg(&op);
+            (*op.a1)++;
+            break;
+        case DECR:
+            parse_one_arg(&op);
+            (*op.a1)--;
+            break;
         case PRINT:
             parse_one_arg(&op);
             printf("%ld\n", *op.a1);

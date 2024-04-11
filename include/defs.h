@@ -10,6 +10,8 @@ typedef enum {
     SUBTR,
     MUL,
     DIV,
+    INCR,
+    DECR,
     PRINT,
     DONE,
 } instructions_e;

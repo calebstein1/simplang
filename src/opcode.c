@@ -13,6 +13,10 @@ void get_opcode(operation *op) {
         op->opcode = MUL;
     } else if (memcmp(op->lit, "div", 3) == 0) {
         op->opcode = DIV;
+    } else if (memcmp(op->lit, "incr", 4) == 0) {
+        op->opcode = INCR;
+    } else if (memcmp(op->lit, "decr", 4) == 0) {
+        op->opcode = DECR;
     } else if (memcmp(op->lit, "print", 5) == 0) {
         op->opcode = PRINT;
     } else if (memcmp(op->lit, "done", 4) == 0) {
