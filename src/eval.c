@@ -17,6 +17,7 @@ void eval_op(operation *op) {
             break;
         case LDSTR:
             parse_two_args(op);
+            if (*op->a1) free(*op->a1);
             *op->a1 = malloc(strlen((char *)op->a2) + 1);
             strcpy(*(char **)op->a1, (char *)op->a2);
             break;
