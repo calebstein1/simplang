@@ -47,6 +47,8 @@ There are no dependencies outside of the C standard library.
 
 `asgn <a1> <a2>` - stores the value specified by a2 in the register specified by a1
 
+`rand <a1> <a2>` - stores a pseudo-randomly generated number in the register specified by a1 between 0 and a2 - 1, a2 may be a register or a number
+
 `ldstr <a1> <a2>` - stores the string literal specified by a2 in the register specified by a1
 
 `(add, subtr, mul, div) <a1> <a2> <a3>` - perform the arithmetic operation specified on a2 and a3 in that order, then store the result in the register specified by a1
