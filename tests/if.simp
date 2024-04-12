@@ -1,5 +1,3 @@
-SIMPLANG
-
 ldstr s0 "It's under 10"
 ldstr s1 "It's 10 or more"
 ldstr s2 "Enter a number: "

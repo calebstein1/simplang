@@ -1,4 +1,3 @@
-SIMPLANG
 beglp
     rand r0 100
     print r0

@@ -1,4 +1,3 @@
-SIMPLANG
 ldstr s0 "Congratulations, you guessed it in "
 ldstr s1 " guesses!"
 ldstr s2 "Enter your guess: "

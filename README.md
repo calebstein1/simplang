@@ -9,12 +9,13 @@ Simplang supports 64-bit signed integers, string literals, user input, the four 
 ## Usage
 
 Simplang supports executing script files or operating as a repl interactively.
-To execute a script, run `simplang <script file>`, and to use the repl, just run `simplang` with no arguments.
+To execute a script, use `#!/usr/bin/env simplang` as your shebang, or run `simplang <script file>`, and to use the repl, just run `simplang` with no arguments.
 
 Here's an example Simplang script:
 
 ```
-SIMPLANG
+#!/usr/bin/env simplang
+
 ldstr s0 "Welcome to Simplang!"
 print_s s0
 asgn r1 6
@@ -26,7 +27,7 @@ done
 
 Running this script will print "Welcome to Simplang!" on one line, followed by 9 on the next.
 
-All Simplang scripts need to begin with `SIMPLANG` on the first line and end with `done` on the last line.
+All Simplang scripts need to end with `done` on the last line.
 Simplang uses registers to store variables, and by default there are 8 registers available for each type.
 Registers `r0` - `r7` are used for integers and `s0` - `s7` are used for strings.
 

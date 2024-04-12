@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
@@ -25,6 +26,7 @@ int main(int argc, char **argv) {
     j_sp = j_bp = &(j_stack[0]);
     operation op = {};
     struct stat script_stat = {};
+    bool start_adv = false;
 
     if (argc == 1) {
         launch_repl(&op);
@@ -51,13 +53,14 @@ int main(int argc, char **argv) {
     read (fd, script, script_stat.st_size);
     close(fd);
 
-    if (memcmp(strtok(script, "\n"), "SIMPLANG", 8) != 0) {
-        printf("Not a SIMPLANG file\n");
-        return -1;
+    if (memcmp(script, "#!", 2) == 0) {
+        start_adv = true;
+        strtok(script, "\n");
     }
 
     do {
-        op.lit = strtok(NULL, " \n\t");
+        op.lit = start_adv ? strtok(NULL, " \n\t") : strtok(script, " \n\t");
+        start_adv = true;
         get_opcode(&op);
         eval_op(&op);
     } while (op.opcode != DONE);

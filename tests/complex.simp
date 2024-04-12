@@ -1,4 +1,3 @@
-SIMPLANG
 add r1 7 6
 subtr r2 20 r1
 mul r3 r1 r2

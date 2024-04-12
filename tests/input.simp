@@ -1,4 +1,3 @@
-SIMPLANG
 ldstr s0 "Enter your name: "
 ldstr s1 "Hello, "
 ldstr s2 "! "
