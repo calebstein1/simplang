@@ -76,3 +76,7 @@ There are no dependencies outside of the C standard library.
 `(print_s, printn_s) <a1>` - prints the string value stored in the register specified by a1, print_s cannot print string literals directly, the n varirant omits the trailing newline
 
 `done` - ends execution of the program
+
+## Known Bugs
+
+- String literals being parsed from a script file will cause a segfault if they don't contain at least one space. This does not occur with strings read it with `gets` or when using `ldstr` in repl mode.
