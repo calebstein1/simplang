@@ -53,6 +53,8 @@ There are no dependencies outside of the C standard library.
 
 `geti <a1>` - gets an integer from the user and stores it in the register specified by a1
 
+`gets <a1>` - gets a string from the user and stoes it in the register specified by a1
+
 `(add, subtr, mul, div) <a1> <a2> <a3>` - perform the arithmetic operation specified on a2 and a3 in that order, then store the result in the register specified by a1
 
 `(incr, decr) <a1>` - increment or decrement the value stored at the register specified by a1
