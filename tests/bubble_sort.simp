@@ -1,0 +1,67 @@
+ldstr s0 "Unsorted: "
+ldstr s1 "Sotrted: "
+
+asgn r0 4
+asgn r1 7
+asgn r2 2
+asgn r3 3
+asgn r4 1
+asgn r5 5
+asgn r6 6
+
+print_s s0
+print r0
+print r1
+print r2
+print r3
+print r4
+print r5
+print r6
+
+asgn r7 7
+
+beglp
+    ifle 2 r7
+        iflt r1 r0
+            swp r0 r1
+        endif
+    endif
+    ifle 3 r7
+        iflt r2 r1
+            swp r1 r2
+        endif
+    endif
+    ifle 4 r7
+        iflt r3 r2
+            swp r2 r3
+        endif
+    endif
+    ifle 5 r7
+        iflt r4 r3
+            swp r3 r4
+        endif
+    endif
+    ifle 6 r7
+        iflt r5 r4
+            swp r4 r5
+        endif
+    endif
+    ifle 7 r7
+        iflt r6 r5
+            swp r5 r6
+        endif
+    endif
+
+    decr r7
+endlpeq r7 0
+
+print_s s1
+print r0
+print r1
+print r2
+print r3
+print r4
+print r5
+print r6
+
+done

@@ -10,6 +10,8 @@
 
 void eval_op(operation *op) {
     int i = 0;
+    unsigned int nested_if = 0;
+
     switch (op->opcode) {
         case ASGN:
             parse_two_args(op);
@@ -130,34 +132,58 @@ void eval_op(operation *op) {
             }
             break;
         case IFEQ:
+            nested_if++;
             parse_two_args(op);
             if (*(long *)op->a1 != *(long *)op->a2) {
-                while (memcmp(op->lit, "endif", 5) != 0) {
+                while (nested_if) {
                     op->lit = strtok(NULL, " \n\t");
+                    if (memcmp(op->lit, "if", 2) == 0) {
+                        nested_if++;
+                    } else if (memcmp(op->lit, "endif", 5) == 0) {
+                        nested_if--;
+                    }
                 }
             }
             break;
         case IFNE:
+            nested_if++;
             parse_two_args(op);
             if (*(long *)op->a1 == *(long *)op->a2) {
-                while (memcmp(op->lit, "endif", 5) != 0) {
+                while (nested_if) {
                     op->lit = strtok(NULL, " \n\t");
+                    if (memcmp(op->lit, "if", 2) == 0) {
+                        nested_if++;
+                    } else if (memcmp(op->lit, "endif", 5) == 0) {
+                        nested_if--;
+                    }
                 }
             }
             break;
         case IFLT:
+            nested_if++;
             parse_two_args(op);
             if (*(long *)op->a1 >= *(long *)op->a2) {
-                while (memcmp(op->lit, "endif", 5) != 0) {
+                while (nested_if) {
                     op->lit = strtok(NULL, " \n\t");
+                    if (memcmp(op->lit, "if", 2) == 0) {
+                        nested_if++;
+                    } else if (memcmp(op->lit, "endif", 5) == 0) {
+                        nested_if--;
+                    }
                 }
             }
             break;
         case IFLE:
+            nested_if++;
             parse_two_args(op);
             if (*(long *)op->a1 > *(long *)op->a2) {
-                while (memcmp(op->lit, "endif", 5) != 0) {
+                while (nested_if) {
                     op->lit = strtok(NULL, " \n\t");
+                    if (memcmp(op->lit, "if", 2) == 0) {
+                        nested_if++;
+                    } else if (memcmp(op->lit, "endif", 5) == 0) {
+                        nested_if--;
+                    }
                 }
             }
             break;
