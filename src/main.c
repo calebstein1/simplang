@@ -31,9 +31,14 @@ int main(int argc, char **argv) {
     if (argc == 1) {
         launch_repl(&op);
         return 0;
-    } else if (argc > 2) {
-        printf("Please specify exactly one file\n");
+    } else if (argc > MAX_REGISTERS + 2) {
+        printf("Too many arguments\n");
         return -1;
+    }
+
+    int i = 2;
+    for (; i < argc; i++) {
+        g_registers[i - 2] = atoi(argv[i]);
     }
     
     int fd;

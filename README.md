@@ -10,6 +10,7 @@ Simplang supports 64-bit signed integers, string literals, user input, the four 
 
 Simplang supports executing script files or operating as a repl interactively.
 To execute a script, use `#!/usr/bin/env simplang` as your shebang, or run `simplang <script file>`, and to use the repl, just run `simplang` with no arguments.
+You can pass integers to your Simplang scripts as command line arguments, and the script will run with its int registers pre-initialized to the supplied values, sequentially starting from r0.
 
 Here's an example Simplang script:
 
