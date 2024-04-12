@@ -9,10 +9,11 @@ char *opcode_lit[] = {
 };
 #undef X
 
-void get_opcode(operation *op) {
+void get_opcode(operation *op, char *tok) {
     int i = 0;
-    int lit_len = strlen(op->lit);
-    for (; memcmp(opcode_lit[i], op->lit, lit_len) != 0; i++) {
+    char *lit = strtok(tok, " \n");
+    int lit_len = strlen(lit);
+    for (; memcmp(opcode_lit[i], lit, lit_len) != 0; i++) {
         if (i >= DONE) {
             op->opcode = -1;
             return;
