@@ -1,0 +1,48 @@
+ldstr s0 "Enter a number between 1 and 100 and I'll try to guess it!"
+print_s s0
+ldstr s0 "Enter your number here: "
+ldstr s1 "Now I'm not cheating or anything, but I know that's out of range!"
+ldstr s2 "I'll guess "
+ldstr s3 ", and that's too low"
+ldstr s4 ", and that's too high"
+ldstr s5 ", and that's it!"
+ldstr s6 "It took me "
+ldstr s7 " guesses"
+
+beglp
+    printn_s s0
+    geti r0
+
+    iflt 100 r0
+        print_s s1
+        cont
+    endif
+    iflt r0 1
+        print_s s1
+        cont
+    endif
+endlpeq 0 0
+
+asgn r4 100
+beglp
+    printn_s s2
+    add r2 r3 r4
+    div r1 r2 2
+    printn r1
+    iflt r1 r0
+        print_s s3
+        asgn r3 r1
+    endif
+    iflt r0 r1
+        print_s s4
+        asgn r4 r1
+    endif
+    incr r7
+endlpeq r0 r1
+
+print_s s5
+printn_s s6
+printn r7
+print_s s7
+
+done
