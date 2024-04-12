@@ -8,6 +8,7 @@
 #include <time.h>
 
 #include "defs.h"
+#include "parse.h"
 #include "eval.h"
 #include "opcode.h"
 #include "repl.h"
@@ -16,19 +17,22 @@ long g_registers[MAX_REGISTERS] = {};
 char *s_registers[MAX_REGISTERS] = {};
 char s_buff[GLOBAL_BUFF_SIZE] = {};
 long g_stack[GLOBAL_STACK_SIZE] = {};
-char *j_stack[GLOBAL_STACK_SIZE] = {};
+operation *j_stack[GLOBAL_STACK_SIZE] = {};
 long *e_sp, *e_bp;
-char **j_sp, **j_bp;
+operation **j_sp, **j_bp;
+operation *pp, *pe;
 
 int main(int argc, char **argv) {
     srand(time(NULL));
     e_sp = e_bp = &(g_stack[0]);
-    j_sp = j_bp = &(j_stack[0]);
+    j_sp = j_bp = j_stack;
     operation op = {};
+    char *cur_tok = NULL;
     struct stat script_stat = {};
     bool start_adv = false;
 
     if (argc == 1) {
+        pp = pe = NULL;
         launch_repl(&op);
         return 0;
     } else if (argc > MAX_REGISTERS + 2) {
@@ -53,6 +57,8 @@ int main(int argc, char **argv) {
         return -1;
     }
     char script[script_stat.st_size];
+    operation program[MAX_PROGRAM_SIZE] = {};
+    pp = pe = program;
 
     lseek(fd, 0, SEEK_SET);
     read (fd, script, script_stat.st_size);
@@ -64,11 +70,21 @@ int main(int argc, char **argv) {
     }
 
     do {
-        op.lit = start_adv ? strtok(NULL, " \n\t") : strtok(script, " \n\t");
+        cur_tok = start_adv ? strtok(cur_tok, "\n") : strtok(script, "\n");
         start_adv = true;
-        get_opcode(&op);
-        eval_op(&op);
+        printf("Current pe: %p\n", pe);
+        printf("Current token: %s\n", cur_tok);
+        get_opcode(&op, cur_tok);
+        printf("Parsing %s...\n", cur_tok);
+        parse_op(&op);
+        printf("Parsed\n");
     } while (op.opcode != DONE);
+
+    do {
+        printf("Evaluating...\n");
+        eval_op(pp);
+        printf("Evaluated\n");
+    } while (++pp < pe);
 
     return 0;
 }
