@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "defs.h"
+#include "parse.h"
 #include "eval.h"
 #include "opcode.h"
 #include "repl.h"
@@ -15,12 +16,12 @@ void launch_repl(operation *op) {
     while(op->opcode != DONE) {
         printf(">> ");
         getline(&cmd, &len, stdin);
-        op->lit = strtok(cmd, " \n\t");
-        get_opcode(op);
+        get_opcode(op, cmd);
         if (op->opcode == BEGLP || op->opcode == ENDLPEQ) {
             printf("Looping not supported in repl mode\n");
             continue;
         }
+        parse_op(op);
         eval_op(op);
     }
 
