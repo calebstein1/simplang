@@ -5,35 +5,40 @@
 #define GLOBAL_STACK_SIZE 16
 #define GLOBAL_BUFF_SIZE 1024
 
+#define OPCODE_TABLE   \
+X(ASGN, "asgn")        \
+X(RAND, "rand")        \
+X(LDSTR, "ldstr")      \
+X(GETI, "geti")        \
+X(GETS, "gets")        \
+X(ADD, "add")          \
+X(SUBTR, "subtr")      \
+X(MUL, "mul")          \
+X(DIV, "div")          \
+X(INCR, "incr")        \
+X(DECR, "decr")        \
+X(SWP, "swp")          \
+X(BEGLP, "beglp")      \
+X(CONT, "cont")        \
+X(ENDLPEQ, "endlpeq")  \
+X(ENDLPNE, "endlpne")  \
+X(ENDLPLT, "endlplt")  \
+X(ENDLPLE, "endlple")  \
+X(IFEQ, "ifeq")        \
+X(IFNE, "ifne")        \
+X(IFLT, "iflt")        \
+X(IFLE, "ifle")        \
+X(ENDIF, "endif")      \
+X(PRINT, "print")      \
+X(PRINTN, "printn")    \
+X(PRINT_S, "print_s")  \
+X(PRINTN_S, "printn_s")\
+X(DONE, "done")
+
 typedef enum {
-    ASGN,
-    RAND,
-    LDSTR,
-    GETI,
-    GETS,
-    ADD,
-    SUBTR,
-    MUL,
-    DIV,
-    INCR,
-    DECR,
-    SWP,
-    BEGLP,
-    CONT,
-    ENDLPEQ,
-    ENDLPNE,
-    ENDLPLT,
-    ENDLPLE,
-    IFEQ,
-    IFNE,
-    IFLT,
-    IFLE,
-    ENDIF,
-    PRINTN_S,
-    PRINT_S,
-    PRINTN,
-    PRINT,
-    DONE,
+    #define X(opcode, lit) opcode,
+    OPCODE_TABLE
+    #undef X
 } instructions_e;
 
 typedef struct {

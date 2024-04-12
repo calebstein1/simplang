@@ -163,21 +163,21 @@ void eval_op(operation *op) {
             break;
         case ENDIF:
             break;
-        case PRINTN_S:
+        case PRINT:
             parse_one_arg(op);
-            printf("%s", *(char **)op->a1);
-            break;
-        case PRINT_S:
-            parse_one_arg(op);
-            printf("%s\n", *(char **)op->a1);
+            printf("%ld\n", *(long *)op->a1);
             break;
         case PRINTN:
             parse_one_arg(op);
             printf("%ld", *(long *)op->a1);
             break;
-        case PRINT:
+        case PRINT_S:
             parse_one_arg(op);
-            printf("%ld\n", *(long *)op->a1);
+            printf("%s\n", *(char **)op->a1);
+            break;
+        case PRINTN_S:
+            parse_one_arg(op);
+            printf("%s", *(char **)op->a1);
             break;
         case DONE:
             for (; i < MAX_REGISTERS; i++) {
