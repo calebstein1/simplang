@@ -1,6 +1,7 @@
 #ifndef SIMPSCRIPT_DEFS_H
 #define SIMPSCRIPT_DEFS_H
 
+#define MAX_PROGRAM_SIZE 2048
 #define MAX_REGISTERS 8
 #define GLOBAL_STACK_SIZE 16
 #define GLOBAL_BUFF_SIZE 1024
@@ -46,7 +47,6 @@ typedef struct {
     void **a1;
     void **a2;
     void **a3;
-    char *lit;
 } operation;
 
 #endif //SIMPSCRIPT_DEFS_H
