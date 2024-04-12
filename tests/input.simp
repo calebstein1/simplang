@@ -1,8 +1,16 @@
 SIMPLANG
-ldstr s0 "Enter a number: "
-ldstr s1 "You entered "
+ldstr s0 "Enter your name: "
+ldstr s1 "Hello, "
+ldstr s2 "! "
+ldstr s3 "Enter a number: "
+ldstr s4 "You entered "
 printn_s s0
+gets s5
+printn_s s3
 geti r0
 printn_s s1
+printn_s s5
+print_s s2
+printn_s s4
 print r0
 done

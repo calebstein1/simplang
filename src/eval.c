@@ -30,6 +30,19 @@ void eval_op(operation *op) {
             fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
             *(long *)op->a1 = atoi(s_buff);
             break;
+        case GETS:
+            parse_one_arg(op);
+            if (*op->a1) free(*op->a1);
+            fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
+            for (; s_buff[i]; i++) {
+                if (s_buff[i] == '\n') {
+                    s_buff[i] = 0x0;
+                    break;
+                }
+            }
+            *op->a1 = malloc(strlen(s_buff) + 1);
+            strcpy(*(char **)op->a1, s_buff);
+            break;
         case ADD:
             parse_three_args(op);
             *(long *)op->a1 = *(long *)op->a2 + *(long *)op->a3;

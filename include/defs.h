@@ -10,6 +10,7 @@ typedef enum {
     RAND,
     LDSTR,
     GETI,
+    GETS,
     ADD,
     SUBTR,
     MUL,

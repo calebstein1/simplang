@@ -11,6 +11,8 @@ void get_opcode(operation *op) {
         op->opcode = LDSTR;
     } else if (memcmp(op->lit, "geti", 4) == 0) {
         op->opcode = GETI;
+    } else if (memcmp(op->lit, "gets", 4) == 0) {
+        op->opcode = GETS;
     } else if (memcmp(op->lit, "add", 3) == 0) {
         op->opcode = ADD;
     } else if (memcmp(op->lit, "subtr", 5) == 0) {
