@@ -1,6 +1,6 @@
 # Simplang
 
-_If you're going to simp for anything on the Internet, it may as well be a crappy math language you found on GitHub_
+_If you're going to simp for anything on the Internet, it may as well be a crappy programming language you found on GitHub_
 
 Simplang is a simple and lightweight, interpreted scripting language for performing arithmetic operations.
 
@@ -24,7 +24,7 @@ print r0
 done
 ```
 
-Running this script will print "Welcome to Simplang!" and the first line and 9 on the second.
+Running this script will print "Welcome to Simplang!" on one line, followed by 9 on the next.
 
 All Simplang scripts need to begin with `SIMPLANG` on the first line and end with `done` on the last line.
 Simplang uses registers to store variables, and by default there are 8 registers available for each type.
