@@ -13,9 +13,8 @@ void loop_backwards(operation *op) {
         *op->lit = ' ';
     }
     for (; op->lit >= *(j_sp - 1); op->lit--) {
-        if (!*op->lit) {
-            *op->lit = ' ';
-        }
+        if (*op->lit) continue;
+        *op->lit = ' ';
     }
     strtok(++op->lit, " \n\t");
 }
