@@ -1,13 +1,13 @@
 ldstr s0 "Unsorted: "
 ldstr s1 "Sotrted: "
 
-asgn r0 4
-asgn r1 7
-asgn r2 2
-asgn r3 3
-asgn r4 1
-asgn r5 5
-asgn r6 6
+rand r0 1000
+rand r1 1000
+rand r2 1000
+rand r3 1000
+rand r4 1000
+rand r5 1000
+rand r6 1000
 
 print_s s0
 print r0
