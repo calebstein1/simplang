@@ -187,8 +187,7 @@ void eval_op(operation *op) {
             }
             break;
         default:
-            printf("Unknown command: %s\n", op->lit);
-            exit(-1);
+            printf("Unknown instruction: %s\n", op->lit);
     }
 
     e_sp = e_bp;
