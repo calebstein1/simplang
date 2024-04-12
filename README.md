@@ -33,16 +33,18 @@ Registers `r0` - `r7` are used for integers and `s0` - `s7` are used for strings
 
 There are more examples that you can run in the tests/ directory.
 
-## Building
+## Building/Installing
 
 ```
 git clone https://github.com/calebstein1/simplang
 cd simplang
 make
+sudo make install
 ```
 
 This will produce a `simplang` binary in the bin/ directory.
 There are no dependencies outside of the C standard library.
+Simplang is self-contained in a single binary, `make install` copies this binary to `/usr/local/bin`, and `make uninstall` deletes it.
 
 ## Reference
 

@@ -16,3 +16,10 @@ $(TARGET): $(OBJ)
 obj/%.o: src/%.c
 	mkdir -p obj
 	cc -c $< -o $@ $(CFLAGS)
+
+install:
+	mkdir -p /usr/local/bin
+	cp $(TARGET) /usr/local/$(TARGET)
+
+uninstall:
+	rm -f /usr/local/$(TARGET)
