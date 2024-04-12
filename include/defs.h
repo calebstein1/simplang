@@ -16,6 +16,7 @@ typedef enum {
     DIV,
     INCR,
     DECR,
+    SWP,
     BEGLP,
     CONT,
     ENDLPEQ,

@@ -57,6 +57,8 @@ There are no dependencies outside of the C standard library.
 
 `(incr, decr) <a1>` - increment or decrement the value stored at the register specified by a1
 
+`swp <a1> <a2>` - swap the values stored in the registers specified by a1 and a2
+
 `beglp` - begins a loop
 
 `cont` - jump back to the beginning of the current loop

@@ -54,6 +54,12 @@ void eval_op(operation *op) {
             parse_one_arg(op);
             (*(long *)op->a1)--;
             break;
+        case SWP:
+            parse_two_args(op);
+            (*(long *)op->a1) ^= (*(long *)op->a2);
+            (*(long *)op->a2) ^= (*(long *)op->a1);
+            (*(long *)op->a1) ^= (*(long *)op->a2);
+            break;
         case BEGLP:
             *j_sp = op->lit;
             if (++j_sp > j_bp + GLOBAL_STACK_SIZE) {
