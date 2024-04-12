@@ -11,7 +11,8 @@ char *opcode_lit[] = {
 
 void get_opcode(operation *op) {
     int i = 0;
-    for (; memcmp(opcode_lit[i], op->lit, strlen(op->lit)) != 0; i++) {
+    int lit_len = strlen(op->lit);
+    for (; memcmp(opcode_lit[i], op->lit, lit_len) != 0; i++) {
         if (i >= DONE) {
             op->opcode = -1;
             return;
