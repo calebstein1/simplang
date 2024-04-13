@@ -5,7 +5,7 @@
 #define MAX_REGISTERS 8
 #define GLOBAL_STACK_SIZE 16
 #define GLOBAL_HEAP_SIZE 4096
-#define GLOBAL_BUFF_SIZE 128
+#define GLOBAL_BUFF_SIZE 512
 
 #define OPCODE_TABLE   \
 X(ASGN, "asgn")        \
