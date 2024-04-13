@@ -1,5 +1,6 @@
 #!/usr/bin/env simplang
 
+; Initialize our string literals
 ldstr s0 "Enter a number between 1 and 100 and I'll try to guess it!"
 print_s s0
 ldstr s0 "Enter your number here: "
@@ -15,6 +16,8 @@ beglp
     printn_s s0
     geti r0
 
+    ; If the user enters a number outside the acceptable range,
+    ; display a message stating so and request a new number
     iflt 100 r0
         print_s s1
         cont
@@ -23,25 +26,40 @@ beglp
         print_s s1
         cont
     endif
+
+; Always end the loop if we reach this point, as that means that
+; the entered number is within range
 endlpeq 0 0
 
-asgn r4 101
+; Since the range of numbers is 1 to 100 inclusive, we'll set our
+; outer bounds to 0 and 101
+; We'll use r2 for the lower bound and r3 for the upper bound,
+; we don't need to initialize r2 since Simplang automatically
+; initializes all registers to 0
+asgn r3 101
 beglp
     printn_s s2
-    add r2 r3 r4
-    div r1 r2 2
+    add r1 r2 r3
+    div r1 r1 2
     printn r1
+
+    ; The guess is the midpoint between the upper and lower bounds,
+    ; rounded down. Here we update either the upper or lower bound
+    ; based on whether the guess was higher or lower than the answer
     iflt r1 r0
         print_s s3
-        asgn r3 r1
+        asgn r2 r1
     endif
     iflt r0 r1
         print_s s4
-        asgn r4 r1
+        asgn r3 r1
     endif
+
+    ; Increment the guess counter
     incr r7
 endlpeq r0 r1
 
+; Prints the success message
 print_s s5
 printn_s s6
 printn r7

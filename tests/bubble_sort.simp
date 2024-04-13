@@ -1,5 +1,6 @@
 #!/usr/bin/env simplang
 
+; Initialize string literals
 ldstr s0 "Unsorted: "
 ldstr s1 "Sotrted: "
 
@@ -22,6 +23,10 @@ print r6
 
 asgn r7 7
 
+; Since Simplang doesn't support arrays, this can't be done using
+; nested loops. Instead, r7 is used to track the furthest unsorted
+; register, and the loop will skip iterating over registers it's
+; already sorted as it sorts r0 - r6
 beglp
     ifle 2 r7
         iflt r1 r0
