@@ -28,6 +28,7 @@ int main(int argc, char **argv) {
     j_sp = j_bp = j_stack;
     operation op = {};
     char *cur_tok = NULL;
+    char *tok_r = NULL;
     struct stat script_stat = {};
     bool start_adv = false;
 
@@ -66,24 +67,18 @@ int main(int argc, char **argv) {
 
     if (memcmp(script, "#!", 2) == 0) {
         start_adv = true;
-        strtok(script, "\n");
+        strtok_r(script, "\n", &tok_r);
     }
 
     do {
-        cur_tok = start_adv ? strtok(cur_tok, "\n") : strtok(script, "\n");
+        cur_tok = start_adv ? strtok_r(NULL, "\n", &tok_r) : strtok_r(script, "\n", &tok_r);
         start_adv = true;
-        printf("Current pe: %p\n", pe);
-        printf("Current token: %s\n", cur_tok);
         get_opcode(&op, cur_tok);
-        printf("Parsing %s...\n", cur_tok);
         parse_op(&op);
-        printf("Parsed\n");
     } while (op.opcode != DONE);
 
     do {
-        printf("Evaluating...\n");
         eval_op(pp);
-        printf("Evaluated\n");
     } while (++pp < pe);
 
     return 0;

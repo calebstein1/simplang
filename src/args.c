@@ -9,7 +9,7 @@
 
 void *parse_arg() {
     bool str_lit = false;
-    char *tmp = strtok(NULL, " \n\t");
+    char *tmp = strtok(NULL, " \t");
 
     if (*tmp == 'r' || *tmp == 's') {
         int target_reg = atoi(tmp + 1);
@@ -35,7 +35,7 @@ void *parse_arg() {
                 s_buff[i++] = *tmp++;
             }
             s_buff[i] = 0x0;
-            strtok(tmp, " \n\t");
+            strtok(tmp, " \t");
         } else {
             *e_sp = atoi(tmp);
             if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
