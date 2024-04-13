@@ -17,6 +17,7 @@ long g_registers[MAX_REGISTERS] = {};
 char *s_registers[MAX_REGISTERS] = {};
 char s_buff[GLOBAL_BUFF_SIZE] = {};
 long g_stack[GLOBAL_STACK_SIZE] = {};
+char g_heap[GLOBAL_HEAP_SIZE] = {};
 operation *j_stack[GLOBAL_STACK_SIZE] = {};
 long *e_sp, *e_bp;
 operation **j_sp, **j_bp;
@@ -26,13 +27,13 @@ int main(int argc, char **argv) {
     srand(time(NULL));
     e_sp = e_bp = &(g_stack[0]);
     j_sp = j_bp = j_stack;
-    operation op = {};
     char *cur_tok = NULL;
     char *tok_r = NULL;
     struct stat script_stat = {};
     bool start_adv = false;
 
     if (argc == 1) {
+        operation op = {};
         pp = pe = NULL;
         launch_repl(&op);
         return 0;
@@ -71,11 +72,12 @@ int main(int argc, char **argv) {
     }
 
     do {
+        operation op = {};
         cur_tok = start_adv ? strtok_r(NULL, "\n", &tok_r) : strtok_r(script, "\n", &tok_r);
         start_adv = true;
         get_opcode(&op, cur_tok);
         parse_op(&op);
-    } while (op.opcode != DONE);
+    } while ((pe - 1)->opcode != DONE);
 
     do {
         eval_op(pp);

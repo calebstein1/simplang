@@ -9,6 +9,7 @@
 
 void *parse_arg() {
     bool str_lit = false;
+    int i = 0, j;
     char *tmp = strtok(NULL, " \t");
 
     if (*tmp == 'r' || *tmp == 's') {
@@ -23,7 +24,12 @@ void *parse_arg() {
         if (*tmp == '"') {
             tmp++;
             str_lit = true;
-            int i = 0;
+            while (g_heap[i]) {
+                i++;
+                if(!g_heap[i] && g_heap[i + 1]) i++;
+            }
+            if (i > 0) i++;
+            j = i;
             while (*tmp != '"') {
                 if (!*tmp) {
                     *tmp = ' ';
@@ -32,9 +38,9 @@ void *parse_arg() {
                     printf("String buffer overflow\n");
                     exit(-1);
                 }
-                s_buff[i++] = *tmp++;
+                g_heap[i++] = *tmp++;
             }
-            s_buff[i] = 0x0;
+            g_heap[i] = 0x0;
             strtok(tmp, " \t");
         } else {
             *e_sp = atoi(tmp);
@@ -45,7 +51,7 @@ void *parse_arg() {
         }
     }
 
-    return str_lit ? s_buff : e_sp++;
+    return str_lit ? &(g_heap[j]) : e_sp++;
 }
 
 void parse_one_arg(operation *op) {

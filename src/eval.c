@@ -140,7 +140,6 @@ void eval_op(operation *op) {
             }
             break;
         case IFLT:
-            break;
             nested_if++;
             if (*(long *)op->a1 >= *(long *)op->a2) {
                 while (nested_if) {
@@ -154,7 +153,6 @@ void eval_op(operation *op) {
             }
             break;
         case IFLE:
-            break;
             nested_if++;
             if (*(long *)op->a1 > *(long *)op->a2) {
                 while (nested_if) {
@@ -182,7 +180,6 @@ void eval_op(operation *op) {
             printf("%s", *(char **)op->a1);
             break;
         case DONE:
-            //printf("%ld %ld\n", (long)pp, (long)pe);
             for (; i < MAX_REGISTERS; i++) {
                 if (*(s_registers + i)) {
                     free(*(s_registers + i));
