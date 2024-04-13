@@ -23,7 +23,7 @@ beglp
     endif
 endlpeq 0 0
 
-asgn r4 100
+asgn r4 101
 beglp
     printn_s s2
     add r2 r3 r4
