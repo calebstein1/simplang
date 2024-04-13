@@ -1,6 +1,6 @@
 ldstr s0 "Enter your name: "
 ldstr s1 "Hello, "
-ldstr s2 "! "
+ldstr s2 "!"
 ldstr s3 "Enter a number: "
 ldstr s4 "You entered "
 printn_s s0

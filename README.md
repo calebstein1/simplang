@@ -82,7 +82,3 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 `done` - ends execution of the program
 
 Hint: all int registers (r0 - r7) are initialized to 0 by default, so you can immediately use any of them as a loop counter with the `incr` instruction without having to explicitly initialize them.
-
-## Known Bugs
-
-- String literals being parsed from a script file will cause a segfault if they don't contain at least one space. This does not occur with strings read it with `gets` or when using `ldstr` in repl mode.
