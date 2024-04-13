@@ -1,3 +1,5 @@
+#!/usr/bin/env simplang
+
 ldstr s0 "Unsorted: "
 ldstr s1 "Sotrted: "
 

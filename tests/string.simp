@@ -1,3 +1,5 @@
+#!/usr/bin/env simplang
+
 ldstr s0 "I'm going to be printed five times"
 ldstr s1 "I'll be printed once, at the end"
 beglp

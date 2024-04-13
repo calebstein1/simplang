@@ -1,3 +1,5 @@
+#!/usr/bin/env simplang
+
 asgn r0 3
 incr r0
 incr r0

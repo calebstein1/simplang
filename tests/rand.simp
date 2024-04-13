@@ -1,3 +1,5 @@
+#!/usr/bin/env simplang
+
 beglp
     rand r0 100
     print r0

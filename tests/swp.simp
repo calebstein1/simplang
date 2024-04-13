@@ -1,3 +1,5 @@
+#!/usr/bin/env simplang
+
 ldstr s0 "Register r0 contains "
 ldstr s1 "Register r1 contains "
 ldstr s2 "Swapping values..."
