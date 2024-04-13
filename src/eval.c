@@ -78,7 +78,8 @@ void eval_op(operation *op) {
             if (j_sp == j_bp) {
                 break;
             }
-            pp = *j_sp;
+            pp = *(j_sp - 1);
+            break;
         case ENDLPEQ:
             if (j_sp == j_bp) {
                 break;
