@@ -35,6 +35,7 @@ X(PRINT, "print")      \
 X(PRINTN, "printn")    \
 X(PRINT_S, "print_s")  \
 X(PRINTN_S, "printn_s")\
+X(CMNT, ";")           \
 X(DONE, "done")
 
 typedef enum {

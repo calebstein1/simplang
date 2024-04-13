@@ -17,6 +17,7 @@ void launch_repl(operation *op) {
         printf(">> ");
         getline(&cmd, &len, stdin);
         get_opcode(op, cmd);
+        if (op->opcode == CMNT) continue;
         if (op->opcode == BEGLP || op->opcode == ENDLPEQ) {
             printf("Looping not supported in repl mode\n");
             continue;

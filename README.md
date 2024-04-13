@@ -31,6 +31,8 @@ Running this script will print "Welcome to Simplang!" on one line, followed by 9
 All Simplang scripts need to end with `done` on the last line.
 Simplang uses registers to store variables, and by default there are 8 registers available for each type.
 Registers `r0` - `r7` are used for integers and `s0` - `s7` are used for strings.
+Comments begin with `;`.
+They must be on their own line, but may be indented, and there must be at at least one whitespace character between the semicolon and the comment text.
 
 There are more examples that you can run in the tests/ directory.
 

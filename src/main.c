@@ -76,6 +76,7 @@ int main(int argc, char **argv) {
         cur_tok = start_adv ? strtok_r(NULL, "\n", &tok_r) : strtok_r(script, "\n", &tok_r);
         start_adv = true;
         get_opcode(&op, cur_tok);
+        if (op.opcode == CMNT) continue;
         parse_op(&op);
     } while ((pe - 1)->opcode != DONE);
 
