@@ -18,16 +18,13 @@ void eval_op(operation *op) {
             *(long *)op->a1 = rand() % *(long *)op->a2;
             break;
         case LDSTR:
-            if (*op->a1) free(*op->a1);
-            *op->a1 = malloc(strlen((char *)op->a2) + 1);
-            strcpy(*(char **)op->a1, (char *)op->a2);
+            *op->a1 = (char *)op->a2;
             break;
         case GETI:
             fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
             *(long *)op->a1 = atoi(s_buff);
             break;
         case GETS:
-            if (*op->a1) free(*op->a1);
             fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
             for (; s_buff[i]; i++) {
                 if (s_buff[i] == '\n') {
@@ -35,8 +32,17 @@ void eval_op(operation *op) {
                     break;
                 }
             }
-            *op->a1 = malloc(strlen(s_buff) + 1);
-            strcpy(*(char **)op->a1, s_buff);
+            while (g_heap[i]) {
+                i++;
+                if(!g_heap[i] && g_heap[i + 1]) i++;
+            }
+            if (i > 0) i++;
+            if (strlen(s_buff) + 1 >= GLOBAL_HEAP_SIZE) {
+                printf("Heap overflow\n");
+                exit(-1);
+            }
+            strcpy(&g_heap[i], s_buff);
+            *op->a1 = &g_heap[i];
             break;
         case ADD:
             *(long *)op->a1 = *(long *)op->a2 + *(long *)op->a3;
@@ -180,11 +186,6 @@ void eval_op(operation *op) {
             printf("%s", *(char **)op->a1);
             break;
         case DONE:
-            for (; i < MAX_REGISTERS; i++) {
-                if (*(s_registers + i)) {
-                    free(*(s_registers + i));
-                }
-            }
             break;
         default:
             printf("Failed to eval operation %p\n", pp);
