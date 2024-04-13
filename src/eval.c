@@ -123,12 +123,12 @@ void eval_op(operation *op) {
             nested_if++;
             if (*(long *)op->a1 != *(long *)op->a2) {
                 while (nested_if) {
+                    op = ++pp;
                     if (IFEQ <= op->opcode && op->opcode <= IFLE) {
                         nested_if++;
                     } else if (op->opcode == ENDIF) {
                         nested_if--;
                     }
-                    op = ++pp;
                 }
             }
             break;
@@ -136,12 +136,12 @@ void eval_op(operation *op) {
             nested_if++;
             if (*(long *)op->a1 == *(long *)op->a2) {
                 while (nested_if) {
+                    op = ++pp;
                     if (IFEQ <= op->opcode && op->opcode <= IFLE) {
                         nested_if++;
                     } else if (op->opcode == ENDIF) {
                         nested_if--;
                     }
-                    op = ++pp;
                 }
             }
             break;
@@ -149,12 +149,12 @@ void eval_op(operation *op) {
             nested_if++;
             if (*(long *)op->a1 >= *(long *)op->a2) {
                 while (nested_if) {
+                    op = ++pp;
                     if (IFEQ <= op->opcode && op->opcode <= IFLE) {
                         nested_if++;
                     } else if (op->opcode == ENDIF) {
                         nested_if--;
                     }
-                    op = ++pp;
                 }
             }
             break;
@@ -162,12 +162,12 @@ void eval_op(operation *op) {
             nested_if++;
             if (*(long *)op->a1 > *(long *)op->a2) {
                 while (nested_if) {
+                    op = ++pp;
                     if (IFEQ <= op->opcode && op->opcode <= IFLE) {
                         nested_if++;
                     } else if (op->opcode == ENDIF) {
                         nested_if--;
                     }
-                    op = ++pp;
                 }
             }
             break;
