@@ -1,8 +1,6 @@
 # Simplang
 
-_If you're going to simp for anything on the Internet, it may as well be a crappy programming language you found on GitHub_
-
-Simplang is a simple and lightweight, interpreted scripting language for performing arithmetic operations.
+Simplang is a simple and lightweight interpreted scripting language with an assembly-like syntax.
 
 Simplang supports 64-bit signed integers, string literals, user input, the four main arithmetic operations, increment/decrement, if statements (with nesting support), and do-while loops (with nested loop support).
 
