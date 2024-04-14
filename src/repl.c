@@ -14,7 +14,7 @@ void launch_repl(operation *op) {
 
     while(op->opcode != DONE) {
         printf(">> ");
-        getline(&cmd, &len, stdin);
+        if (getline(&cmd, &len, stdin) < 2) continue;
         get_opcode(op, cmd);
         if (op->opcode == CMNT) continue;
         if (op->opcode == BEGLP || op->opcode == ENDLPEQ) {

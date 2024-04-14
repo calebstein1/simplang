@@ -187,8 +187,6 @@ void eval_op(operation *op) {
             break;
         case DONE:
             break;
-        default:
-            printf("Failed to eval operation %p\n", pp);
     }
 
     e_sp = e_bp;
