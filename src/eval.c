@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "defs.h"
-#include "globals.h"
 #include "eval.h"
 
 void eval_op(operation *op) {

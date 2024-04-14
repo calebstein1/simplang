@@ -5,7 +5,6 @@
 #include "defs.h"
 #include "parse.h"
 #include "eval.h"
-#include "opcode.h"
 #include "repl.h"
 
 void launch_repl(operation *op) {

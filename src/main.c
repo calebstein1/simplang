@@ -10,7 +10,6 @@
 #include "defs.h"
 #include "parse.h"
 #include "eval.h"
-#include "opcode.h"
 #include "repl.h"
 
 long g_registers[MAX_REGISTERS] = {};
