@@ -7,39 +7,39 @@
 #define GLOBAL_HEAP_SIZE 4096
 #define GLOBAL_BUFF_SIZE 512
 
-#define OPCODE_TABLE   \
-X(ASGN, "asgn")        \
-X(RAND, "rand")        \
-X(LDSTR, "ldstr")      \
-X(GETI, "geti")        \
-X(GETS, "gets")        \
-X(ADD, "add")          \
-X(SUBTR, "subtr")      \
-X(MUL, "mul")          \
-X(DIV, "div")          \
-X(INCR, "incr")        \
-X(DECR, "decr")        \
-X(SWP, "swp")          \
-X(BEGLP, "beglp")      \
-X(CONT, "cont")        \
-X(ENDLPEQ, "endlpeq")  \
-X(ENDLPNE, "endlpne")  \
-X(ENDLPLT, "endlplt")  \
-X(ENDLPLE, "endlple")  \
-X(IFEQ, "ifeq")        \
-X(IFNE, "ifne")        \
-X(IFLT, "iflt")        \
-X(IFLE, "ifle")        \
-X(ENDIF, "endif")      \
-X(PRINT, "print")      \
-X(PRINTN, "printn")    \
-X(PRINT_S, "print_s")  \
-X(PRINTN_S, "printn_s")\
-X(CMNT, ";")           \
-X(DONE, "done")
+#define OPCODE_TABLE                      \
+X(ASGN, "asgn", &parse_two_args)          \
+X(RAND, "rand", &parse_two_args)          \
+X(LDSTR, "ldstr", &parse_two_args)        \
+X(GETI, "geti", &parse_one_arg)           \
+X(GETS, "gets", &parse_one_arg)           \
+X(ADD, "add", &parse_three_args)          \
+X(SUBTR, "subtr", &parse_three_args)      \
+X(MUL, "mul", &parse_three_args)          \
+X(DIV, "div", &parse_three_args)          \
+X(INCR, "incr", &parse_one_arg)           \
+X(DECR, "decr", &parse_one_arg)           \
+X(SWP, "swp", &parse_two_args)            \
+X(BEGLP, "beglp", &parse_no_args)         \
+X(CONT, "cont", &parse_no_args)           \
+X(ENDLPEQ, "endlpeq", &parse_two_args)    \
+X(ENDLPNE, "endlpne", &parse_two_args)    \
+X(ENDLPLT, "endlplt", &parse_two_args)    \
+X(ENDLPLE, "endlple", &parse_two_args)    \
+X(IFEQ, "ifeq", &parse_two_args)          \
+X(IFNE, "ifne", &parse_two_args)          \
+X(IFLT, "iflt", &parse_two_args)          \
+X(IFLE, "ifle", &parse_two_args)          \
+X(ENDIF, "endif", &parse_no_args)         \
+X(PRINT, "print", &parse_one_arg)         \
+X(PRINTN, "printn", &parse_one_arg)       \
+X(PRINT_S, "print_s", &parse_one_arg)     \
+X(PRINTN_S, "printn_s", &parse_one_arg)   \
+X(CMNT, ";", &parse_no_args)              \
+X(DONE, "done", &parse_no_args)
 
 typedef enum {
-    #define X(opcode, lit) opcode,
+    #define X(opcode, lit, parse_fn) opcode,
     OPCODE_TABLE
     #undef X
 } instructions_e;

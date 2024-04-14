@@ -6,7 +6,7 @@
 #include "defs.h"
 #include "parse.h"
 
-#define X(opcode, lit) lit,
+#define X(opcode, lit, parse_fn) lit,
 char *opcode_lit[] = {
         OPCODE_TABLE
 };
@@ -72,6 +72,8 @@ void *parse_arg() {
     return str_lit ? &(g_heap[j]) : e_sp++;
 }
 
+void parse_no_args(operation *op) {}
+
 void parse_one_arg(operation *op) {
     op->a1 = parse_arg();
 }
@@ -87,89 +89,14 @@ void parse_three_args(operation *op) {
     op->a3 = parse_arg();
 }
 
+#define X(opcode, lit, parse_fn) parse_fn,
+void (*parse_fn[])(operation *op) = {
+        OPCODE_TABLE
+};
+#undef X
+
 void parse_op(operation *op) {
-    switch (op->opcode) {
-        case ASGN:
-            parse_two_args(op);
-            break;
-        case RAND:
-            parse_two_args(op);
-            break;
-        case LDSTR:
-            parse_two_args(op);
-            break;
-        case GETI:
-            parse_one_arg(op);
-            break;
-        case GETS:
-            parse_one_arg(op);
-            break;
-        case ADD:
-            parse_three_args(op);
-            break;
-        case SUBTR:
-            parse_three_args(op);
-            break;
-        case MUL:
-            parse_three_args(op);
-            break;
-        case DIV:
-            parse_three_args(op);
-            break;
-        case INCR:
-            parse_one_arg(op);
-            break;
-        case DECR:
-            parse_one_arg(op);
-            break;
-        case SWP:
-            parse_two_args(op);
-            break;
-        case BEGLP:
-            break;
-        case CONT:
-            break;
-        case ENDLPEQ:
-            parse_two_args(op);
-            break;
-        case ENDLPNE:
-            parse_two_args(op);
-            break;
-        case ENDLPLT:
-            parse_two_args(op);
-            break;
-        case ENDLPLE:
-            parse_two_args(op);
-            break;
-        case IFEQ:
-            parse_two_args(op);
-            break;
-        case IFNE:
-            parse_two_args(op);
-            break;
-        case IFLT:
-            parse_two_args(op);
-            break;
-        case IFLE:
-            parse_two_args(op);
-            break;
-        case ENDIF:
-            break;
-        case PRINT:
-            parse_one_arg(op);
-            break;
-        case PRINTN:
-            parse_one_arg(op);
-            break;
-        case PRINT_S:
-            parse_one_arg(op);
-            break;
-        case PRINTN_S:
-            parse_one_arg(op);
-            break;
-        case DONE:
-            break;
-    }
+    parse_fn[op->opcode](op);
     if (!pe) return;
 
     memcpy(pe, op, sizeof(operation));
