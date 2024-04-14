@@ -55,6 +55,9 @@ void eval_op(operation *op) {
         case DIV:
             *(long *)op->a1 = *(long *)op->a2 / *(long *)op->a3;
             break;
+        case MOD:
+            *(long *)op->a1 = *(long *)op->a2 % *(long *)op->a3;
+            break;
         case INCR:
             (*(long *)op->a1)++;
             break;

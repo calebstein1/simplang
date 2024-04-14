@@ -17,6 +17,7 @@ X(ADD, "add", &parse_three_args)          \
 X(SUBTR, "subtr", &parse_three_args)      \
 X(MUL, "mul", &parse_three_args)          \
 X(DIV, "div", &parse_three_args)          \
+X(MOD, "mod", &parse_three_args)          \
 X(INCR, "incr", &parse_one_arg)           \
 X(DECR, "decr", &parse_one_arg)           \
 X(SWP, "swp", &parse_two_args)            \
