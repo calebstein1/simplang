@@ -26,13 +26,10 @@ asgn r3 r1
 
 ; Calculate the GCD using Euclid's algorithm
 beglp
-    iflt r0 r1
-        subtr r1 r1 r0
-    endif
-    iflt r1 r0
-        subtr r0 r0 r1
-    endif
-endlpeq r0 r1
+    asgn r4 r1
+    mod r1 r0 r1
+    asgn r0 r4
+endlpeq r1 0
 
 ; Form and print the final output
 printn_s s0
