@@ -5,6 +5,7 @@
 
 #include "defs.h"
 #include "parse.h"
+#include "heap.h"
 
 #define X(opcode, lit, parse_fn) lit,
 char *opcode_lit[] = {
@@ -38,8 +39,8 @@ void get_opcode(operation *op, char *tok) {
 
 void parse_arg(op_ptr_t *arg) {
     bool str_lit = false;
-    int i = 0, j;
-    char *tmp = strtok(NULL, " \t");
+    int i = 0;
+    char *tmp = strtok(NULL, " \t"), *str = NULL;
 
     if (*tmp == 'r' || *tmp == 's') {
         int target_reg = atoi(tmp + 1);
@@ -64,12 +65,6 @@ void parse_arg(op_ptr_t *arg) {
         if (*tmp == '"') {
             tmp++;
             str_lit = true;
-            while (g_heap[i]) {
-                i++;
-                if(!g_heap[i] && g_heap[i + 1]) i++;
-            }
-            if (i > 0) i++;
-            j = i;
             while (*tmp != '"') {
                 if (!*tmp) {
                     *tmp = ' ';
@@ -78,9 +73,11 @@ void parse_arg(op_ptr_t *arg) {
                     printf("String buffer overflow\n");
                     exit(-1);
                 }
-                g_heap[i++] = *tmp++;
+                s_buff[i++] = *tmp++;
             }
-            g_heap[i] = 0x0;
+            s_buff[i] = 0x0;
+            str = simp_alloc(i, STR);
+            strcpy(str, s_buff);
             strtok(tmp, " \t");
         } else {
             *e_sp = atoi(tmp);
@@ -93,7 +90,7 @@ void parse_arg(op_ptr_t *arg) {
 
     if (str_lit) {
         arg->type = CHAR;
-        arg->ptr.char_ptr = &(g_heap[j]);
+        arg->ptr.char_ptr = str;
     } else {
         arg->type = INT;
         arg->ptr.int_ptr = e_sp++;

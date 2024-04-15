@@ -4,10 +4,12 @@
 
 #include "defs.h"
 #include "eval.h"
+#include "heap.h"
 
 void eval_op(operation *op) {
     int i = 0;
     unsigned int nested_if = 0;
+    char *str = NULL;
 
     switch (op->opcode) {
         case ASGN:
@@ -17,6 +19,7 @@ void eval_op(operation *op) {
             *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
             break;
         case LDSTR:
+            if (*op->a1.ptr.str_ptr) simp_free(*op->a1.ptr.str_ptr);
             *op->a1.ptr.str_ptr = op->a2.ptr.char_ptr;
             break;
         case GETI:
@@ -31,17 +34,9 @@ void eval_op(operation *op) {
                     break;
                 }
             }
-            while (g_heap[i]) {
-                i++;
-                if(!g_heap[i] && g_heap[i + 1]) i++;
-            }
-            if (i > 0) i++;
-            if (strlen(s_buff) + 1 >= GLOBAL_HEAP_SIZE) {
-                printf("Heap overflow\n");
-                exit(-1);
-            }
-            strcpy(&g_heap[i], s_buff);
-            *op->a1.ptr.str_ptr = &g_heap[i];
+            str = simp_alloc(i, STR);
+            strcpy(str, s_buff);
+            *op->a1.ptr.str_ptr = str;
             break;
         case ADD:
             *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr + *op->a3.ptr.int_ptr;
@@ -186,6 +181,7 @@ void eval_op(operation *op) {
                     break;
                 case CHAR:
                     printf("%s\n", op->a1.ptr.char_ptr);
+                    simp_free(op->a1.ptr.char_ptr);
                     break;
                 default:
                     break;
@@ -200,8 +196,8 @@ void eval_op(operation *op) {
                     printf("%s", *op->a1.ptr.str_ptr);
                     break;
                 case CHAR:
-                    // TODO: free string after printing
                     printf("%s", op->a1.ptr.char_ptr);
+                    simp_free(op->a1.ptr.char_ptr);
                     break;
                 default:
                     break;
