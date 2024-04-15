@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "defs.h"
 #include "heap.h"
@@ -14,8 +15,14 @@ void init_heap() {
 
 void *simp_alloc(int size, ptr_type_e type) {
     int num_blocks = (size / sizeof(heap_hdr_t)) + 1;
-    if (heap_ptr.hdr_ptr->sig != HEADER_SIG) heap_ptr.str_ptr = g_heap;
+    int offset_blocks = 0;
+    heap_ptr.str_ptr = g_heap;
     while (heap_ptr.hdr_ptr->size < num_blocks || heap_ptr.hdr_ptr->type != NONE) {
+        if (offset_blocks + num_blocks >= max_heap_blocks) {
+            printf("Heap full\n");
+            exit(-1);
+        }
+        offset_blocks += heap_ptr.hdr_ptr->size;
         heap_ptr.hdr_ptr += (heap_ptr.hdr_ptr->size + 1);
     }
     heap_ptr.hdr_ptr->size = num_blocks;
