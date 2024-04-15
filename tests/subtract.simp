@@ -1,6 +1,0 @@
-#!/usr/bin/env simplang
-
-asgn r1 2
-subtr r0 9 r1
-print r0
-done

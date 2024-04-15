@@ -1,8 +1,0 @@
-#!/usr/bin/env simplang
-
-beglp
-    rand r0 100
-    print r0
-    incr r1
-endlpeq r1 10
-done

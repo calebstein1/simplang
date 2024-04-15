@@ -1,9 +1,0 @@
-#!/usr/bin/env simplang
-
-add r1 7 6
-subtr r2 20 r1
-mul r3 r1 r2
-subtr r1 r3 1
-div r0 r1 2
-print r0
-done
