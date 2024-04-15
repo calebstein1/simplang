@@ -1,15 +1,13 @@
 #!/usr/bin/env simplang
 
 ; Initialize our string literals
-print "Enter a number between 1 and 100 and I'll try to guess it!"
 ldstr s0 "Enter your number here: "
 ldstr s1 "Now I'm not cheating or anything, but I know that's out of range!"
 ldstr s2 "I'll guess "
 ldstr s3 ", and that's too low"
 ldstr s4 ", and that's too high"
-ldstr s5 ", and that's it!"
-ldstr s6 "It took me "
-ldstr s7 " guesses"
+
+print "Enter a number between 1 and 100 and I'll try to guess it!"
 
 beglp
     printn s0
@@ -59,9 +57,9 @@ beglp
 endlpeq r0 r1
 
 ; Prints the success message
-print s5
-printn s6
+print ", and that's it!"
+printn "It took me "
 printn r7
-print s7
+print " guesses"
 
 done

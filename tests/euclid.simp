@@ -1,21 +1,14 @@
 #!/usr/bin/env simplang
 
-; Initialize string literals
-ldstr s0 "The GCD of "
-ldstr s1 " and "
-ldstr s2 " is "
-ldstr s3 "Enter first number: "
-ldstr s4 "Enter second number: "
-
 ; Get the two numbers to operate on from the user
 ; They can be passed in as command line arguments,
 ; in which case we can skip prompting for the number
 ifeq r0 0
-    printn s3
+    printn "Enter first number: "
     geti r0
 endif
 ifeq r1 0
-    printn s4
+    printn "Enter second number: "
     geti r1
 endif
 
@@ -32,11 +25,11 @@ beglp
 endlpeq r1 0
 
 ; Form and print the final output
-printn s0
+printn "The GCD of "
 printn r2
-printn s1
+printn " and "
 printn r3
-printn s2
+printn " is "
 print r0
 
 done
