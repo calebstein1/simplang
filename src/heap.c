@@ -41,6 +41,8 @@ void *simp_alloc(int size, ptr_type_e type) {
 }
 
 void simp_free(char *ptr) {
+    if (pe) return;
+
     heap_ptr.str_ptr = ptr - sizeof(heap_hdr_t);
     if (heap_ptr.hdr_ptr->sig != HEADER_SIG) return;
 
