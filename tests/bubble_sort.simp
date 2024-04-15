@@ -3,6 +3,7 @@
 ; Initialize string literals
 ldstr s0 "Unsorted: "
 ldstr s1 "Sotrted: "
+ldstr s2 " "
 
 rand r0 1000
 rand r1 1000
@@ -13,12 +14,18 @@ rand r5 1000
 rand r6 1000
 
 print s0
-print r0
-print r1
-print r2
-print r3
-print r4
-print r5
+printn r0
+printn s2
+printn r1
+printn s2
+printn r2
+printn s2
+printn r3
+printn s2
+printn r4
+printn s2
+printn r5
+printn s2
 print r6
 
 asgn r7 7
@@ -63,12 +70,18 @@ beglp
 endlpeq r7 0
 
 print s1
-print r0
-print r1
-print r2
-print r3
-print r4
-print r5
+printn r0
+printn s2
+printn r1
+printn s2
+printn r2
+printn s2
+printn r3
+printn s2
+printn r4
+printn s2
+printn r5
+printn s2
 print r6
 
 done
