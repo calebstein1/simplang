@@ -4,13 +4,13 @@ ldstr s0 "It's under 10"
 ldstr s1 "It's 10 or more"
 ldstr s2 "Enter a number: "
 
-printn_s s2
+printn s2
 geti r0
 
 iflt r0 10
-    print_s s0
+    print s0
 endif
 ifle 10 r0
-    print_s s1
+    print s1
 endif
 done

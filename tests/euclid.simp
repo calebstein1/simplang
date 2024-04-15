@@ -11,11 +11,11 @@ ldstr s4 "Enter second number: "
 ; They can be passed in as command line arguments,
 ; in which case we can skip prompting for the number
 ifeq r0 0
-    printn_s s3
+    printn s3
     geti r0
 endif
 ifeq r1 0
-    printn_s s4
+    printn s4
     geti r1
 endif
 
@@ -32,11 +32,11 @@ beglp
 endlpeq r1 0
 
 ; Form and print the final output
-printn_s s0
+printn s0
 printn r2
-printn_s s1
+printn s1
 printn r3
-printn_s s2
+printn s2
 print r0
 
 done

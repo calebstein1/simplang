@@ -9,12 +9,12 @@ asgn r1 10
 
 beglp
     incr r2
-    printn_s s0
+    printn s0
     print r0
-    printn_s s1
+    printn s1
     print r1
     ifle r2 1
-        print_s s2
+        print s2
         swp r0 r1
     endif
 endlpeq r2 2

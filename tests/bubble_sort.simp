@@ -12,7 +12,7 @@ rand r4 1000
 rand r5 1000
 rand r6 1000
 
-print_s s0
+print s0
 print r0
 print r1
 print r2
@@ -62,7 +62,7 @@ beglp
     decr r7
 endlpeq r7 0
 
-print_s s1
+print s1
 print r0
 print r1
 print r2

@@ -5,13 +5,13 @@ ldstr s1 "Hello, "
 ldstr s2 "!"
 ldstr s3 "Enter a number: "
 ldstr s4 "You entered "
-printn_s s0
+printn s0
 gets s5
-printn_s s3
+printn s3
 geti r0
-printn_s s1
-printn_s s5
-print_s s2
-printn_s s4
+printn s1
+printn s5
+print s2
+printn s4
 print r0
 done

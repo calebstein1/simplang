@@ -16,30 +16,30 @@ ldstr s6 "Welcome to Guess the Number, see how many guesses it takes to guess a 
 rand r0 100
 incr r0
 
-print_s s6
+print s6
 beglp
-    printn_s s2
+    printn s2
     geti r1
 
     ; If the user guesses a number that's not between 1-100,
     ; print a message stating such and restart the loop without
     ; a guess penalty
     iflt 100 r1
-        print_s s5
+        print s5
         cont
     endif
     ifle r1 0
-        print_s s5
+        print s5
         cont
     endif
 
     ; Display the proper message depending on whether the user's
     ; guess was too low or too high
     iflt r1 r0
-        print_s s3
+        print s3
     endif
     iflt r0 r1
-        print_s s4
+        print s4
     endif
 
     ; Increment the guess counter
@@ -47,8 +47,8 @@ beglp
 endlpeq r0 r1
 
 ; Print the success message
-printn_s s0
+printn s0
 printn r2
-print_s s1
+print s1
 
 done
