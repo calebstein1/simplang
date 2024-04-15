@@ -5,7 +5,7 @@
 
 typedef struct {
     int sig;
-    size_t size;
+    int size;
     ptr_type_e type;
 } heap_hdr_t;
 
@@ -16,7 +16,7 @@ typedef union {
 } heap_ptr_u;
 
 void init_heap();
-void *simp_alloc(size_t size, ptr_type_e type);
+void *simp_alloc(int size, ptr_type_e type);
 void simp_free(char *ptr);
 
 #endif //SIMPLANG_HEAP_H

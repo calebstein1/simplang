@@ -27,6 +27,7 @@ void eval_op(operation *op) {
             *op->a1.ptr.int_ptr = atoi(s_buff);
             break;
         case GETS:
+            if (*op->a1.ptr.str_ptr) simp_free(*op->a1.ptr.str_ptr);
             fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
             for (; s_buff[i]; i++) {
                 if (s_buff[i] == '\n') {
