@@ -16,7 +16,7 @@ Here's an example Simplang script:
 #!/usr/bin/env simplang
 
 ldstr s0 "Welcome to Simplang!"
-print_s s0
+print s0
 asgn r1 6
 asgn r2 3
 add r0 r1 r2
@@ -75,9 +75,7 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 `endif` - signifies the end of an if block
 
-`(print, printn) <a1>` - prints the integer value stored in the register specified by a1, the n variant omits the trailing newline
-
-`(print_s, printn_s) <a1>` - prints the string value stored in the register specified by a1, print_s cannot print string literals directly, the n varirant omits the trailing newline
+`(print, printn) <a1>` - prints the integer value or string stored in the register specified by a1, or print a number or string literal passed directly as an argument, the n variant omits the trailing newline
 
 `done` - ends execution of the program
 

@@ -34,8 +34,6 @@ X(IFLE, "ifle", &parse_two_args)          \
 X(ENDIF, "endif", &parse_no_args)         \
 X(PRINT, "print", &parse_one_arg)         \
 X(PRINTN, "printn", &parse_one_arg)       \
-X(PRINT_S, "print_s", &parse_one_arg)     \
-X(PRINTN_S, "printn_s", &parse_one_arg)   \
 X(CMNT, ";", &parse_no_args)              \
 X(DONE, "done", &parse_no_args)
 
@@ -45,11 +43,30 @@ typedef enum {
     #undef X
 } instructions_e;
 
+typedef union {
+    char *char_ptr;
+    char **str_ptr;
+    long *int_ptr;
+    void *void_ptr;
+} op_ptr_u;
+
+typedef enum {
+    CHAR,
+    STR,
+    INT,
+    NONE
+} ptr_type_e;
+
+typedef struct {
+    op_ptr_u ptr;
+    ptr_type_e type;
+} op_ptr_t;
+
 typedef struct {
     instructions_e opcode;
-    void **a1;
-    void **a2;
-    void **a3;
+    op_ptr_t a1;
+    op_ptr_t a2;
+    op_ptr_t a3;
 } operation;
 
 extern long g_registers[MAX_REGISTERS];

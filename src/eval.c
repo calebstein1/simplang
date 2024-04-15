@@ -11,17 +11,17 @@ void eval_op(operation *op) {
 
     switch (op->opcode) {
         case ASGN:
-            *(long *)op->a1 = *(long *)op->a2;
+            *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
             break;
         case RAND:
-            *(long *)op->a1 = rand() % *(long *)op->a2;
+            *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
             break;
         case LDSTR:
-            *op->a1 = (char *)op->a2;
+            *op->a1.ptr.str_ptr = op->a2.ptr.char_ptr;
             break;
         case GETI:
             fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
-            *(long *)op->a1 = atoi(s_buff);
+            *op->a1.ptr.int_ptr = atoi(s_buff);
             break;
         case GETS:
             fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
@@ -41,33 +41,33 @@ void eval_op(operation *op) {
                 exit(-1);
             }
             strcpy(&g_heap[i], s_buff);
-            *op->a1 = &g_heap[i];
+            *op->a1.ptr.str_ptr = &g_heap[i];
             break;
         case ADD:
-            *(long *)op->a1 = *(long *)op->a2 + *(long *)op->a3;
+            *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr + *op->a3.ptr.int_ptr;
             break;
         case SUBTR:
-            *(long *)op->a1 = *(long *)op->a2 - *(long *)op->a3;
+            *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr - *op->a3.ptr.int_ptr;
             break;
         case MUL:
-            *(long *)op->a1 = *(long *)op->a2 * *(long *)op->a3;
+            *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr * *op->a3.ptr.int_ptr;
             break;
         case DIV:
-            *(long *)op->a1 = *(long *)op->a2 / *(long *)op->a3;
+            *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr / *op->a3.ptr.int_ptr;
             break;
         case MOD:
-            *(long *)op->a1 = *(long *)op->a2 % *(long *)op->a3;
+            *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr % *op->a3.ptr.int_ptr;
             break;
         case INCR:
-            (*(long *)op->a1)++;
+            (*op->a1.ptr.int_ptr)++;
             break;
         case DECR:
-            (*(long *)op->a1)--;
+            (*op->a1.ptr.int_ptr)--;
             break;
         case SWP:
-            (*(long *)op->a1) ^= (*(long *)op->a2);
-            (*(long *)op->a2) ^= (*(long *)op->a1);
-            (*(long *)op->a1) ^= (*(long *)op->a2);
+            (*op->a1.ptr.int_ptr) ^= (*op->a2.ptr.int_ptr);
+            (*op->a2.ptr.int_ptr) ^= (*op->a1.ptr.int_ptr);
+            (*op->a1.ptr.int_ptr) ^= (*op->a2.ptr.int_ptr);
             break;
         case BEGLP:
             *j_sp = pp;
@@ -86,7 +86,7 @@ void eval_op(operation *op) {
             if (j_sp == j_bp) {
                 break;
             }
-            if (*(long *)op->a1 != *(long *)op->a2) {
+            if (*op->a1.ptr.int_ptr != *op->a2.ptr.int_ptr) {
                 pp = *(j_sp - 1);
             } else {
                 j_sp--;
@@ -96,7 +96,7 @@ void eval_op(operation *op) {
             if (j_sp == j_bp) {
                 break;
             }
-            if (*(long *)op->a1 == *(long *)op->a2) {
+            if (*op->a1.ptr.int_ptr == *op->a2.ptr.int_ptr) {
                 pp = *(j_sp - 1);
             } else {
                 j_sp--;
@@ -106,7 +106,7 @@ void eval_op(operation *op) {
             if (j_sp == j_bp) {
                 break;
             }
-            if (*(long *)op->a1 >= *(long *)op->a2) {
+            if (*op->a1.ptr.int_ptr >= *op->a2.ptr.int_ptr) {
                 pp = *(j_sp - 1);
             } else {
                 j_sp--;
@@ -116,7 +116,7 @@ void eval_op(operation *op) {
             if (j_sp == j_bp) {
                 break;
             }
-            if (*(long *)op->a1 > *(long *)op->a2) {
+            if (*op->a1.ptr.int_ptr > *op->a2.ptr.int_ptr) {
                 pp = *(j_sp - 1);
             } else {
                 j_sp--;
@@ -124,7 +124,7 @@ void eval_op(operation *op) {
             break;
         case IFEQ:
             nested_if++;
-            if (*(long *)op->a1 != *(long *)op->a2) {
+            if (*op->a1.ptr.int_ptr != *op->a2.ptr.int_ptr) {
                 while (nested_if) {
                     op = ++pp;
                     if (IFEQ <= op->opcode && op->opcode <= IFLE) {
@@ -137,7 +137,7 @@ void eval_op(operation *op) {
             break;
         case IFNE:
             nested_if++;
-            if (*(long *)op->a1 == *(long *)op->a2) {
+            if (*op->a1.ptr.int_ptr == *op->a2.ptr.int_ptr) {
                 while (nested_if) {
                     op = ++pp;
                     if (IFEQ <= op->opcode && op->opcode <= IFLE) {
@@ -150,7 +150,7 @@ void eval_op(operation *op) {
             break;
         case IFLT:
             nested_if++;
-            if (*(long *)op->a1 >= *(long *)op->a2) {
+            if (*op->a1.ptr.int_ptr >= *op->a2.ptr.int_ptr) {
                 while (nested_if) {
                     op = ++pp;
                     if (IFEQ <= op->opcode && op->opcode <= IFLE) {
@@ -163,7 +163,7 @@ void eval_op(operation *op) {
             break;
         case IFLE:
             nested_if++;
-            if (*(long *)op->a1 > *(long *)op->a2) {
+            if (*op->a1.ptr.int_ptr > *op->a2.ptr.int_ptr) {
                 while (nested_if) {
                     op = ++pp;
                     if (IFEQ <= op->opcode && op->opcode <= IFLE) {
@@ -177,16 +177,35 @@ void eval_op(operation *op) {
         case ENDIF:
             break;
         case PRINT:
-            printf("%ld\n", *(long *)op->a1);
+            switch(op->a1.type) {
+                case INT:
+                    printf("%ld\n", *op->a1.ptr.int_ptr);
+                    break;
+                case STR:
+                    printf("%s\n", *op->a1.ptr.str_ptr);
+                    break;
+                case CHAR:
+                    printf("%s\n", op->a1.ptr.char_ptr);
+                    break;
+                default:
+                    break;
+            }
             break;
         case PRINTN:
-            printf("%ld", *(long *)op->a1);
-            break;
-        case PRINT_S:
-            printf("%s\n", *(char **)op->a1);
-            break;
-        case PRINTN_S:
-            printf("%s", *(char **)op->a1);
+            switch(op->a1.type) {
+                case INT:
+                    printf("%ld", *op->a1.ptr.int_ptr);
+                    break;
+                case STR:
+                    printf("%s", *op->a1.ptr.str_ptr);
+                    break;
+                case CHAR:
+                    // TODO: free string after printing
+                    printf("%s", op->a1.ptr.char_ptr);
+                    break;
+                default:
+                    break;
+            }
             break;
         case DONE:
             break;

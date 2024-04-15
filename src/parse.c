@@ -36,7 +36,7 @@ void get_opcode(operation *op, char *tok) {
     op->opcode = i;
 }
 
-void *parse_arg() {
+void parse_arg(op_ptr_t *arg) {
     bool str_lit = false;
     int i = 0, j;
     char *tmp = strtok(NULL, " \t");
@@ -48,7 +48,18 @@ void *parse_arg() {
             exit(-1);
         }
 
-        return *tmp == 'r' ? &(g_registers[target_reg]) : &(s_registers[target_reg]);
+        switch (*tmp) {
+            case 'r':
+                arg->type = INT;
+                arg->ptr.int_ptr = &(g_registers[target_reg]);
+                break;
+            case 's':
+                arg->type = STR;
+                arg->ptr.str_ptr = &(s_registers[target_reg]);
+                break;
+        }
+
+        return;
     } else {
         if (*tmp == '"') {
             tmp++;
@@ -80,24 +91,37 @@ void *parse_arg() {
         }
     }
 
-    return str_lit ? &(g_heap[j]) : e_sp++;
+    if (str_lit) {
+        arg->type = CHAR;
+        arg->ptr.char_ptr = &(g_heap[j]);
+    } else {
+        arg->type = INT;
+        arg->ptr.int_ptr = e_sp++;
+    }
 }
 
-void parse_no_args(operation *op) {}
+void parse_no_args(operation *op) {
+    op->a1.type = op->a2.type = op->a3.type = NONE;
+    op->a1.ptr.void_ptr = op->a2.ptr.void_ptr = op->a3.ptr.void_ptr = NULL;
+}
 
 void parse_one_arg(operation *op) {
-    op->a1 = parse_arg();
+    parse_arg(&op->a1);
+    op->a2.type = op->a3.type = NONE;
+    op->a2.ptr.void_ptr = op->a3.ptr.void_ptr = NULL;
 }
 
 void parse_two_args(operation *op) {
-    op->a1 = parse_arg();
-    op->a2 = parse_arg();
+    parse_arg(&op->a1);
+    parse_arg(&op->a2);
+    op->a3.type = NONE;
+    op->a3.ptr.void_ptr = NULL;
 }
 
 void parse_three_args(operation *op) {
-    op->a1 = parse_arg();
-    op->a2 = parse_arg();
-    op->a3 = parse_arg();
+    parse_arg(&op->a1);
+    parse_arg(&op->a2);
+    parse_arg(&op->a3);
 }
 
 #define X(opcode, lit, parse_fn) parse_fn,
