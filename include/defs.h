@@ -8,6 +8,7 @@
 #define GLOBAL_BUFF_SIZE 512
 
 #define OPCODE_TABLE                                 \
+X(INVLD, "", &parse_no_args, &&NOP)                    \
 X(ASGN, "asgn", &parse_two_args, &&ASGN)             \
 X(RAND, "rand", &parse_two_args, &&RAND)             \
 X(LDSTR, "ldstr", &parse_two_args, &&LDSTR)          \
@@ -35,8 +36,7 @@ X(ENDIF, "endif", &parse_no_args, &&NOP)             \
 X(PRINT, "print", &parse_one_arg, &&PRINT)           \
 X(PRINTN, "printn", &parse_one_arg, &&PRINTN)        \
 X(CMNT, ";", &parse_no_args, &&NOP)                  \
-X(DONE, "done", &parse_no_args, &&NOP)               \
-X(NOP, "", &parse_no_args, &&NOP)
+X(DONE, "done", &parse_no_args, &&NOP)
 
 #define PTR_TYPE_TABLE               \
 X(NONE, &&NOP, &&NOP)                \

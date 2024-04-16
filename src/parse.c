@@ -18,12 +18,12 @@ int greater_of(int a, int b) {
 }
 
 void get_opcode(operation *op, char *tok) {
-    int i = 0;
+    int i = 1;
     char *lit = strtok(tok, " \n");
     int lit_len = strlen(lit);
     for (; memcmp(opcode_lit[i], lit, greater_of(lit_len, strlen(opcode_lit[i]))) != 0; i++) {
-        if (i >= NOP) {
-            op->opcode = NOP;
+        if (i >= DONE) {
+            op->opcode = INVLD;
             char err_msg[lit_len + 24];
             sprintf(err_msg, "Invalid instruction: %s", lit);
             if (strlen(err_msg) > GLOBAL_BUFF_SIZE){
@@ -128,7 +128,7 @@ void (*parse_fn[])(operation *op) = {
 };
 
 void parse_op(operation *op) {
-    if (op->opcode == NOP) {
+    if (!op->opcode) {
         printf("%s\n", s_buff);
         if (pe) exit(-1);
 
