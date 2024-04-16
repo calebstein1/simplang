@@ -13,15 +13,11 @@ char *opcode_lit[] = {
     #undef X
 };
 
-int greater_of(int a, int b) {
-    return a > b ? a : b;
-}
-
 void get_opcode(operation *op, char *tok) {
-    int i = 1;
+    int i = 1, l = 0;
     char *lit = strtok(tok, " \n");
     int lit_len = strlen(lit);
-    for (; memcmp(opcode_lit[i], lit, greater_of(lit_len, strlen(opcode_lit[i]))) != 0; i++) {
+    for (; memcmp(opcode_lit[i], lit, (l = strlen(opcode_lit[i])) > lit_len ? l : lit_len) != 0; i++) {
         if (i >= DONE) {
             op->opcode = INVLD;
             char err_msg[lit_len + 24];
