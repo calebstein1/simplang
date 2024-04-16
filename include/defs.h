@@ -7,8 +7,8 @@
 #define GLOBAL_HEAP_SIZE 4096
 #define GLOBAL_BUFF_SIZE 512
 
-#define OPCODE_TABLE                                 \
-X(INVLD, "", &&parse_no_args, &&NOP)                    \
+#define OPCODE_TABLE                                  \
+X(INVLD, "", &&parse_no_args, &&NOP)                  \
 X(ASGN, "asgn", &&parse_two_args, &&ASGN)             \
 X(RAND, "rand", &&parse_two_args, &&RAND)             \
 X(LDSTR, "ldstr", &&parse_two_args, &&LDSTR)          \
