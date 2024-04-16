@@ -36,7 +36,6 @@ void eval_op(operation *op) {
         *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
         goto END;
     LDSTR:
-        printf("%p\n", op->a2.ptr.char_ptr);
         if (*op->a1.ptr.str_ptr) simp_free(*op->a1.ptr.str_ptr);
         *op->a1.ptr.str_ptr = op->a2.ptr.char_ptr;
         goto END;
@@ -171,7 +170,6 @@ void eval_op(operation *op) {
         }
         goto END;
     PRINT:
-        printf("%p\n", op->a1.ptr.char_ptr);
         goto *print_jmp_tbl[op->a1.type];
         PRINT_INT:
             printf("%ld\n", *op->a1.ptr.int_ptr);
@@ -184,7 +182,6 @@ void eval_op(operation *op) {
             simp_free(op->a1.ptr.char_ptr);
             goto END;
     PRINTN:
-        printf("%p\n", *op->a1.ptr.str_ptr);
         goto *printn_jmp_tbl[op->a1.type];
         PRINTN_INT:
             printf("%ld", *op->a1.ptr.int_ptr);

@@ -17,7 +17,7 @@ void *simp_alloc(int size, ptr_type_e type) {
     int num_blocks = (size / sizeof(heap_hdr_t)) + 1;
     int offset_blocks = 0;
     heap_ptr.str_ptr = g_heap;
-    while (heap_ptr.hdr_ptr->size < num_blocks || heap_ptr.hdr_ptr->type != NONE) {
+    while (heap_ptr.hdr_ptr->size < num_blocks || heap_ptr.hdr_ptr->type) {
         if (offset_blocks + num_blocks >= max_heap_blocks) {
             printf("Heap full\n");
             exit(-1);
@@ -51,11 +51,10 @@ void simp_free(char *ptr) {
     heap_hdr_t *lookahead = heap_ptr.hdr_ptr;
     do {
         lookahead += (heap_ptr.hdr_ptr->size + 1);
-        if (lookahead->type == NONE) {
-            lookahead->sig = 0x0;
+        if (!lookahead->type) {
             extra_blocks += (lookahead->size + 1);
         }
-    } while (lookahead->type == NONE);
+    } while (!lookahead->type);
 
     heap_ptr.hdr_ptr->size += extra_blocks;
 }
