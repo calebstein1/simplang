@@ -7,11 +7,11 @@
 #include "parse.h"
 #include "heap.h"
 
-#define X(opcode, lit, parse_fn) lit,
 char *opcode_lit[] = {
-        OPCODE_TABLE
+    #define X(opcode, lit, parse_fn, eval_lbl) lit,
+    OPCODE_TABLE
+    #undef X
 };
-#undef X
 
 int greater_of(int a, int b) {
     return a > b ? a : b;
@@ -22,8 +22,8 @@ void get_opcode(operation *op, char *tok) {
     char *lit = strtok(tok, " \n");
     int lit_len = strlen(lit);
     for (; memcmp(opcode_lit[i], lit, greater_of(lit_len, strlen(opcode_lit[i]))) != 0; i++) {
-        if (i >= DONE) {
-            op->opcode = -1;
+        if (i >= NOP) {
+            op->opcode = NOP;
             char err_msg[lit_len + 24];
             sprintf(err_msg, "Invalid instruction: %s", lit);
             if (strlen(err_msg) > GLOBAL_BUFF_SIZE){
@@ -121,14 +121,14 @@ void parse_three_args(operation *op) {
     parse_arg(&op->a3);
 }
 
-#define X(opcode, lit, parse_fn) parse_fn,
 void (*parse_fn[])(operation *op) = {
-        OPCODE_TABLE
+    #define X(opcode, lit, parse_fn, eval_lbl) parse_fn,
+    OPCODE_TABLE
+    #undef X
 };
-#undef X
 
 void parse_op(operation *op) {
-    if (op->opcode == -1) {
+    if (op->opcode == NOP) {
         printf("%s\n", s_buff);
         if (pe) exit(-1);
 
