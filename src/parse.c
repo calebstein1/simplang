@@ -37,104 +37,102 @@ void get_opcode(operation *op, char *tok) {
     op->opcode = i;
 }
 
-void parse_arg(op_ptr_t *arg) {
-    bool str_lit = false;
-    int i = 0;
-    char *tmp = strtok(NULL, " \t"), *str = NULL;
-
-    if (*tmp == 'r' || *tmp == 's') {
-        int target_reg = atoi(tmp + 1);
-        if (target_reg >= MAX_REGISTERS) {
-            printf("Invalid register number\n");
-            exit(-1);
-        }
-
-        switch (*tmp) {
-            case 'r':
-                arg->type = INT;
-                arg->ptr.int_ptr = &(g_registers[target_reg]);
-                break;
-            case 's':
-                arg->type = STR;
-                arg->ptr.str_ptr = &(s_registers[target_reg]);
-                break;
-        }
-
-        return;
-    } else {
-        if (*tmp == '"') {
-            tmp++;
-            str_lit = true;
-            while (*tmp != '"') {
-                if (!*tmp) {
-                    *tmp = ' ';
-                }
-                if (i >= GLOBAL_BUFF_SIZE - 1) {
-                    printf("String buffer overflow\n");
-                    exit(-1);
-                }
-                s_buff[i++] = *tmp++;
-            }
-            s_buff[i] = 0x0;
-            str = simp_alloc(i, STR);
-            strcpy(str, s_buff);
-            strtok(tmp, " \t");
-        } else {
-            *e_sp = atoi(tmp);
-            if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
-                printf("Eval stack overflow\n");
-                exit(-1);
-            }
-        }
-    }
-
-    if (str_lit) {
-        arg->type = CHAR;
-        arg->ptr.char_ptr = str;
-    } else {
-        arg->type = INT;
-        arg->ptr.int_ptr = e_sp++;
-    }
-}
-
-void parse_no_args(operation *op) {
-    op->a1.type = op->a2.type = op->a3.type = NONE;
-    op->a1.ptr.void_ptr = op->a2.ptr.void_ptr = op->a3.ptr.void_ptr = NULL;
-}
-
-void parse_one_arg(operation *op) {
-    parse_arg(&op->a1);
-    op->a2.type = op->a3.type = NONE;
-    op->a2.ptr.void_ptr = op->a3.ptr.void_ptr = NULL;
-}
-
-void parse_two_args(operation *op) {
-    parse_arg(&op->a1);
-    parse_arg(&op->a2);
-    op->a3.type = NONE;
-    op->a3.ptr.void_ptr = NULL;
-}
-
-void parse_three_args(operation *op) {
-    parse_arg(&op->a1);
-    parse_arg(&op->a2);
-    parse_arg(&op->a3);
-}
-
-void (*parse_fn[])(operation *op) = {
-    #define X(opcode, lit, parse_fn, eval_lbl) parse_fn,
-    OPCODE_TABLE
-    #undef X
-};
-
 void parse_op(operation *op) {
+    bool str_lit = false;
+    char *tmp, *str;
+    tmp = str = NULL;
+    int i, j, num_args;
+    i = j = num_args = 0;
+    op_ptr_t *args[] = {
+            &op->a1,
+            &op->a2,
+            &op->a3,
+    };
+
+    static void *parse_fn_tbl[] = {
+    #define X(opcode, lit, parse_fn, eval_lbl) parse_fn,
+        OPCODE_TABLE
+    #undef X
+    };
+
     if (!op->opcode) {
         printf("%s\n", s_buff);
         if (pe) exit(-1);
 
         return;
     }
-    parse_fn[op->opcode](op);
+
+    goto *parse_fn_tbl[op->opcode];
+
+    parse_three_args:
+        ++num_args;
+    parse_two_args:
+        ++num_args;
+    parse_one_arg:
+        ++num_args;
+
+    while (num_args-- > 0) {
+        tmp = strtok(NULL, " \t");
+        if (*tmp == 'r' || *tmp == 's') {
+            int target_reg = atoi(tmp + 1);
+            if (target_reg >= MAX_REGISTERS) {
+                printf("Invalid register number\n");
+                exit(-1);
+            }
+
+            switch (*tmp) {
+                case 'r':
+                    args[j]->type = INT;
+                    args[j]->ptr.int_ptr = &(g_registers[target_reg]);
+                    break;
+                case 's':
+                    args[j]->type = STR;
+                    args[j]->ptr.str_ptr = &(s_registers[target_reg]);
+                    break;
+            }
+
+            j++;
+            continue;
+        } else {
+            if (*tmp == '"') {
+                tmp++;
+                str_lit = true;
+                while (*tmp != '"') {
+                    if (!*tmp) {
+                        *tmp = ' ';
+                    }
+                    if (i >= GLOBAL_BUFF_SIZE - 1) {
+                        printf("String buffer overflow\n");
+                        exit(-1);
+                    }
+                    s_buff[i++] = *tmp++;
+                }
+                s_buff[i] = 0x0;
+                str = simp_alloc(i, STR);
+                strcpy(str, s_buff);
+                strtok(tmp, " \t");
+            } else {
+                *e_sp = atoi(tmp);
+                if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
+                    printf("Eval stack overflow\n");
+                    exit(-1);
+                }
+            }
+        }
+
+        if (str_lit) {
+            args[j]->type = CHAR;
+            args[j]->ptr.char_ptr = str;
+        } else {
+            args[j]->type = INT;
+            args[j]->ptr.int_ptr = e_sp++;
+        }
+
+        j++;
+    }
+
+    parse_no_args:
+
     if (!pe) return;
 
     memcpy(pe, op, sizeof(operation));

@@ -8,35 +8,35 @@
 #define GLOBAL_BUFF_SIZE 512
 
 #define OPCODE_TABLE                                 \
-X(INVLD, "", &parse_no_args, &&NOP)                    \
-X(ASGN, "asgn", &parse_two_args, &&ASGN)             \
-X(RAND, "rand", &parse_two_args, &&RAND)             \
-X(LDSTR, "ldstr", &parse_two_args, &&LDSTR)          \
-X(GETI, "geti", &parse_one_arg, &&GETI)              \
-X(GETS, "gets", &parse_one_arg, &&GETS)              \
-X(ADD, "add", &parse_three_args, &&ADD)              \
-X(SUBTR, "subtr", &parse_three_args, &&SUBTR)        \
-X(MUL, "mul", &parse_three_args, &&MUL)              \
-X(DIV, "div", &parse_three_args, &&DIV)              \
-X(MOD, "mod", &parse_three_args, &&MOD)              \
-X(INCR, "incr", &parse_one_arg, &&INCR)              \
-X(DECR, "decr", &parse_one_arg, &&DECR)              \
-X(SWP, "swp", &parse_two_args, &&SWP)                \
-X(BEGLP, "beglp", &parse_no_args, &&BEGLP)           \
-X(CONT, "cont", &parse_no_args, &&CONT)              \
-X(ENDLPEQ, "endlpeq", &parse_two_args, &&ENDLPEQ)    \
-X(ENDLPNE, "endlpne", &parse_two_args, &&ENDLPNE)    \
-X(ENDLPLT, "endlplt", &parse_two_args, &&ENDLPLT)    \
-X(ENDLPLE, "endlple", &parse_two_args, &&ENDLPLE)    \
-X(IFEQ, "ifeq", &parse_two_args, &&IFEQ)             \
-X(IFNE, "ifne", &parse_two_args, &&IFNE)             \
-X(IFLT, "iflt", &parse_two_args, &&IFLT)             \
-X(IFLE, "ifle", &parse_two_args, &&IFLE)             \
-X(ENDIF, "endif", &parse_no_args, &&NOP)             \
-X(PRINT, "print", &parse_one_arg, &&PRINT)           \
-X(PRINTN, "printn", &parse_one_arg, &&PRINTN)        \
-X(CMNT, ";", &parse_no_args, &&NOP)                  \
-X(DONE, "done", &parse_no_args, &&NOP)
+X(INVLD, "", &&parse_no_args, &&NOP)                    \
+X(ASGN, "asgn", &&parse_two_args, &&ASGN)             \
+X(RAND, "rand", &&parse_two_args, &&RAND)             \
+X(LDSTR, "ldstr", &&parse_two_args, &&LDSTR)          \
+X(GETI, "geti", &&parse_one_arg, &&GETI)              \
+X(GETS, "gets", &&parse_one_arg, &&GETS)              \
+X(ADD, "add", &&parse_three_args, &&ADD)              \
+X(SUBTR, "subtr", &&parse_three_args, &&SUBTR)        \
+X(MUL, "mul", &&parse_three_args, &&MUL)              \
+X(DIV, "div", &&parse_three_args, &&DIV)              \
+X(MOD, "mod", &&parse_three_args, &&MOD)              \
+X(INCR, "incr", &&parse_one_arg, &&INCR)              \
+X(DECR, "decr", &&parse_one_arg, &&DECR)              \
+X(SWP, "swp", &&parse_two_args, &&SWP)                \
+X(BEGLP, "beglp", &&parse_no_args, &&BEGLP)           \
+X(CONT, "cont", &&parse_no_args, &&CONT)              \
+X(ENDLPEQ, "endlpeq", &&parse_two_args, &&ENDLPEQ)    \
+X(ENDLPNE, "endlpne", &&parse_two_args, &&ENDLPNE)    \
+X(ENDLPLT, "endlplt", &&parse_two_args, &&ENDLPLT)    \
+X(ENDLPLE, "endlple", &&parse_two_args, &&ENDLPLE)    \
+X(IFEQ, "ifeq", &&parse_two_args, &&IFEQ)             \
+X(IFNE, "ifne", &&parse_two_args, &&IFNE)             \
+X(IFLT, "iflt", &&parse_two_args, &&IFLT)             \
+X(IFLE, "ifle", &&parse_two_args, &&IFLE)             \
+X(ENDIF, "endif", &&parse_no_args, &&NOP)             \
+X(PRINT, "print", &&parse_one_arg, &&PRINT)           \
+X(PRINTN, "printn", &&parse_one_arg, &&PRINTN)        \
+X(CMNT, ";", &&parse_no_args, &&NOP)                  \
+X(DONE, "done", &&parse_no_args, &&NOP)
 
 #define PTR_TYPE_TABLE               \
 X(NONE, &&NOP, &&NOP)                \
