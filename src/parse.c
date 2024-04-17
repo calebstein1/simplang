@@ -46,9 +46,9 @@ void parse_op(operation *op) {
     };
 
     static void *parse_fn_tbl[] = {
-    #define X(opcode, lit, parse_fn, eval_lbl) parse_fn,
+        #define X(opcode, lit, parse_fn, eval_lbl) parse_fn,
         OPCODE_TABLE
-    #undef X
+        #undef X
     };
 
     if (!op->opcode) {
@@ -67,7 +67,7 @@ void parse_op(operation *op) {
     parse_one_arg:
         ++num_args;
 
-    while (num_args-- > 0) {
+    do {
         tmp = strtok(NULL, " \t");
         if (*tmp == 'r' || *tmp == 's') {
             int target_reg = atoi(tmp + 1);
@@ -86,9 +86,6 @@ void parse_op(operation *op) {
                     args[j]->ptr.str_ptr = &(s_registers[target_reg]);
                     break;
             }
-
-            j++;
-            continue;
         } else {
             if (*tmp == '"') {
                 i = 0;
@@ -115,18 +112,16 @@ void parse_op(operation *op) {
                     exit(-1);
                 }
             }
-        }
 
-        if (str_lit) {
-            args[j]->type = CHAR;
-            args[j]->ptr.char_ptr = str;
-        } else {
-            args[j]->type = INT;
-            args[j]->ptr.int_ptr = e_sp++;
+            if (str_lit) {
+                args[j]->type = CHAR;
+                args[j]->ptr.char_ptr = str;
+            } else {
+                args[j]->type = INT;
+                args[j]->ptr.int_ptr = e_sp++;
+            }
         }
-
-        j++;
-    }
+    } while (++j < num_args);
 
     parse_no_args:
 
