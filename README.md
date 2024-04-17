@@ -55,6 +55,8 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 `ldstr <a1> <a2>` - stores the string literal specified by a2 in the register specified by a1
 
+`getopt <a1> <a2>` - prints a string literal prompt specified by a2 and gets and integer from the user to store in the regester specified by a1 if that register hasn't already been filled
+
 `geti <a1>` - gets an integer from the user and stores it in the register specified by a1
 
 `gets <a1>` - gets a string from the user and stoes it in the register specified by a1

@@ -39,6 +39,13 @@ void eval_op(operation *op) {
         if (*op->a1.ptr.str_ptr) simp_free(*op->a1.ptr.str_ptr);
         *op->a1.ptr.str_ptr = op->a2.ptr.char_ptr;
         goto END;
+    GETOPT:
+        if (*op->a1.ptr.int_ptr) {
+            simp_free(op->a2.ptr.char_ptr);
+            goto END;
+        }
+        printf("%s", op->a2.ptr.char_ptr);
+        simp_free(op->a2.ptr.char_ptr);
     GETI:
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
         *op->a1.ptr.int_ptr = atoi(s_buff);

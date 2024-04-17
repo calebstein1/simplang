@@ -12,6 +12,7 @@ X(INVLD, "", &&parse_no_args, &&NOP)                  \
 X(ASGN, "asgn", &&parse_two_args, &&ASGN)             \
 X(RAND, "rand", &&parse_two_args, &&RAND)             \
 X(LDSTR, "ldstr", &&parse_two_args, &&LDSTR)          \
+X(GETOPT, "getopt", &&parse_two_args, &&GETOPT)       \
 X(GETI, "geti", &&parse_one_arg, &&GETI)              \
 X(GETS, "gets", &&parse_one_arg, &&GETS)              \
 X(ADD, "add", &&parse_three_args, &&ADD)              \

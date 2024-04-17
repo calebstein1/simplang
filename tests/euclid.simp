@@ -3,14 +3,8 @@
 ; Get the two numbers to operate on from the user
 ; They can be passed in as command line arguments,
 ; in which case we can skip prompting for the number
-ifeq r0 0
-    printn "Enter first number: "
-    geti r0
-endif
-ifeq r1 0
-    printn "Enter second number: "
-    geti r1
-endif
+getopt r0 "Enter first number: "
+getopt r1 "Enter second number: "
 
 ; Store the initial values in r2 and r3 so that we
 ; can print them at the end
