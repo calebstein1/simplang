@@ -38,7 +38,7 @@ void parse_op(operation *op) {
     char *tmp, *str;
     tmp = str = NULL;
     int i, j, num_args;
-    i = j = num_args = 0;
+    j = num_args = 0;
     op_ptr_t *args[] = {
             &op->a1,
             &op->a2,
@@ -91,6 +91,7 @@ void parse_op(operation *op) {
             continue;
         } else {
             if (*tmp == '"') {
+                i = 0;
                 tmp++;
                 str_lit = true;
                 while (*tmp != '"') {
