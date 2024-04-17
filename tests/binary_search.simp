@@ -15,7 +15,7 @@ beglp
 
     ; If the user enters a number outside the acceptable range,
     ; display a message stating so and request a new number
-    iflt 100 r0
+    ifgt r0 100
         print s1
         cont
     endif
@@ -47,7 +47,7 @@ beglp
         print s3
         asgn r2 r1
     endif
-    iflt r0 r1
+    ifgt r1 r0
         print s4
         asgn r3 r1
     endif

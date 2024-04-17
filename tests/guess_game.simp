@@ -21,7 +21,7 @@ beglp
     ; If the user guesses a number that's not between 1-100,
     ; print a message stating such and restart the loop without
     ; a guess penalty
-    iflt 100 r1
+    ifgt r1 100
         print s3
         cont
     endif
@@ -35,7 +35,7 @@ beglp
     iflt r1 r0
         print s1
     endif
-    iflt r0 r1
+    ifgt r1 r0
         print s2
     endif
 

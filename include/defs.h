@@ -28,10 +28,14 @@ X(ENDLPEQ, "endlpeq", &&parse_two_args, &&ENDLPEQ)    \
 X(ENDLPNE, "endlpne", &&parse_two_args, &&ENDLPNE)    \
 X(ENDLPLT, "endlplt", &&parse_two_args, &&ENDLPLT)    \
 X(ENDLPLE, "endlple", &&parse_two_args, &&ENDLPLE)    \
+X(ENDLPGT, "endlpgt", &&parse_two_args, &&ENDLPGT)    \
+X(ENDLPGE, "endlpge", &&parse_two_args, &&ENDLPGE)    \
 X(IFEQ, "ifeq", &&parse_two_args, &&IFEQ)             \
 X(IFNE, "ifne", &&parse_two_args, &&IFNE)             \
 X(IFLT, "iflt", &&parse_two_args, &&IFLT)             \
 X(IFLE, "ifle", &&parse_two_args, &&IFLE)             \
+X(IFGT, "ifgt", &&parse_two_args, &&IFGT)             \
+X(IFGE, "ifge", &&parse_two_args, &&IFGE)             \
 X(ENDIF, "endif", &&parse_no_args, &&NOP)             \
 X(PRINT, "print", &&parse_one_arg, &&PRINT)           \
 X(PRINTN, "printn", &&parse_one_arg, &&PRINTN)        \

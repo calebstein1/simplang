@@ -69,9 +69,9 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 `cont` - jump back to the beginning of the current loop
 
-`(endlpeq, endlpne, endlplt, endlple) <a1> <a2>` - ends execution of a loop based on the condition comparing a1 and a2, otherwise jump back to `beglp`
+`(endlpeq, endlpne, endlplt, endlple, endlpgt, endlpge) <a1> <a2>` - ends execution of a loop based on the condition comparing a1 and a2, otherwise jump back to `beglp`
 
-`(ifeq, ifne, iflt, ifle) <a1> <a2>` - executes the following code block based on the condition comparing a1 and a2, otherwise jump ahead to the next `endif`
+`(ifeq, ifne, iflt, ifle, ifgt, ifge) <a1> <a2>` - executes the following code block based on the condition comparing a1 and a2, otherwise jump ahead to the next `endif`
 
 `endif` - signifies the end of an if block
 

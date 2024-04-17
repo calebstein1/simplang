@@ -135,6 +135,26 @@ void eval_op(operation *op) {
             j_sp--;
         }
         goto END;
+    ENDLPGT:
+        if (j_sp == j_bp) {
+            goto END;
+        }
+        if (*op->a1.ptr.int_ptr <= *op->a2.ptr.int_ptr) {
+            pp = *(j_sp - 1);
+        } else {
+            j_sp--;
+        }
+        goto END;
+    ENDLPGE:
+        if (j_sp == j_bp) {
+            goto END;
+        }
+        if (*op->a1.ptr.int_ptr < *op->a2.ptr.int_ptr) {
+            pp = *(j_sp - 1);
+        } else {
+            j_sp--;
+        }
+        goto END;
     IFEQ:
         nested_if++;
         if (*op->a1.ptr.int_ptr != *op->a2.ptr.int_ptr) {
@@ -156,6 +176,18 @@ void eval_op(operation *op) {
     IFLE:
         nested_if++;
         if (*op->a1.ptr.int_ptr > *op->a2.ptr.int_ptr) {
+            goto SKIP_IF;
+        }
+        goto END;
+    IFGT:
+        nested_if++;
+        if (*op->a1.ptr.int_ptr <= *op->a2.ptr.int_ptr) {
+            goto SKIP_IF;
+        }
+        goto END;
+    IFGE:
+        nested_if++;
+        if (*op->a1.ptr.int_ptr < *op->a2.ptr.int_ptr) {
             goto SKIP_IF;
         }
         goto END;
