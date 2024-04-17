@@ -49,7 +49,7 @@ void eval_op(operation *op) {
         for (; s_buff[i]; i++) {
             if (s_buff[i] == '\n') {
                 s_buff[i] = 0x0;
-                goto END;
+                break;
             }
         }
         str = simp_alloc(i, STR);
