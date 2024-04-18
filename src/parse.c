@@ -8,7 +8,7 @@
 #include "heap.h"
 
 char *opcode_lit[] = {
-    #define X(opcode, lit, parse_fn, eval_lbl) lit,
+    #define X(opcode, lit, ...) lit,
     OPCODE_TABLE
     #undef X
 };
@@ -46,7 +46,7 @@ void parse_op(operation *op) {
     };
 
     static void *parse_fn_tbl[] = {
-        #define X(opcode, lit, parse_fn, eval_lbl) parse_fn,
+        #define X(opcode, lit, parse_fn) parse_fn,
         OPCODE_TABLE
         #undef X
     };

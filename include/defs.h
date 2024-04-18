@@ -7,50 +7,50 @@
 #define GLOBAL_HEAP_SIZE 4096
 #define GLOBAL_BUFF_SIZE 512
 
-#define OPCODE_TABLE                                  \
-X(INVLD, "", &&parse_no_args, &&NOP)                  \
-X(ASGN, "asgn", &&parse_two_args, &&ASGN)             \
-X(RAND, "rand", &&parse_two_args, &&RAND)             \
-X(LDSTR, "ldstr", &&parse_two_args, &&LDSTR)          \
-X(GETOPT, "getopt", &&parse_two_args, &&GETOPT)       \
-X(GETI, "geti", &&parse_one_arg, &&GETI)              \
-X(GETS, "gets", &&parse_one_arg, &&GETS)              \
-X(ADD, "add", &&parse_two_args, &&ADD)              \
-X(SUBTR, "subtr", &&parse_two_args, &&SUBTR)        \
-X(MUL, "mul", &&parse_two_args, &&MUL)              \
-X(DIV, "div", &&parse_two_args, &&DIV)              \
-X(MOD, "mod", &&parse_two_args, &&MOD)              \
-X(INCR, "incr", &&parse_one_arg, &&INCR)              \
-X(DECR, "decr", &&parse_one_arg, &&DECR)              \
-X(SWP, "swp", &&parse_two_args, &&SWP)                \
-X(BEGLP, "beglp", &&parse_no_args, &&BEGLP)           \
-X(CONT, "cont", &&parse_no_args, &&CONT)              \
-X(ENDLPEQ, "endlpeq", &&parse_two_args, &&ENDLPEQ)    \
-X(ENDLPNE, "endlpne", &&parse_two_args, &&ENDLPNE)    \
-X(ENDLPLT, "endlplt", &&parse_two_args, &&ENDLPLT)    \
-X(ENDLPLE, "endlple", &&parse_two_args, &&ENDLPLE)    \
-X(ENDLPGT, "endlpgt", &&parse_two_args, &&ENDLPGT)    \
-X(ENDLPGE, "endlpge", &&parse_two_args, &&ENDLPGE)    \
-X(IFEQ, "ifeq", &&parse_two_args, &&IFEQ)             \
-X(IFNE, "ifne", &&parse_two_args, &&IFNE)             \
-X(IFLT, "iflt", &&parse_two_args, &&IFLT)             \
-X(IFLE, "ifle", &&parse_two_args, &&IFLE)             \
-X(IFGT, "ifgt", &&parse_two_args, &&IFGT)             \
-X(IFGE, "ifge", &&parse_two_args, &&IFGE)             \
-X(ENDIF, "endif", &&parse_no_args, &&NOP)             \
-X(PRINT, "print", &&parse_one_arg, &&PRINT)           \
-X(PRINTN, "printn", &&parse_one_arg, &&PRINTN)        \
-X(CMNT, ";", &&parse_no_args, &&NOP)                  \
-X(DONE, "done", &&parse_no_args, &&NOP)
+#define OPCODE_TABLE                       \
+X(INVLD, "", &&parse_no_args)              \
+X(ASGN, "asgn", &&parse_two_args)          \
+X(RAND, "rand", &&parse_two_args)          \
+X(LDSTR, "ldstr", &&parse_two_args)        \
+X(GETOPT, "getopt", &&parse_two_args)      \
+X(GETI, "geti", &&parse_one_arg)           \
+X(GETS, "gets", &&parse_one_arg)           \
+X(ADD, "add", &&parse_two_args)            \
+X(SUBTR, "subtr", &&parse_two_args)        \
+X(MUL, "mul", &&parse_two_args)            \
+X(DIV, "div", &&parse_two_args)            \
+X(MOD, "mod", &&parse_two_args)            \
+X(INCR, "incr", &&parse_one_arg)           \
+X(DECR, "decr", &&parse_one_arg)           \
+X(SWP, "swp", &&parse_two_args)            \
+X(BEGLP, "beglp", &&parse_no_args)         \
+X(CONT, "cont", &&parse_no_args)           \
+X(ENDLPEQ, "endlpeq", &&parse_two_args)    \
+X(ENDLPNE, "endlpne", &&parse_two_args)    \
+X(ENDLPLT, "endlplt", &&parse_two_args)    \
+X(ENDLPLE, "endlple", &&parse_two_args)    \
+X(ENDLPGT, "endlpgt", &&parse_two_args)    \
+X(ENDLPGE, "endlpge", &&parse_two_args)    \
+X(IFEQ, "ifeq", &&parse_two_args)          \
+X(IFNE, "ifne", &&parse_two_args)          \
+X(IFLT, "iflt", &&parse_two_args)          \
+X(IFLE, "ifle", &&parse_two_args)          \
+X(IFGT, "ifgt", &&parse_two_args)          \
+X(IFGE, "ifge", &&parse_two_args)          \
+X(ENDIF, "endif", &&parse_no_args)         \
+X(PRINT, "print", &&parse_one_arg)         \
+X(PRINTN, "printn", &&parse_one_arg)       \
+X(CMNT, ";", &&parse_no_args)              \
+X(DONE, "done", &&parse_no_args)
 
-#define PTR_TYPE_TABLE               \
-X(NONE, &&NOP, &&NOP)                \
-X(CHAR, &&PRINT_CHAR, &&PRINTN_CHAR) \
-X(STR, &&PRINT_STR, &&PRINTN_STR)    \
-X(INT, &&PRINT_INT, &&PRINTN_INT)
+#define PTR_TYPE_TABLE \
+X(NONE)                \
+X(CHAR)                \
+X(STR)                 \
+X(INT)
 
 typedef enum {
-    #define X(opcode, lit, parse_fn, eval_lbl) opcode,
+    #define X(opcode, ...) opcode,
     OPCODE_TABLE
     #undef X
 } instructions_e;
@@ -63,7 +63,7 @@ typedef union {
 } op_ptr_u;
 
 typedef enum {
-    #define X(type, print_lbl, printn_lbl) type,
+    #define X(type, ...) type,
     PTR_TYPE_TABLE
     #undef X
 } ptr_type_e;

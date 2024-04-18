@@ -9,17 +9,17 @@
 
 void eval_op(operation *op) {
     static void *eval_jmp_tbl[] = {
-        #define X(opcode, lit, parse_fn, eval_lbl) eval_lbl,
+        #define X(opcode, ...) &&opcode,
         OPCODE_TABLE
         #undef X
     };
     static void *print_jmp_tbl[] = {
-        #define X(type, print_lbl, printn_lbl) print_lbl,
+        #define X(type) &&PRINT_##type,
         PTR_TYPE_TABLE
         #undef X
     };
     static void *printn_jmp_tbl[] = {
-        #define X(type, print_lbl, printn_lbl) printn_lbl,
+        #define X(type) &&PRINTN_##type,
         PTR_TYPE_TABLE
         #undef X
     };
@@ -232,8 +232,6 @@ void eval_op(operation *op) {
             printf("%s", op->a1.ptr.char_ptr);
             simp_free(op->a1.ptr.char_ptr);
             goto END;
-    NOP:
-        goto END;
-    END:
+    END: CMNT: DONE: ENDIF: PRINT_NONE: PRINTN_NONE: INVLD: NOP:
         e_sp = e_bp;
 }
