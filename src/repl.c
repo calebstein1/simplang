@@ -8,14 +8,13 @@
 #include "repl.h"
 
 void launch_repl(operation *op) {
-    char *cmd = NULL;
-    size_t len = 0;
     printf("Welcome to Simplang! Enter your commands at the prompt (done to exit):\n");
 
     while(op->opcode != DONE) {
         printf(">> ");
-        if (getline(&cmd, &len, stdin) < 2) continue;
-        get_opcode(op, cmd);
+        fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
+        if (s_buff[0] == '\n') continue;
+        get_opcode(op, s_buff);
         if (op->opcode == CMNT) continue;
         if (op->opcode == BEGLP || (ENDLPEQ <= op->opcode && op->opcode <= ENDLPGE)) {
             printf("Looping not yet supported in repl mode\n");
@@ -27,6 +26,4 @@ void launch_repl(operation *op) {
         parse_op(op);
         eval_op(op);
     }
-
-    free(cmd);
 }
