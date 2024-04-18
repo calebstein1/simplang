@@ -73,7 +73,9 @@ void parse_op(operation *op) {
             int target_reg = atoi(tmp + 1);
             if (target_reg >= MAX_REGISTERS) {
                 printf("Invalid register number\n");
-                exit(-1);
+                if (pe) exit(-1);
+                op->opcode = INVLD;
+                return;
             }
 
             switch (*tmp) {
@@ -97,7 +99,8 @@ void parse_op(operation *op) {
                     }
                     if (i >= GLOBAL_BUFF_SIZE - 1) {
                         printf("String buffer overflow\n");
-                        exit(-1);
+                        if (pe) exit(-1);
+                        return;
                     }
                     s_buff[i++] = *tmp++;
                 }
@@ -109,7 +112,10 @@ void parse_op(operation *op) {
                 *e_sp = atoi(tmp);
                 if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
                     printf("Eval stack overflow\n");
-                    exit(-1);
+                    if (pe) exit(-1);
+                    e_sp = e_bp;
+                    op->opcode = INVLD;
+                    return;
                 }
             }
 
