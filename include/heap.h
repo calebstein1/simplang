@@ -1,11 +1,11 @@
 #ifndef SIMPLANG_HEAP_H
 #define SIMPLANG_HEAP_H
 
-#define HEADER_SIG 0x50485053
+#define HEADER_SIG 0x5053
 
 typedef struct {
-    int sig;
-    int size;
+    uint16_t sig;
+    uint16_t blocks;
     ptr_type_e type;
 } heap_hdr_t;
 
