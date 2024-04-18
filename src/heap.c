@@ -32,9 +32,15 @@ void *simp_alloc(int size, ptr_type_e type) {
     if (heap_ptr->sig != HEADER_SIG) {
         heap_hdr_t hdr = { .sig = HEADER_SIG, .type = NONE };
         if (!*(char *)((char *)(heap_ptr + 1) + 1)) {
-            hdr.blocks = max_heap_blocks - ((heap_ptr - g_heap) / sizeof(hdr));
-            *heap_ptr = hdr;
+            hdr.blocks = max_heap_blocks - offset_blocks;
+        } else {
+            heap_hdr_t *lookahead = heap_ptr;
+            do {
+                hdr.blocks++;
+                lookahead++;
+            } while (lookahead->sig != HEADER_SIG);
         }
+        *heap_ptr = hdr;
     }
 
     return alloc_ptr;
