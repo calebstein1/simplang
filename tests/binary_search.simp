@@ -36,8 +36,10 @@ endlpeq 0 0
 asgn r3 101
 beglp
     printn s2
-    add r1 r2 r3
-    div r1 r1 2
+    asgn r1 0
+    add r1 r2
+    add r1 r3
+    div r1 2
     printn r1
 
     ; The guess is the midpoint between the upper and lower bounds,

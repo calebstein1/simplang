@@ -15,11 +15,11 @@ X(LDSTR, "ldstr", &&parse_two_args, &&LDSTR)          \
 X(GETOPT, "getopt", &&parse_two_args, &&GETOPT)       \
 X(GETI, "geti", &&parse_one_arg, &&GETI)              \
 X(GETS, "gets", &&parse_one_arg, &&GETS)              \
-X(ADD, "add", &&parse_three_args, &&ADD)              \
-X(SUBTR, "subtr", &&parse_three_args, &&SUBTR)        \
-X(MUL, "mul", &&parse_three_args, &&MUL)              \
-X(DIV, "div", &&parse_three_args, &&DIV)              \
-X(MOD, "mod", &&parse_three_args, &&MOD)              \
+X(ADD, "add", &&parse_two_args, &&ADD)              \
+X(SUBTR, "subtr", &&parse_two_args, &&SUBTR)        \
+X(MUL, "mul", &&parse_two_args, &&MUL)              \
+X(DIV, "div", &&parse_two_args, &&DIV)              \
+X(MOD, "mod", &&parse_two_args, &&MOD)              \
 X(INCR, "incr", &&parse_one_arg, &&INCR)              \
 X(DECR, "decr", &&parse_one_arg, &&DECR)              \
 X(SWP, "swp", &&parse_two_args, &&SWP)                \

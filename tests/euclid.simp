@@ -14,7 +14,8 @@ asgn r3 r1
 ; Calculate the GCD using Euclid's algorithm
 beglp
     asgn r4 r1
-    mod r1 r0 r1
+    mod r0 r1
+    asgn r1 r0
     asgn r0 r4
 endlpeq r1 0
 

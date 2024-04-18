@@ -64,19 +64,19 @@ void eval_op(operation *op) {
         *op->a1.ptr.str_ptr = str;
         goto END;
     ADD:
-        *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr + *op->a3.ptr.int_ptr;
+        *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr + *op->a2.ptr.int_ptr;
         goto END;
     SUBTR:
-        *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr - *op->a3.ptr.int_ptr;
+        *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr - *op->a2.ptr.int_ptr;
         goto END;
     MUL:
-        *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr * *op->a3.ptr.int_ptr;
+        *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr * *op->a2.ptr.int_ptr;
         goto END;
     DIV:
-        *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr / *op->a3.ptr.int_ptr;
+        *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr / *op->a2.ptr.int_ptr;
         goto END;
     MOD:
-        *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr % *op->a3.ptr.int_ptr;
+        *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr % *op->a2.ptr.int_ptr;
         goto END;
     INCR:
         (*op->a1.ptr.int_ptr)++;
