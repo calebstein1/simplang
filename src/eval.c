@@ -31,6 +31,7 @@ void eval_op(operation *op) {
 
     ASGN:
         *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
+        if (!pe) goto PRINT;
         goto END;
     RAND:
         *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
@@ -38,6 +39,7 @@ void eval_op(operation *op) {
     LDSTR:
         if (*op->a1.ptr.str_ptr) simp_free(*op->a1.ptr.str_ptr);
         *op->a1.ptr.str_ptr = op->a2.ptr.char_ptr;
+        if (!pe) goto PRINT;
         goto END;
     GETOPT:
         if (*op->a1.ptr.int_ptr) {
@@ -65,24 +67,31 @@ void eval_op(operation *op) {
         goto END;
     ADD:
         *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr + *op->a2.ptr.int_ptr;
+        if (!pe) goto PRINT;
         goto END;
     SUBTR:
         *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr - *op->a2.ptr.int_ptr;
+        if (!pe) goto PRINT;
         goto END;
     MUL:
         *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr * *op->a2.ptr.int_ptr;
+        if (!pe) goto PRINT;
         goto END;
     DIV:
         *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr / *op->a2.ptr.int_ptr;
+        if (!pe) goto PRINT;
         goto END;
     MOD:
         *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr % *op->a2.ptr.int_ptr;
+        if (!pe) goto PRINT;
         goto END;
     INCR:
         (*op->a1.ptr.int_ptr)++;
+        if (!pe) goto PRINT;
         goto END;
     DECR:
         (*op->a1.ptr.int_ptr)--;
+        if (!pe) goto PRINT;
         goto END;
     SWP:
         (*op->a1.ptr.int_ptr) ^= (*op->a2.ptr.int_ptr);
