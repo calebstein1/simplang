@@ -13,8 +13,7 @@
 #include "repl.h"
 #include "heap.h"
 
-long g_registers[MAX_REGISTERS] = {};
-char *s_registers[MAX_REGISTERS] = {};
+dyn_ptr_t g_registers[MAX_REGISTERS] = {};
 char s_buff[GLOBAL_BUFF_SIZE] = {};
 long g_stack[GLOBAL_STACK_SIZE] = {};
 operation *j_stack[GLOBAL_STACK_SIZE] = {};
@@ -31,6 +30,12 @@ int main(int argc, char **argv) {
     char *tok_r = NULL;
     struct stat script_stat = {};
     bool start_adv = false;
+    int i = 0;
+
+    for (; i < MAX_REGISTERS; i++) {
+        g_registers[i].type = NONE;
+        g_registers[i].ptr.void_ptr = NULL;
+    }
 
     if (argc == 1) {
         operation op = {};
@@ -42,10 +47,10 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    int i = 2;
+    /*int i = 2;
     for (; i < argc; i++) {
         g_registers[i - 2] = atoi(argv[i]);
-    }
+    }*/
     
     int fd;
 

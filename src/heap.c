@@ -46,7 +46,7 @@ void *simp_alloc(int size, ptr_type_e type) {
     return alloc_ptr;
 }
 
-void simp_free(char *ptr) {
+void simp_free(void *ptr) {
     if (pe) return;
 
     heap_ptr = (heap_hdr_t *)ptr - 1;

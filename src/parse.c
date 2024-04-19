@@ -67,7 +67,7 @@ void parse_op(operation *op) {
 
     do {
         tmp = strtok(NULL, " \t");
-        if (*tmp == 'r' || *tmp == 's') {
+        if (*tmp == 'r') {
             int target_reg = atoi(tmp + 1);
             if (target_reg >= MAX_REGISTERS) {
                 printf("Invalid register number\n");
@@ -76,16 +76,7 @@ void parse_op(operation *op) {
                 return;
             }
 
-            switch (*tmp) {
-                case 'r':
-                    args[j]->type = INT;
-                    args[j]->ptr.int_ptr = &(g_registers[target_reg]);
-                    break;
-                case 's':
-                    args[j]->type = STR;
-                    args[j]->ptr.str_ptr = &(s_registers[target_reg]);
-                    break;
-            }
+            args[j] = &(g_registers[target_reg]);
         } else {
             if (*tmp == '"') {
                 i = 0;
@@ -106,8 +97,8 @@ void parse_op(operation *op) {
                 strcpy(str, s_buff);
                 strtok(tmp, " \t");
 
-                args[j]->type = CHAR;
-                args[j]->ptr.char_ptr = str;
+                args[j]->type = TRANSIENT_STR;
+                args[j]->ptr.str_ptr = str;
             } else {
                 *e_sp = atoi(tmp);
                 if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
@@ -118,7 +109,7 @@ void parse_op(operation *op) {
                     return;
                 }
 
-                args[j]->type = INT;
+                args[j]->type = TRANSIENT_INT;
                 args[j]->ptr.int_ptr = e_sp++;
             }
         }

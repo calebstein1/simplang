@@ -2,7 +2,7 @@
 #define SIMPSCRIPT_DEFS_H
 
 #define MAX_PROGRAM_SIZE 2048
-#define MAX_REGISTERS 8
+#define MAX_REGISTERS 24
 #define GLOBAL_STACK_SIZE 16
 #define GLOBAL_HEAP_SIZE 4096
 #define GLOBAL_BUFF_SIZE 512
@@ -45,8 +45,9 @@ X(DONE, "done", &&parse_no_args)
 
 #define PTR_TYPE_TABLE \
 X(NONE)                \
-X(CHAR)                \
+X(TRANSIENT_STR)       \
 X(STR)                 \
+X(TRANSIENT_INT)       \
 X(INT)
 
 typedef enum {
@@ -56,8 +57,7 @@ typedef enum {
 } instructions_e;
 
 typedef union {
-    char *char_ptr;
-    char **str_ptr;
+    char *str_ptr;
     long *int_ptr;
     void *void_ptr;
 } dyn_ptr_u;
@@ -80,8 +80,7 @@ typedef struct {
     dyn_ptr_t a3;
 } operation;
 
-extern long g_registers[MAX_REGISTERS];
-extern char *s_registers[MAX_REGISTERS];
+extern dyn_ptr_t g_registers[MAX_REGISTERS];
 extern char s_buff[GLOBAL_BUFF_SIZE];
 extern long *e_sp, *e_bp;
 extern operation **j_sp, **j_bp;

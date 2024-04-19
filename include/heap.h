@@ -11,7 +11,7 @@ typedef struct {
 
 void init_heap();
 void *simp_alloc(int size, ptr_type_e type);
-void simp_free(char *ptr);
+void simp_free(void *ptr);
 
 extern heap_hdr_t g_heap[GLOBAL_HEAP_SIZE];
 

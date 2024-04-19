@@ -25,35 +25,43 @@ void eval_op(operation *op) {
     };
     int i = 0;
     unsigned int nested_if = 0;
+    long *int_ptr = NULL;
     char *str = NULL;
 
     goto *eval_jmp_tbl[op->opcode];
 
-    ASGN:
-        *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
+    ASGN: // TODO: Fix alloc error (applies to all)
+        op->a1.type = INT;
+        int_ptr = simp_alloc(sizeof(long), INT);
+        *int_ptr = *op->a2.ptr.int_ptr;
+        op->a1.ptr.int_ptr = int_ptr;
         if (!pe) goto PRINT;
         goto END;
     RAND:
-        *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
+        op->a1.type = INT;
+        int_ptr = simp_alloc(sizeof(long), INT);
+        *int_ptr = rand() % *op->a2.ptr.int_ptr;
+        op->a1.ptr.int_ptr = int_ptr;
         goto END;
     LDSTR:
-        if (*op->a1.ptr.str_ptr) simp_free(*op->a1.ptr.str_ptr);
-        *op->a1.ptr.str_ptr = op->a2.ptr.char_ptr;
+        if (op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);
+        op->a1.type = STR;
+        op->a1.ptr.str_ptr = op->a2.ptr.str_ptr;
         if (!pe) goto PRINT;
         goto END;
-    GETOPT:
+    GETOPT: // TODO: fix segfault
         if (*op->a1.ptr.int_ptr) {
-            simp_free(op->a2.ptr.char_ptr);
+            simp_free(op->a2.ptr.str_ptr);
             goto END;
         }
-        printf("%s", op->a2.ptr.char_ptr);
-        simp_free(op->a2.ptr.char_ptr);
-    GETI:
+        printf("%s", op->a2.ptr.str_ptr);
+        simp_free(op->a2.ptr.str_ptr);
+    GETI: // TODO: fix segfault
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
         *op->a1.ptr.int_ptr = atoi(s_buff);
         goto END;
-    GETS:
-        if (*op->a1.ptr.str_ptr) simp_free(*op->a1.ptr.str_ptr);
+    GETS: // TODO: fix segfault
+        if (*op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
         for (; s_buff[i]; i++) {
             if (s_buff[i] == '\n') {
@@ -63,7 +71,7 @@ void eval_op(operation *op) {
         }
         str = simp_alloc(i, STR);
         strcpy(str, s_buff);
-        *op->a1.ptr.str_ptr = str;
+        op->a1.ptr.str_ptr = str;
         goto END;
     ADD:
         *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr + *op->a2.ptr.int_ptr;
@@ -222,24 +230,32 @@ void eval_op(operation *op) {
         PRINT_INT:
             printf("%ld\n", *op->a1.ptr.int_ptr);
             goto END;
-        PRINT_STR:
-            printf("%s\n", *op->a1.ptr.str_ptr);
+        PRINT_TRANSIENT_INT:
+            printf("%ld\n", *op->a1.ptr.int_ptr);
+            simp_free(op->a1.ptr.int_ptr);
             goto END;
-        PRINT_CHAR:
-            printf("%s\n", op->a1.ptr.char_ptr);
-            simp_free(op->a1.ptr.char_ptr);
+        PRINT_STR:
+            printf("%s\n", op->a1.ptr.str_ptr);
+            goto END;
+        PRINT_TRANSIENT_STR:
+            printf("%s\n", op->a1.ptr.str_ptr);
+            simp_free(op->a1.ptr.str_ptr);
             goto END;
     PRINTN:
         goto *printn_jmp_tbl[op->a1.type];
         PRINTN_INT:
             printf("%ld", *op->a1.ptr.int_ptr);
             goto END;
-        PRINTN_STR:
-            printf("%s", *op->a1.ptr.str_ptr);
+        PRINTN_TRANSIENT_INT:
+            printf("%ld\n", *op->a1.ptr.int_ptr);
+            simp_free(op->a1.ptr.int_ptr);
             goto END;
-        PRINTN_CHAR:
-            printf("%s", op->a1.ptr.char_ptr);
-            simp_free(op->a1.ptr.char_ptr);
+        PRINTN_STR:
+            printf("%s", op->a1.ptr.str_ptr);
+            goto END;
+        PRINTN_TRANSIENT_STR:
+            printf("%s", op->a1.ptr.str_ptr);
+            simp_free(op->a1.ptr.str_ptr);
             goto END;
     END: CMNT: DONE: ENDIF: PRINT_NONE: PRINTN_NONE: INVLD: NOP:
         e_sp = e_bp;
