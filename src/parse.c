@@ -65,8 +65,7 @@ void parse_op(operation *op) {
                 return;
             }
 
-            op->target = target_reg;
-            memcpy(args[j], &g_registers[target_reg], sizeof(dyn_ptr_t));
+            op->target[j] = target_reg;
         } else {
             if (*cur_arg == '"') {
                 i = 0;

@@ -25,14 +25,30 @@ void eval_op(operation *op) {
     };
     int i = 0;
     unsigned int nested_if = 0;
+    dyn_ptr_t *args[] = {
+            &op->a1,
+            &op->a2,
+            &op->a3,
+    };
+
+    for (; i < 3; i++) {
+        if (op->target[i] >= 0) {
+            memcpy(args[i], &g_registers[op->target[i]], sizeof(dyn_ptr_t));
+        }
+    }
 
     goto *eval_jmp_tbl[op->opcode];
 
-    ASGN: // TODO: Fix alloc error (applies to all)
+    ASGN:
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         op->a1.type = INT;
-        op->a1.ptr.int_ptr = op->a2.ptr.int_ptr;
-        if (op->target >= 0) memcpy(&g_registers[op->target], &op->a1, sizeof(dyn_ptr_t));
+        if (op->target[1] >= 0) {
+            op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
+            *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
+        } else {
+            op->a1.ptr.int_ptr = op->a2.ptr.int_ptr;
+        }
+        if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         if (!pe) goto PRINT;
         goto END;
     RAND:
@@ -40,14 +56,14 @@ void eval_op(operation *op) {
         op->a1.type = INT;
         op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
         *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
-        if (op->target >= 0) memcpy(&g_registers[op->target], &op->a1, sizeof(dyn_ptr_t));
+        if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         simp_free(op->a2.ptr.int_ptr);
         goto END;
     LDSTR:
         if (op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);
         op->a1.type = STR;
         op->a1.ptr.str_ptr = op->a2.ptr.str_ptr;
-        if (op->target >= 0) memcpy(&g_registers[op->target], &op->a1, sizeof(dyn_ptr_t));
+        if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         if (!pe) goto PRINT;
         goto END;
     GETOPT:
@@ -63,7 +79,7 @@ void eval_op(operation *op) {
         op->a1.type = INT;
         op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
         *op->a1.ptr.int_ptr = atoi(s_buff);
-        if (op->target >= 0) memcpy(&g_registers[op->target], &op->a1, sizeof(dyn_ptr_t));
+        if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         goto END;
     GETS:
         if (op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);
@@ -77,7 +93,7 @@ void eval_op(operation *op) {
         op->a1.type = STR;
         op->a1.ptr.str_ptr = simp_alloc(i, STR);
         strcpy(op->a1.ptr.str_ptr, s_buff);
-        if (op->target >= 0) memcpy(&g_registers[op->target], &op->a1, sizeof(dyn_ptr_t));
+        if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         goto END;
     ADD:
         *op->a1.ptr.int_ptr += *op->a2.ptr.int_ptr;

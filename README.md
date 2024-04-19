@@ -82,3 +82,6 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 `done` - ends execution of the program
 
 Hint: all int registers (r0 - r7) are initialized to 0 by default, so you can immediately use any of them as a loop counter with the `incr` instruction without having to explicitly initialize them.
+
+## Known Bugs:
+- Trying to assign a register to a constant number within a loop doesn't seem to be working properly

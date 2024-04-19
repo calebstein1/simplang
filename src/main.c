@@ -68,10 +68,8 @@ int main(int argc, char **argv) {
         strtok_r(script, "\n", &tok_r);
     }
 
-    int target;
     do {
-        operation op = {};
-        op.target = -1;
+        operation op = { .target = { -1, -1, -1 } };
         cur_tok = start_adv ? strtok_r(NULL, "\n", &tok_r) : strtok_r(script, "\n", &tok_r);
         start_adv = true;
         get_opcode(&op, cur_tok);
