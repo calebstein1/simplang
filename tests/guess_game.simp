@@ -1,10 +1,7 @@
 #!/usr/bin/env simplang
 
 ; Initialize string literals
-ldstr s0 "Enter your guess: "
-ldstr s1 "Your guess was too low, try again"
-ldstr s2 "Your guess was too high, try again"
-ldstr s3 "Remember, the range of the random number is 1 to 100 inclusive"
+ldstr r8 "Remember, the range of the random number is 1 to 100 inclusive"
 
 ; Generates the random number
 ; Since Simplang's rand instruction generates a number
@@ -15,28 +12,28 @@ incr r0
 
 print "Welcome to Guess the Number, see how many guesses it takes to guess a number between 1 and 100!"
 beglp
-    printn s0
+    printn "Enter your guess: "
     geti r1
 
     ; If the user guesses a number that's not between 1-100,
     ; print a message stating such and restart the loop without
     ; a guess penalty
     ifgt r1 100
-        print s3
+        print r8
         cont
     endif
     ifle r1 0
-        print s3
+        print r8
         cont
     endif
 
     ; Display the proper message depending on whether the user's
     ; guess was too low or too high
     iflt r1 r0
-        print s1
+        print "Your guess was too low, try again"
     endif
     ifgt r1 r0
-        print s2
+        print "Your guess was too high, try again"
     endif
 
     ; Increment the guess counter

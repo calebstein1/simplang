@@ -1,26 +1,24 @@
 #!/usr/bin/env simplang
 
 ; Initialize our string literals
-ldstr s0 "Enter your number here: "
-ldstr s1 "Now I'm not cheating or anything, but I know that's out of range!"
-ldstr s2 "I'll guess "
-ldstr s3 ", and that's too low"
-ldstr s4 ", and that's too high"
+ldstr r8 "Now I'm not cheating or anything, but I know that's out of range!"
+ldstr r9 "I'll guess "
+ldstr r10 ", and that's too low"
+ldstr r11 ", and that's too high"
 
 print "Enter a number between 1 and 100 and I'll try to guess it!"
 
 beglp
-    printn s0
-    geti r0
+    getopt r0 "Enter your number here: "
 
     ; If the user enters a number outside the acceptable range,
     ; display a message stating so and request a new number
     ifgt r0 100
-        print s1
+        print r8
         cont
     endif
     iflt r0 1
-        print s1
+        print r8
         cont
     endif
 
@@ -35,7 +33,7 @@ endlpeq 0 0
 ; initializes all registers to 0
 asgn r3 101
 beglp
-    printn s2
+    printn r9
     asgn r1 0
     add r1 r2
     add r1 r3
@@ -46,11 +44,11 @@ beglp
     ; rounded down. Here we update either the upper or lower bound
     ; based on whether the guess was higher or lower than the answer
     iflt r1 r0
-        print s3
+        print r10
         asgn r2 r1
     endif
     ifgt r1 r0
-        print s4
+        print r11
         asgn r3 r1
     endif
 

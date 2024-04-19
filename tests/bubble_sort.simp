@@ -1,10 +1,6 @@
 #!/usr/bin/env simplang
 
 ; Initialize string literals
-ldstr s0 "Unsorted: "
-ldstr s1 "Sotrted: "
-ldstr s2 " "
-
 rand r0 1000
 rand r1 1000
 rand r2 1000
@@ -13,19 +9,19 @@ rand r4 1000
 rand r5 1000
 rand r6 1000
 
-print s0
+print "Unsorted:"
 printn r0
-printn s2
+printn " "
 printn r1
-printn s2
+printn " "
 printn r2
-printn s2
+printn " "
 printn r3
-printn s2
+printn " "
 printn r4
-printn s2
+printn " "
 printn r5
-printn s2
+printn " "
 print r6
 
 asgn r7 7
@@ -69,19 +65,19 @@ beglp
     decr r7
 endlpeq r7 0
 
-print s1
+print "Sorted:"
 printn r0
-printn s2
+printn " "
 printn r1
-printn s2
+printn " "
 printn r2
-printn s2
+printn " "
 printn r3
-printn s2
+printn " "
 printn r4
-printn s2
+printn " "
 printn r5
-printn s2
+printn " "
 print r6
 
 done
