@@ -47,19 +47,21 @@ void eval_op(operation *op) {
         op->a1.ptr.str_ptr = op->a2.ptr.str_ptr;
         if (!pe) goto PRINT;
         goto END;
-    GETOPT: // TODO: fix segfault
-        if (*op->a1.ptr.int_ptr) {
+    GETOPT:
+        if (op->a1.ptr.int_ptr && *op->a1.ptr.int_ptr) {
             simp_free(op->a2.ptr.str_ptr);
             goto END;
         }
         printf("%s", op->a2.ptr.str_ptr);
         simp_free(op->a2.ptr.str_ptr);
-    GETI: // TODO: fix segfault
+    GETI:
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
+        op->a1.type = INT;
+        op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
         *op->a1.ptr.int_ptr = atoi(s_buff);
         goto END;
-    GETS: // TODO: fix segfault
-        if (*op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);
+    GETS:
+        if (op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
         for (; s_buff[i]; i++) {
             if (s_buff[i] == '\n') {
@@ -67,9 +69,9 @@ void eval_op(operation *op) {
                 break;
             }
         }
-        str = simp_alloc(i, STR);
-        strcpy(str, s_buff);
-        op->a1.ptr.str_ptr = str;
+        op->a1.type = STR;
+        op->a1.ptr.str_ptr = simp_alloc(i, STR);
+        strcpy(op->a1.ptr.str_ptr, s_buff);
         goto END;
     ADD:
         *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr + *op->a2.ptr.int_ptr;
