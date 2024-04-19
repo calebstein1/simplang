@@ -10,6 +10,7 @@ void launch_repl() {
 
     while(1) {
         operation op = {};
+        int target = -1;
         printf(">> ");
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
         if (s_buff[0] == '\n') continue;
@@ -23,7 +24,7 @@ void launch_repl() {
             printf("Conditional statements not yet supported in repl mode\n");
             continue;
         }
-        parse_op(&op);
-        eval_op(&op);
+        parse_op(&op, &target);
+        eval_op(&op, target);
     }
 }

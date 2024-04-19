@@ -37,10 +37,12 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    /*int i = 2;
+    int i = 2;
     for (; i < argc; i++) {
-        g_registers[i - 2] = atoi(argv[i]);
-    }*/
+        g_registers[i - 2].type = INT;
+        g_registers[i - 2].ptr.int_ptr = simp_alloc(sizeof(long), INT);
+        *g_registers[i - 2].ptr.int_ptr = atoi(argv[i]);
+    }
     
     int fd;
 
@@ -66,17 +68,19 @@ int main(int argc, char **argv) {
         strtok_r(script, "\n", &tok_r);
     }
 
+    int target;
     do {
         operation op = {};
+        target = -1;
         cur_tok = start_adv ? strtok_r(NULL, "\n", &tok_r) : strtok_r(script, "\n", &tok_r);
         start_adv = true;
         get_opcode(&op, cur_tok);
         if (op.opcode == CMNT) continue;
-        parse_op(&op);
+        parse_op(&op, &target);
     } while ((pe - 1)->opcode != DONE);
 
     do {
-        eval_op(pp);
+        eval_op(pp, target);
     } while (++pp < pe);
 
     return 0;

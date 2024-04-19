@@ -46,7 +46,8 @@ void *simp_alloc(int size, ptr_type_e type) {
     return alloc_ptr;
 }
 
-void simp_free(void *ptr) {
+void simp_free(void *ptr) {}
+void real_simp_free(void *ptr) {
     if (pe) return;
 
     heap_ptr = (heap_hdr_t *)ptr - 1;
@@ -57,10 +58,10 @@ void simp_free(void *ptr) {
     heap_hdr_t *lookahead = heap_ptr;
     do {
         lookahead += (heap_ptr->blocks + 1);
-        if (!lookahead->type) {
+        if (!lookahead->type && lookahead->sig == HEADER_SIG) {
             extra_blocks += (lookahead->blocks + 1);
         }
-    } while (!lookahead->type);
+    } while (!lookahead->type && lookahead->sig == HEADER_SIG);
 
     heap_ptr->blocks += extra_blocks;
 }
