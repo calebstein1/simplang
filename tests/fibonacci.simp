@@ -12,8 +12,10 @@ endlpeq 0 0
 ; r1 will be the current digit, r2 and r3 will be the prior two,
 ; r7 is our iterator
 
+asgn r1 0
 asgn r2 1
 asgn r3 1
+asgn r7 0
 
 ifeq r7 0
     print 1
@@ -29,7 +31,7 @@ ifeq r7 1
 endif
 ifgt r0 2
     beglp
-       asgn r1 0
+       subtr r1 r1
        add r1 r2
        add r1 r3
        asgn r3 r2

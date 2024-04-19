@@ -1,6 +1,9 @@
 #!/usr/bin/env simplang
 
-; Initialize our string literals
+; Initialize our initial values and string literals
+asgn r1 0
+asgn r2 0
+asgn r7 0
 ldstr r8 "Now I'm not cheating or anything, but I know that's out of range!"
 ldstr r9 "I'll guess "
 ldstr r10 ", and that's too low"
@@ -15,10 +18,12 @@ beglp
     ; display a message stating so and request a new number
     ifgt r0 100
         print r8
+        asgn r0 0
         cont
     endif
     iflt r0 1
         print r8
+        asgn r0 0
         cont
     endif
 
@@ -28,13 +33,11 @@ endlpeq 0 0
 
 ; Since the range of numbers is 1 to 100 inclusive, we'll set our
 ; outer bounds to 0 and 101
-; We'll use r2 for the lower bound and r3 for the upper bound,
-; we don't need to initialize r2 since Simplang automatically
-; initializes all registers to 0
+; We'll use r2 for the lower bound and r3 for the upper bound
 asgn r3 101
 beglp
     printn r9
-    asgn r1 0
+    subtr r1 r1
     add r1 r2
     add r1 r3
     div r1 2

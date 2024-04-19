@@ -1,6 +1,7 @@
 #!/usr/bin/env simplang
 
-; Initialize string literals
+; Initialize iterator and string literals
+asgn r2 0
 ldstr r8 "Remember, the range of the random number is 1 to 100 inclusive"
 
 ; Generates the random number
