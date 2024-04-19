@@ -75,6 +75,7 @@ typedef struct {
 
 typedef struct {
     instructions_e opcode;
+    int target;
     dyn_ptr_t a1;
     dyn_ptr_t a2;
     dyn_ptr_t a3;

@@ -7,7 +7,7 @@
 #include "heap.h"
 
 
-void eval_op(operation *op, int target) {
+void eval_op(operation *op) {
     static void *eval_jmp_tbl[] = {
         #define X(opcode, ...) &&opcode,
         OPCODE_TABLE
@@ -32,21 +32,21 @@ void eval_op(operation *op, int target) {
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         op->a1.type = INT;
         op->a1.ptr.int_ptr = op->a2.ptr.int_ptr;
-        if (target >= 0) memcpy(&g_registers[target], &op->a1, sizeof(dyn_ptr_t));
+        if (op->target >= 0) memcpy(&g_registers[op->target], &op->a1, sizeof(dyn_ptr_t));
         if (!pe) goto PRINT;
         goto END;
     RAND:
         op->a1.type = INT;
         op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
         *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
-        if (target >= 0) memcpy(&g_registers[target], &op->a1, sizeof(dyn_ptr_t));
+        if (op->target >= 0) memcpy(&g_registers[op->target], &op->a1, sizeof(dyn_ptr_t));
         simp_free(op->a2.ptr.int_ptr);
         goto END;
     LDSTR:
         if (op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);
         op->a1.type = STR;
         op->a1.ptr.str_ptr = op->a2.ptr.str_ptr;
-        if (target >= 0) memcpy(&g_registers[target], &op->a1, sizeof(dyn_ptr_t));
+        if (op->target >= 0) memcpy(&g_registers[op->target], &op->a1, sizeof(dyn_ptr_t));
         if (!pe) goto PRINT;
         goto END;
     GETOPT:
@@ -61,7 +61,7 @@ void eval_op(operation *op, int target) {
         op->a1.type = INT;
         op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
         *op->a1.ptr.int_ptr = atoi(s_buff);
-        if (target >= 0) memcpy(&g_registers[target], &op->a1, sizeof(dyn_ptr_t));
+        if (op->target >= 0) memcpy(&g_registers[op->target], &op->a1, sizeof(dyn_ptr_t));
         goto END;
     GETS:
         if (op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);
@@ -75,7 +75,7 @@ void eval_op(operation *op, int target) {
         op->a1.type = STR;
         op->a1.ptr.str_ptr = simp_alloc(i, STR);
         strcpy(op->a1.ptr.str_ptr, s_buff);
-        if (target >= 0) memcpy(&g_registers[target], &op->a1, sizeof(dyn_ptr_t));
+        if (op->target >= 0) memcpy(&g_registers[op->target], &op->a1, sizeof(dyn_ptr_t));
         goto END;
     ADD:
         *op->a1.ptr.int_ptr += *op->a2.ptr.int_ptr;

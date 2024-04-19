@@ -71,16 +71,16 @@ int main(int argc, char **argv) {
     int target;
     do {
         operation op = {};
-        target = -1;
+        op.target = -1;
         cur_tok = start_adv ? strtok_r(NULL, "\n", &tok_r) : strtok_r(script, "\n", &tok_r);
         start_adv = true;
         get_opcode(&op, cur_tok);
         if (op.opcode == CMNT) continue;
-        parse_op(&op, &target);
+        parse_op(&op);
     } while ((pe - 1)->opcode != DONE);
 
     do {
-        eval_op(pp, target);
+        eval_op(pp);
     } while (++pp < pe);
 
     return 0;

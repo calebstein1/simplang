@@ -29,7 +29,7 @@ void get_opcode(operation *op, char *tok) {
     op->opcode = i;
 }
 
-void parse_op(operation *op, int *target) {
+void parse_op(operation *op) {
     char *cur_arg = NULL;
     int i, j, num_args;
     j = num_args = 0;
@@ -65,7 +65,7 @@ void parse_op(operation *op, int *target) {
                 return;
             }
 
-            *target = target_reg;
+            op->target = target_reg;
             memcpy(args[j], &g_registers[target_reg], sizeof(dyn_ptr_t));
         } else {
             if (*cur_arg == '"') {
