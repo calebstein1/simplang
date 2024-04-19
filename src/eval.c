@@ -25,7 +25,6 @@ void eval_op(operation *op) {
     };
     int i = 0;
     unsigned int nested_if = 0;
-    char *str = NULL;
 
     goto *eval_jmp_tbl[op->opcode];
 
