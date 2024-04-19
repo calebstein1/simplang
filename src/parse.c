@@ -66,7 +66,7 @@ void parse_op(operation *op) {
                 return;
             }
 
-            args[j] = &(g_registers[target_reg]);
+            args[j] = &g_registers[target_reg];
         } else {
             if (*cur_arg == '"') {
                 i = 0;

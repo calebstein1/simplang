@@ -25,23 +25,21 @@ void eval_op(operation *op) {
     };
     int i = 0;
     unsigned int nested_if = 0;
-    long *int_ptr = NULL;
     char *str = NULL;
 
     goto *eval_jmp_tbl[op->opcode];
 
     ASGN: // TODO: Fix alloc error (applies to all)
+        if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         op->a1.type = INT;
-        int_ptr = simp_alloc(sizeof(long), INT);
-        *int_ptr = *op->a2.ptr.int_ptr;
-        op->a1.ptr.int_ptr = int_ptr;
+        op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
+        *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     RAND:
         op->a1.type = INT;
-        int_ptr = simp_alloc(sizeof(long), INT);
-        *int_ptr = rand() % *op->a2.ptr.int_ptr;
-        op->a1.ptr.int_ptr = int_ptr;
+        op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
+        *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
         goto END;
     LDSTR:
         if (op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);
