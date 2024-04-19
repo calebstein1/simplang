@@ -224,36 +224,37 @@ void eval_op(operation *op) {
         }
         goto END;
     PRINT:
+        printf("%d\n", op->a1.type);
         goto *print_jmp_tbl[op->a1.type];
-        PRINT_INT:
-            printf("%ld\n", *op->a1.ptr.int_ptr);
+        PRINT_TRANSIENT_STR:
+            printf("%s\n", op->a1.ptr.str_ptr);
+            simp_free(op->a1.ptr.str_ptr);
+            goto END;
+        PRINT_STR:
+            printf("%s\n", op->a1.ptr.str_ptr);
             goto END;
         PRINT_TRANSIENT_INT:
             printf("%ld\n", *op->a1.ptr.int_ptr);
             simp_free(op->a1.ptr.int_ptr);
             goto END;
-        PRINT_STR:
-            printf("%s\n", op->a1.ptr.str_ptr);
-            goto END;
-        PRINT_TRANSIENT_STR:
-            printf("%s\n", op->a1.ptr.str_ptr);
-            simp_free(op->a1.ptr.str_ptr);
+        PRINT_INT:
+            printf("%ld\n", *op->a1.ptr.int_ptr);
             goto END;
     PRINTN:
         goto *printn_jmp_tbl[op->a1.type];
-        PRINTN_INT:
-            printf("%ld", *op->a1.ptr.int_ptr);
+        PRINTN_TRANSIENT_STR:
+            printf("%s", op->a1.ptr.str_ptr);
+            simp_free(op->a1.ptr.str_ptr);
+            goto END;
+        PRINTN_STR:
+            printf("%s", op->a1.ptr.str_ptr);
             goto END;
         PRINTN_TRANSIENT_INT:
             printf("%ld\n", *op->a1.ptr.int_ptr);
             simp_free(op->a1.ptr.int_ptr);
             goto END;
-        PRINTN_STR:
-            printf("%s", op->a1.ptr.str_ptr);
-            goto END;
-        PRINTN_TRANSIENT_STR:
-            printf("%s", op->a1.ptr.str_ptr);
-            simp_free(op->a1.ptr.str_ptr);
+        PRINTN_INT:
+            printf("%ld", *op->a1.ptr.int_ptr);
             goto END;
     END: CMNT: DONE: ENDIF: PRINT_NONE: PRINTN_NONE: INVLD: NOP:
         e_sp = e_bp;
