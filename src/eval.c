@@ -36,6 +36,7 @@ void eval_op(operation *op) {
         if (!pe) goto PRINT;
         goto END;
     RAND:
+        if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         op->a1.type = INT;
         op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
         *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
@@ -57,6 +58,7 @@ void eval_op(operation *op) {
         printf("%s", op->a2.ptr.str_ptr);
         simp_free(op->a2.ptr.str_ptr);
     GETI:
+        if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
         op->a1.type = INT;
         op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
