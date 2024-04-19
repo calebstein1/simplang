@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 
 #include "defs.h"
@@ -34,7 +33,6 @@ void get_opcode(operation *op, char *tok) {
 }
 
 void parse_op(operation *op) {
-    bool str_lit = false;
     char *tmp, *str;
     tmp = str = NULL;
     int i, j, num_args;
@@ -92,7 +90,6 @@ void parse_op(operation *op) {
             if (*tmp == '"') {
                 i = 0;
                 tmp++;
-                str_lit = true;
                 while (*tmp != '"') {
                     if (!*tmp) {
                         *tmp = ' ';
@@ -108,6 +105,9 @@ void parse_op(operation *op) {
                 str = simp_alloc(i, STR);
                 strcpy(str, s_buff);
                 strtok(tmp, " \t");
+
+                args[j]->type = CHAR;
+                args[j]->ptr.char_ptr = str;
             } else {
                 *e_sp = atoi(tmp);
                 if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
@@ -117,12 +117,7 @@ void parse_op(operation *op) {
                     op->opcode = INVLD;
                     return;
                 }
-            }
 
-            if (str_lit) {
-                args[j]->type = CHAR;
-                args[j]->ptr.char_ptr = str;
-            } else {
                 args[j]->type = INT;
                 args[j]->ptr.int_ptr = e_sp++;
             }
