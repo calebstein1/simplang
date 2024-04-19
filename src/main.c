@@ -30,17 +30,10 @@ int main(int argc, char **argv) {
     char *tok_r = NULL;
     struct stat script_stat = {};
     bool start_adv = false;
-    int i = 0;
-
-    for (; i < MAX_REGISTERS; i++) {
-        g_registers[i].type = NONE;
-        g_registers[i].ptr.void_ptr = NULL;
-    }
 
     if (argc == 1) {
-        operation op = {};
         pp = pe = NULL;
-        launch_repl(&op);
+        launch_repl();
         return 0;
     } else if (argc > MAX_REGISTERS + 2) {
         printf("Too many arguments\n");

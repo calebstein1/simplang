@@ -30,8 +30,8 @@ void get_opcode(operation *op, char *tok) {
 }
 
 void parse_op(operation *op) {
-    char *tmp, *str;
-    tmp = str = NULL;
+    char *cur_arg, *str;
+    cur_arg = str = NULL;
     int i, j, num_args;
     j = num_args = 0;
     dyn_ptr_t *args[] = {
@@ -56,9 +56,9 @@ void parse_op(operation *op) {
         ++num_args;
 
     do {
-        tmp = strtok(NULL, " \t");
-        if (*tmp == 'r') {
-            int target_reg = atoi(tmp + 1);
+        cur_arg = strtok(NULL, " \t");
+        if (*cur_arg == 'r') {
+            int target_reg = atoi(cur_arg + 1);
             if (target_reg >= MAX_REGISTERS) {
                 printf("Invalid register number\n");
                 if (pe) exit(-1);
@@ -68,29 +68,29 @@ void parse_op(operation *op) {
 
             args[j] = &(g_registers[target_reg]);
         } else {
-            if (*tmp == '"') {
+            if (*cur_arg == '"') {
                 i = 0;
-                tmp++;
-                while (*tmp != '"') {
-                    if (!*tmp) {
-                        *tmp = ' ';
+                cur_arg++;
+                while (*cur_arg != '"') {
+                    if (!*cur_arg) {
+                        *cur_arg = ' ';
                     }
                     if (i >= GLOBAL_BUFF_SIZE - 1) {
                         printf("String buffer overflow\n");
                         if (pe) exit(-1);
                         return;
                     }
-                    s_buff[i++] = *tmp++;
+                    s_buff[i++] = *cur_arg++;
                 }
                 s_buff[i] = 0x0;
                 str = simp_alloc(i, STR);
                 strcpy(str, s_buff);
-                strtok(tmp, " \t");
+                strtok(cur_arg, " \t");
 
                 args[j]->type = TRANSIENT_STR;
                 args[j]->ptr.str_ptr = str;
             } else {
-                *e_sp = atoi(tmp);
+                *e_sp = atoi(cur_arg);
                 if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
                     printf("Eval stack overflow\n");
                     if (pe) exit(-1);
