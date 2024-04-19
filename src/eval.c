@@ -74,23 +74,23 @@ void eval_op(operation *op) {
         strcpy(op->a1.ptr.str_ptr, s_buff);
         goto END;
     ADD:
-        *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr + *op->a2.ptr.int_ptr;
+        *op->a1.ptr.int_ptr += *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     SUBTR:
-        *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr - *op->a2.ptr.int_ptr;
+        *op->a1.ptr.int_ptr -= *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     MUL:
-        *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr * *op->a2.ptr.int_ptr;
+        *op->a1.ptr.int_ptr *= *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     DIV:
-        *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr / *op->a2.ptr.int_ptr;
+        *op->a1.ptr.int_ptr /= *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     MOD:
-        *op->a1.ptr.int_ptr = *op->a1.ptr.int_ptr % *op->a2.ptr.int_ptr;
+        *op->a1.ptr.int_ptr %= *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     INCR:
@@ -226,7 +226,6 @@ void eval_op(operation *op) {
         }
         goto END;
     PRINT:
-        printf("%d\n", op->a1.type);
         goto *print_jmp_tbl[op->a1.type];
         PRINT_TRANSIENT_STR:
             printf("%s\n", op->a1.ptr.str_ptr);
