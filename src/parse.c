@@ -19,12 +19,9 @@ void get_opcode(operation *op, char *tok) {
     for (; memcmp(opcode_lit[i], lit, (l = strlen(opcode_lit[i])) > lit_len ? l : lit_len) != 0; i++) {
         if (i >= DONE) {
             op->opcode = INVLD;
-            char err_msg[lit_len + 24];
-            sprintf(err_msg, "Invalid instruction: %s", lit);
-            if (strlen(err_msg) > GLOBAL_BUFF_SIZE){
-                sprintf(err_msg, "Invalid instruction: string buffer overflow");
-            }
-            strcpy(s_buff, err_msg);
+
+            printf("Invalid instruction: %s\n", lit);
+            if (pe) exit(-1);
 
             return;
         }
@@ -48,13 +45,6 @@ void parse_op(operation *op) {
         OPCODE_TABLE
         #undef X
     };
-
-    if (!op->opcode) {
-        printf("%s\n", s_buff);
-        if (pe) exit(-1);
-
-        return;
-    }
 
     goto *parse_fn_tbl[op->opcode];
 
