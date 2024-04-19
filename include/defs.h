@@ -60,7 +60,7 @@ typedef union {
     char **str_ptr;
     long *int_ptr;
     void *void_ptr;
-} op_ptr_u;
+} dyn_ptr_u;
 
 typedef enum {
     #define X(type, ...) type,
@@ -69,15 +69,15 @@ typedef enum {
 } ptr_type_e;
 
 typedef struct {
-    op_ptr_u ptr;
+    dyn_ptr_u ptr;
     ptr_type_e type;
-} op_ptr_t;
+} dyn_ptr_t;
 
 typedef struct {
     instructions_e opcode;
-    op_ptr_t a1;
-    op_ptr_t a2;
-    op_ptr_t a3;
+    dyn_ptr_t a1;
+    dyn_ptr_t a2;
+    dyn_ptr_t a3;
 } operation;
 
 extern long g_registers[MAX_REGISTERS];

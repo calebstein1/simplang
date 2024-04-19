@@ -39,7 +39,7 @@ void parse_op(operation *op) {
     tmp = str = NULL;
     int i, j, num_args;
     j = num_args = 0;
-    op_ptr_t *args[] = {
+    dyn_ptr_t *args[] = {
             &op->a1,
             &op->a2,
             &op->a3,
