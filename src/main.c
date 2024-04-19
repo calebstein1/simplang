@@ -15,16 +15,13 @@
 
 dyn_ptr_t g_registers[MAX_REGISTERS] = {};
 char s_buff[GLOBAL_BUFF_SIZE] = {};
-long g_stack[GLOBAL_STACK_SIZE] = {};
 operation *j_stack[GLOBAL_STACK_SIZE] = {};
-long *e_sp, *e_bp;
 operation **j_sp, **j_bp;
 operation *pp, *pe;
 
 int main(int argc, char **argv) {
     srand(time(NULL));
     init_heap();
-    e_sp = e_bp = &(g_stack[0]);
     j_sp = j_bp = j_stack;
     char *cur_tok = NULL;
     char *tok_r = NULL;

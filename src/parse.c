@@ -83,21 +83,13 @@ void parse_op(operation *op) {
                 }
                 s_buff[i] = 0x0;
                 args[j]->type = TRANSIENT_STR;
-                args[j]->ptr.str_ptr = simp_alloc(i, STR);
+                args[j]->ptr.str_ptr = simp_alloc(i, TRANSIENT_STR);
                 strcpy(args[j]->ptr.str_ptr, s_buff);
                 strtok(cur_arg, " \t");
             } else {
-                *e_sp = atoi(cur_arg);
-                if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
-                    printf("Eval stack overflow\n");
-                    if (pe) exit(-1);
-                    e_sp = e_bp;
-                    op->opcode = INVLD;
-                    return;
-                }
-
                 args[j]->type = TRANSIENT_INT;
-                args[j]->ptr.int_ptr = e_sp++;
+                args[j]->ptr.int_ptr = simp_alloc(sizeof(long), TRANSIENT_INT);
+                *args[j]->ptr.int_ptr = atoi(cur_arg);
             }
         }
     } while (++j < num_args);

@@ -31,8 +31,7 @@ void eval_op(operation *op) {
     ASGN: // TODO: Fix alloc error (applies to all)
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         op->a1.type = INT;
-        op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
-        *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
+        op->a1.ptr.int_ptr = op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     RAND:
@@ -257,5 +256,5 @@ void eval_op(operation *op) {
             printf("%ld", *op->a1.ptr.int_ptr);
             goto END;
     END: CMNT: DONE: ENDIF: PRINT_NONE: PRINTN_NONE: INVLD: NOP:
-        e_sp = e_bp;
+        return;
 }
