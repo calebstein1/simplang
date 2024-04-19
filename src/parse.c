@@ -30,14 +30,13 @@ void get_opcode(operation *op, char *tok) {
 }
 
 void parse_op(operation *op) {
-    char *cur_arg, *str;
-    cur_arg = str = NULL;
+    char *cur_arg = NULL;
     int i, j, num_args;
     j = num_args = 0;
     dyn_ptr_t *args[] = {
-            &op->a1,
-            &op->a2,
-            &op->a3,
+    &op->a1,
+    &op->a2,
+    &op->a3,
     };
 
     static void *parse_fn_tbl[] = {
@@ -83,12 +82,10 @@ void parse_op(operation *op) {
                     s_buff[i++] = *cur_arg++;
                 }
                 s_buff[i] = 0x0;
-                str = simp_alloc(i, STR);
-                strcpy(str, s_buff);
-                strtok(cur_arg, " \t");
-
                 args[j]->type = TRANSIENT_STR;
-                args[j]->ptr.str_ptr = str;
+                args[j]->ptr.str_ptr = simp_alloc(i, STR);
+                strcpy(args[j]->ptr.str_ptr, s_buff);
+                strtok(cur_arg, " \t");
             } else {
                 *e_sp = atoi(cur_arg);
                 if (e_sp + 1 > e_bp + GLOBAL_STACK_SIZE) {
