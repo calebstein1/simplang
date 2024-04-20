@@ -1,83 +1,83 @@
 #!/usr/bin/env simplang
 
 ; Initialize string literals
-rand r0 1000
-rand r1 1000
-rand r2 1000
-rand r3 1000
-rand r4 1000
-rand r5 1000
-rand r6 1000
+random r0 1000
+random r1 1000
+random r2 1000
+random r3 1000
+random r4 1000
+random r5 1000
+random r6 1000
 
 print "Unsorted:"
-printn r0
-printn " "
-printn r1
-printn " "
-printn r2
-printn " "
-printn r3
-printn " "
-printn r4
-printn " "
-printn r5
-printn " "
+print_n r0
+print_n " "
+print_n r1
+print_n " "
+print_n r2
+print_n " "
+print_n r3
+print_n " "
+print_n r4
+print_n " "
+print_n r5
+print_n " "
 print r6
 
-asgn r7 7
+asign r7 7
 
 ; Since Simplang doesn't support arrays, this can't be done using
 ; nested loops. Instead, r7 is used to track the furthest unsorted
 ; register, and the loop will skip iterating over registers it's
 ; already sorted as it sorts r0 - r6
-beglp
-    ifle 2 r7
-        iflt r1 r0
-            swp r0 r1
-        endif
-    endif
-    ifle 3 r7
-        iflt r2 r1
-            swp r1 r2
-        endif
-    endif
-    ifle 4 r7
-        iflt r3 r2
-            swp r2 r3
-        endif
-    endif
-    ifle 5 r7
-        iflt r4 r3
-            swp r3 r4
-        endif
-    endif
-    ifle 6 r7
-        iflt r5 r4
-            swp r4 r5
-        endif
-    endif
-    ifle 7 r7
-        iflt r6 r5
-            swp r5 r6
-        endif
-    endif
+begin_loop
+    if_less_or_equal 2 r7
+        if_less r1 r0
+            swap r0 r1
+        end_if
+    end_if
+    if_less_or_equal 3 r7
+        if_less r2 r1
+            swap r1 r2
+        end_if
+    end_if
+    if_less_or_equal 4 r7
+        if_less r3 r2
+            swap r2 r3
+        end_if
+    end_if
+    if_less_or_equal 5 r7
+        if_less r4 r3
+            swap r3 r4
+        end_if
+    end_if
+    if_less_or_equal 6 r7
+        if_less r5 r4
+            swap r4 r5
+        end_if
+    end_if
+    if_less_or_equal 7 r7
+        if_less r6 r5
+            swap r5 r6
+        end_if
+    end_if
 
-    decr r7
-endlpeq r7 0
+    decrement r7
+end_loop_if_equal r7 0
 
 print "Sorted:"
-printn r0
-printn " "
-printn r1
-printn " "
-printn r2
-printn " "
-printn r3
-printn " "
-printn r4
-printn " "
-printn r5
-printn " "
+print_n r0
+print_n " "
+print_n r1
+print_n " "
+print_n r2
+print_n " "
+print_n r3
+print_n " "
+print_n r4
+print_n " "
+print_n r5
+print_n " "
 print r6
 
 done

@@ -1,49 +1,49 @@
 #!/usr/bin/env simplang
 
 ; Initialize iterator and string literals
-asgn r2 0
-ldstr r8 "Remember, the range of the random number is 1 to 100 inclusive"
+asign r2 0
+load_string r8 "Remember, the range of the randomom number is 1 to 100 inclusive"
 
-; Generates the random number
-; Since Simplang's rand instruction generates a number
+; Generates the randomom number
+; Since Simplang's random instruction generates a number
 ; between 0 and a2 - 1, we increment the generated number
 ; to put it in the range 1-100
-rand r0 100
-incr r0
+random r0 100
+increment r0
 
 print "Welcome to Guess the Number, see how many guesses it takes to guess a number between 1 and 100!"
-beglp
-    printn "Enter your guess: "
-    geti r1
+begin_loop
+    print_n "Enter your guess: "
+    get_number r1
 
     ; If the user guesses a number that's not between 1-100,
     ; print a message stating such and restart the loop without
     ; a guess penalty
-    ifgt r1 100
+    if_greater r1 100
         print r8
-        cont
-    endif
-    ifle r1 0
+        continue
+    end_if
+    if_less_or_equal r1 0
         print r8
-        cont
-    endif
+        continue
+    end_if
 
     ; Display the proper message depending on whether the user's
     ; guess was too low or too high
-    iflt r1 r0
+    if_less r1 r0
         print "Your guess was too low, try again"
-    endif
-    ifgt r1 r0
+    end_if
+    if_greater r1 r0
         print "Your guess was too high, try again"
-    endif
+    end_if
 
     ; Increment the guess counter
-    incr r2
-endlpeq r0 r1
+    increment r2
+end_loop_if_equal r0 r1
 
 ; Print the success message
-printn "Congratulations, you guessed it in "
-printn r2
+print_n "Congratulations, you guessed it in "
+print_n r2
 print " guesses!"
 
 done

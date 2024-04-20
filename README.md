@@ -15,10 +15,10 @@ Here's an example Simplang script:
 ```
 #!/usr/bin/env simplang
 
-ldstr r0 "Welcome to Simplang!"
+load_string r0 "Welcome to Simplang!"
 print r0
-asgn r1 6
-asgn r2 3
+asign r1 6
+asign r2 3
 add r1 r2
 print r1
 done
@@ -49,35 +49,35 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 ## Reference
 
-`asgn <a1> <a2>` - stores the value specified by a2 in the register specified by a1
+`asign <a1> <a2>` - stores the value specified by a2 in the register specified by a1
 
-`rand <a1> <a2>` - stores a pseudo-randomly generated number in the register specified by a1 between 0 and a2 - 1, a2 may be a register or a number
+`random <a1> <a2>` - stores a pseudo-randomly generated number in the register specified by a1 between 0 and a2 - 1, a2 may be a register or a number
 
-`ldstr <a1> <a2>` - stores the string literal specified by a2 in the register specified by a1
+`load_string <a1> <a2>` - stores the string literal specified by a2 in the register specified by a1
 
-`getopt <a1> <a2>` - prints a string literal prompt specified by a2 and gets and integer from the user to store in the regester specified by a1 if that register hasn't already been filled
+`get_option <a1> <a2>` - prints a string literal prompt specified by a2 and gets and integer from the user to store in the regester specified by a1 if that register hasn't already been filled
 
-`geti <a1>` - gets an integer from the user and stores it in the register specified by a1
+`get_number <a1>` - gets an integer from the user and stores it in the register specified by a1
 
-`gets <a1>` - gets a string from the user and stoes it in the register specified by a1
+`get_string <a1>` - gets a string from the user and stoes it in the register specified by a1
 
-`(add, subtr, mul, div, mod) <a1> <a2>` - perform the arithmetic operation specified on the value stored in the a1 register with the number specified by a2, then store the result back in a1
+`(add, subtract, multiply, divide, modulo) <a1> <a2>` - perform the arithmetic operation specified on the value stored in the a1 register with the number specified by a2, then store the result back in a1
 
-`(incr, decr) <a1>` - increment or decrement the value stored at the register specified by a1
+`(increment, decrement) <a1>` - increment or decrement the value stored at the register specified by a1
 
-`swp <a1> <a2>` - swap the values stored in the registers specified by a1 and a2
+`swap <a1> <a2>` - swap the values stored in the registers specified by a1 and a2
 
-`beglp` - begins a loop
+`begin_loop` - begins a loop
 
-`cont` - jump back to the beginning of the current loop
+`continue` - jump back to the beginning of the current loop
 
-`(endlpeq, endlpne, endlplt, endlple, endlpgt, endlpge) <a1> <a2>` - ends execution of a loop based on the condition comparing a1 and a2, otherwise jump back to `beglp`
+`(end_loop_if_equal, end_loop_if_not_equal, end_loop_if_less, end_loop_if_less_or_equal, end_loop_if_greater, end_loop_if_greater_or_equal) <a1> <a2>` - ends execution of a loop based on the condition comparing a1 and a2, otherwise jump back to `beglp`
 
-`(ifeq, ifne, iflt, ifle, ifgt, ifge) <a1> <a2>` - executes the following code block based on the condition comparing a1 and a2, otherwise jump ahead to the next `endif`
+`(if_equal, if_not_equal, if_less, if_less_or_equal, if_greater, if_greater_or_equal) <a1> <a2>` - executes the following code block based on the condition comparing a1 and a2, otherwise jump ahead to the next `end_if`
 
-`endif` - signifies the end of an if block
+`end_if` - signifies the end of an if block
 
-`(print, printn) <a1>` - prints the integer value or string stored in the register specified by a1, or print a number or string literal passed directly as an argument, the n variant omits the trailing newline
+`(print, print_n) <a1>` - prints the integer value or string stored in the register specified by a1, or print a number or string literal passed directly as an argument, the n variant omits the trailing newline
 
 `done` - ends execution of the program
 

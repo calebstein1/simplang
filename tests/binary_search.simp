@@ -1,68 +1,68 @@
 #!/usr/bin/env simplang
 
 ; Initialize our initial values and string literals
-asgn r1 0
-asgn r2 0
-asgn r7 0
-ldstr r8 "Now I'm not cheating or anything, but I know that's out of range!"
-ldstr r9 "I'll guess "
-ldstr r10 ", and that's too low"
-ldstr r11 ", and that's too high"
+asign r1 0
+asign r2 0
+asign r7 0
+load_string r8 "Now I'm not cheating or anything, but I know that's out of range!"
+load_string r9 "I'll guess "
+load_string r10 ", and that's too low"
+load_string r11 ", and that's too high"
 
 print "Enter a number between 1 and 100 and I'll try to guess it!"
 
-beglp
-    getopt r0 "Enter your number here: "
+begin_loop
+    get_option r0 "Enter your number here: "
 
     ; If the user enters a number outside the acceptable range,
     ; display a message stating so and request a new number
-    ifgt r0 100
+    if_greater r0 100
         print r8
-        asgn r0 0
-        cont
-    endif
-    iflt r0 1
+        asign r0 0
+        continue
+    end_if
+    if_less r0 1
         print r8
-        asgn r0 0
-        cont
-    endif
+        asign r0 0
+        continue
+    end_if
 
 ; Always end the loop if we reach this point, as that means that
 ; the entered number is within range
-endlpeq 0 0
+end_loop_if_equal 0 0
 
 ; Since the range of numbers is 1 to 100 inclusive, we'll set our
 ; outer bounds to 0 and 101
 ; We'll use r2 for the lower bound and r3 for the upper bound
-asgn r3 101
-beglp
-    printn r9
-    subtr r1 r1
+asign r3 101
+begin_loop
+    print_n r9
+    subtract r1 r1
     add r1 r2
     add r1 r3
-    div r1 2
-    printn r1
+    divide r1 2
+    print_n r1
 
     ; The guess is the midpoint between the upper and lower bounds,
     ; rounded down. Here we update either the upper or lower bound
     ; based on whether the guess was higher or lower than the answer
-    iflt r1 r0
+    if_less r1 r0
         print r10
-        asgn r2 r1
-    endif
-    ifgt r1 r0
+        asign r2 r1
+    end_if
+    if_greater r1 r0
         print r11
-        asgn r3 r1
-    endif
+        asign r3 r1
+    end_if
 
     ; Increment the guess counter
-    incr r7
-endlpeq r0 r1
+    increment r7
+end_loop_if_equal r0 r1
 
 ; Prints the success message
 print ", and that's it!"
-printn "It took me "
-printn r7
+print_n "It took me "
+print_n r7
 print " guesses"
 
 done

@@ -1,44 +1,44 @@
 #!/usr/bin/env simplang
 
-beglp
-    getopt r0 "Enter Fibonacci digit to calculate up to: "
-    ifle r0 0
+begin_loop
+    get_option r0 "Enter Fibonacci digit to calculate up to: "
+    if_less_or_equal r0 0
         print "Please enter a number greater than 0"
-        asgn r0 0
-        cont
-    endif
-endlpeq 0 0
+        asign r0 0
+        continue
+    end_if
+end_loop_if_equal 0 0
 
 ; r1 will be the current digit, r2 and r3 will be the prior two,
 ; r7 is our iterator
 
-asgn r1 0
-asgn r2 1
-asgn r3 1
-asgn r7 0
+asign r1 0
+asign r2 1
+asign r3 1
+asign r7 0
 
-ifeq r7 0
+if_equal r7 0
     print 1
-    ifgt r0 1
-        incr r7
-    endif
-endif
-ifeq r7 1
+    if_greater r0 1
+        increment r7
+    end_if
+end_if
+if_equal r7 1
     print 1
-    ifgt r0 2
-        incr r7
-    endif
-endif
-ifgt r0 2
-    beglp
-       subtr r1 r1
+    if_greater r0 2
+        increment r7
+    end_if
+end_if
+if_greater r0 2
+    begin_loop
+       subtract r1 r1
        add r1 r2
        add r1 r3
-       asgn r3 r2
-       asgn r2 r1
+       asign r3 r2
+       asign r2 r1
        print r1
-       incr r7
-    endlpeq r0 r7
-endif
+       increment r7
+    end_loop_if_equal r0 r7
+end_if
 
 done

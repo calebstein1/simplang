@@ -3,28 +3,28 @@
 ; Get the two numbers to operate on from the user
 ; They can be passed in as command line arguments,
 ; in which case we can skip prompting for the number
-getopt r0 "Enter first number: "
-getopt r1 "Enter second number: "
+get_option r0 "Enter first number: "
+get_option r1 "Enter second number: "
 
 ; Store the initial values in r2 and r3 so that we
 ; can print them at the end
-asgn r2 r0
-asgn r3 r1
+asign r2 r0
+asign r3 r1
 
 ; Calculate the GCD using Euclid's algorithm
-beglp
-    asgn r4 r1
-    mod r0 r1
-    asgn r1 r0
-    asgn r0 r4
-endlpeq r1 0
+begin_loop
+    asign r4 r1
+    modulo r0 r1
+    asign r1 r0
+    asign r0 r4
+end_loop_if_equal r1 0
 
 ; Form and print the final output
-printn "The GCD of "
-printn r2
-printn " and "
-printn r3
-printn " is "
+print_n "The GCD of "
+print_n r2
+print_n " and "
+print_n r3
+print_n " is "
 print r0
 
 done
