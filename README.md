@@ -2,7 +2,7 @@
 
 Simplang is a simple and lightweight interpreted scripting language with an assembly-like syntax.
 
-Simplang supports 64-bit signed integers, string literals, user input, the four main arithmetic operations, increment/decrement, if statements (with nesting support), and do-while loops (with nested loop support).
+Simplang supports dynamic typing, 64-bit signed integers, string literals, user input, the four main arithmetic operations, increment/decrement, if statements (with nesting support), and do-while loops (with nested loop support).
 
 ## Usage
 
@@ -15,12 +15,12 @@ Here's an example Simplang script:
 ```
 #!/usr/bin/env simplang
 
-ldstr s0 "Welcome to Simplang!"
-print s0
+ldstr r0 "Welcome to Simplang!"
+print r0
 asgn r1 6
 asgn r2 3
-add r0 r1 r2
-print r0
+add r1 r2
+print r1
 done
 ```
 
