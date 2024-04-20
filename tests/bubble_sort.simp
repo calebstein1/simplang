@@ -24,7 +24,7 @@ print_n r5
 print_n " "
 print r6
 
-asign r7 7
+assign r7 7
 
 ; Since Simplang doesn't support arrays, this can't be done using
 ; nested loops. Instead, r7 is used to track the furthest unsorted

@@ -1,9 +1,9 @@
 #!/usr/bin/env simplang
 
 ; Initialize our initial values and string literals
-asign r1 0
-asign r2 0
-asign r7 0
+assign r1 0
+assign r2 0
+assign r7 0
 load_string r8 "Now I'm not cheating or anything, but I know that's out of range!"
 load_string r9 "I'll guess "
 load_string r10 ", and that's too low"
@@ -18,12 +18,12 @@ begin_loop
     ; display a message stating so and request a new number
     if_greater r0 100
         print r8
-        asign r0 0
+        assign r0 0
         continue
     end_if
     if_less r0 1
         print r8
-        asign r0 0
+        assign r0 0
         continue
     end_if
 
@@ -34,7 +34,7 @@ end_loop_if_equal 0 0
 ; Since the range of numbers is 1 to 100 inclusive, we'll set our
 ; outer bounds to 0 and 101
 ; We'll use r2 for the lower bound and r3 for the upper bound
-asign r3 101
+assign r3 101
 begin_loop
     print_n r9
     subtract r1 r1
@@ -48,11 +48,11 @@ begin_loop
     ; based on whether the guess was higher or lower than the answer
     if_less r1 r0
         print r10
-        asign r2 r1
+        assign r2 r1
     end_if
     if_greater r1 r0
         print r11
-        asign r3 r1
+        assign r3 r1
     end_if
 
     ; Increment the guess counter

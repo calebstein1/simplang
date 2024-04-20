@@ -8,15 +8,15 @@ get_option r1 "Enter second number: "
 
 ; Store the initial values in r2 and r3 so that we
 ; can print them at the end
-asign r2 r0
-asign r3 r1
+assign r2 r0
+assign r3 r1
 
 ; Calculate the GCD using Euclid's algorithm
 begin_loop
-    asign r4 r1
+    assign r4 r1
     modulo r0 r1
-    asign r1 r0
-    asign r0 r4
+    assign r1 r0
+    assign r0 r4
 end_loop_if_equal r1 0
 
 ; Form and print the final output

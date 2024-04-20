@@ -9,7 +9,7 @@
 
 #define OPCODE_TABLE                                         \
 X(INVLD, "", &&parse_no_args)                                \
-X(ASGN, "asign", &&parse_two_args)                           \
+X(ASGN, "assign", &&parse_two_args)                           \
 X(RAND, "random", &&parse_two_args)                          \
 X(LDSTR, "load_string", &&parse_two_args)                    \
 X(GETOPT, "get_option", &&parse_two_args)                    \

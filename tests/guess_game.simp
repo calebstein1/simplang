@@ -1,7 +1,7 @@
 #!/usr/bin/env simplang
 
 ; Initialize iterator and string literals
-asign r2 0
+assign r2 0
 load_string r8 "Remember, the range of the randomom number is 1 to 100 inclusive"
 
 ; Generates the randomom number

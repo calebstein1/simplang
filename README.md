@@ -17,8 +17,8 @@ Here's an example Simplang script:
 
 load_string r0 "Welcome to Simplang!"
 print r0
-asign r1 6
-asign r2 3
+assign r1 6
+assign r2 3
 add r1 r2
 print r1
 done
@@ -49,7 +49,7 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 ## Reference
 
-`asign <a1> <a2>` - stores the value specified by a2 in the register specified by a1
+`assign <a1> <a2>` - stores the value specified by a2 in the register specified by a1
 
 `random <a1> <a2>` - stores a pseudo-randomly generated number in the register specified by a1 between 0 and a2 - 1, a2 may be a register or a number
 

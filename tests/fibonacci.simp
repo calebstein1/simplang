@@ -4,7 +4,7 @@ begin_loop
     get_option r0 "Enter Fibonacci digit to calculate up to: "
     if_less_or_equal r0 0
         print "Please enter a number greater than 0"
-        asign r0 0
+        assign r0 0
         continue
     end_if
 end_loop_if_equal 0 0
@@ -12,10 +12,10 @@ end_loop_if_equal 0 0
 ; r1 will be the current digit, r2 and r3 will be the prior two,
 ; r7 is our iterator
 
-asign r1 0
-asign r2 1
-asign r3 1
-asign r7 0
+assign r1 0
+assign r2 1
+assign r3 1
+assign r7 0
 
 if_equal r7 0
     print 1
@@ -34,8 +34,8 @@ if_greater r0 2
        subtract r1 r1
        add r1 r2
        add r1 r3
-       asign r3 r2
-       asign r2 r1
+       assign r3 r2
+       assign r2 r1
        print r1
        increment r7
     end_loop_if_equal r0 r7
