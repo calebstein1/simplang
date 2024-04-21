@@ -15,20 +15,19 @@ Here's an example Simplang script:
 ```
 #!/usr/bin/env simplang
 
-load_string r0 "Welcome to Simplang!"
-print r0
-assign r1 6
-assign r2 3
-add r1 r2
-print r1
+load_string welcome_msg "Welcome to Simplang!"
+print welcome_msg
+assign num1 6
+assign num2 3
+add num1 num2
+print num1
 done
 ```
 
 Running this script will print "Welcome to Simplang!" on one line, followed by 9 on the next.
 
 All Simplang scripts need to end with `done` on the last line.
-Simplang uses registers to store variables, and by default there are 24 registers available, r0-r23.
-Registers can store either strings or integers.
+Simplang supports up to 24 uniquely named variables, which can either be integers or strings.
 Comments begin with `;`.
 They must be on their own line, but may be indented, and there must be at at least one whitespace character between the semicolon and the comment text.
 

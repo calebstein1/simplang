@@ -1,44 +1,44 @@
 #!/usr/bin/env simplang
 
 begin_loop
-    get_option r0 "Enter Fibonacci digit to calculate up to: "
-    if_less_or_equal r0 0
+    get_option target_digit "Enter Fibonacci digit to calculate up to: "
+    if_less_or_equal target_digit 0
         print "Please enter a number greater than 0"
-        assign r0 0
+        assign target_digit 0
         continue
     end_if
 end_loop_if_equal 0 0
 
-; r1 will be the current digit, r2 and r3 will be the prior two,
-; r7 is our iterator
+; current_digit will be the current digit, previous_digit and last_previous_digit will be the prior two,
+; counter is our iterator
 
-assign r1 0
-assign r2 1
-assign r3 1
-assign r7 0
+assign current_digit 0
+assign previous_digit 1
+assign last_previous_digit 1
+assign counter 0
 
-if_equal r7 0
+if_equal counter 0
     print 1
-    if_greater r0 1
-        increment r7
+    if_greater target_digit 1
+        increment counter
     end_if
 end_if
-if_equal r7 1
+if_equal counter 1
     print 1
-    if_greater r0 2
-        increment r7
+    if_greater target_digit 2
+        increment counter
     end_if
 end_if
-if_greater r0 2
+if_greater target_digit 2
     begin_loop
-       subtract r1 r1
-       add r1 r2
-       add r1 r3
-       assign r3 r2
-       assign r2 r1
-       print r1
-       increment r7
-    end_loop_if_equal r0 r7
+       subtract current_digit current_digit
+       add current_digit previous_digit
+       add current_digit last_previous_digit
+       assign last_previous_digit previous_digit
+       assign previous_digit current_digit
+       print current_digit
+       increment counter
+    end_loop_if_equal target_digit counter
 end_if
 
 done

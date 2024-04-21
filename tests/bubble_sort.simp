@@ -1,83 +1,83 @@
 #!/usr/bin/env simplang
 
 ; Initialize string literals
-random r0 1000
-random r1 1000
-random r2 1000
-random r3 1000
-random r4 1000
-random r5 1000
-random r6 1000
+random num1 1000
+random num2 1000
+random num3 1000
+random num4 1000
+random num5 1000
+random num6 1000
+random num7 1000
 
 print "Unsorted:"
-print_n r0
+print_n num1
 print_n " "
-print_n r1
+print_n num2
 print_n " "
-print_n r2
+print_n num3
 print_n " "
-print_n r3
+print_n num4
 print_n " "
-print_n r4
+print_n num5
 print_n " "
-print_n r5
+print_n num6
 print_n " "
-print r6
+print num7
 
-assign r7 7
+assign counter 7
 
 ; Since Simplang doesn't support arrays, this can't be done using
-; nested loops. Instead, r7 is used to track the furthest unsorted
+; nested loops. Instead, counter is used to track the furthest unsorted
 ; register, and the loop will skip iterating over registers it's
-; already sorted as it sorts r0 - r6
+; already sorted as it sorts num1 - num7
 begin_loop
-    if_less_or_equal 2 r7
-        if_less r1 r0
-            swap r0 r1
+    if_less_or_equal 2 counter
+        if_less num2 num1
+            swap num1 num2
         end_if
     end_if
-    if_less_or_equal 3 r7
-        if_less r2 r1
-            swap r1 r2
+    if_less_or_equal 3 counter
+        if_less num3 num2
+            swap num2 num3
         end_if
     end_if
-    if_less_or_equal 4 r7
-        if_less r3 r2
-            swap r2 r3
+    if_less_or_equal 4 counter
+        if_less num4 num3
+            swap num3 num4
         end_if
     end_if
-    if_less_or_equal 5 r7
-        if_less r4 r3
-            swap r3 r4
+    if_less_or_equal 5 counter
+        if_less num5 num4
+            swap num4 num5
         end_if
     end_if
-    if_less_or_equal 6 r7
-        if_less r5 r4
-            swap r4 r5
+    if_less_or_equal 6 counter
+        if_less num6 num5
+            swap num5 num6
         end_if
     end_if
-    if_less_or_equal 7 r7
-        if_less r6 r5
-            swap r5 r6
+    if_less_or_equal 7 counter
+        if_less num7 num6
+            swap num6 num7
         end_if
     end_if
 
-    decrement r7
-end_loop_if_equal r7 0
+    decrement counter
+end_loop_if_equal counter 0
 
 print "Sorted:"
-print_n r0
+print_n num1
 print_n " "
-print_n r1
+print_n num2
 print_n " "
-print_n r2
+print_n num3
 print_n " "
-print_n r3
+print_n num4
 print_n " "
-print_n r4
+print_n num5
 print_n " "
-print_n r5
+print_n num6
 print_n " "
-print r6
+print num7
 
 done

@@ -1,29 +1,30 @@
 #!/usr/bin/env simplang
 
-; Initialize our initial values and string literals
-assign r1 0
-assign r2 0
-assign r7 0
-load_string r8 "Now I'm not cheating or anything, but I know that's out of range!"
-load_string r9 "I'll guess "
-load_string r10 ", and that's too low"
-load_string r11 ", and that's too high"
+; Set our initial values and string literals
+assign guess 0
+assign lower_bound 0
+assign upper_bound 101
+assign counter 0
+load_string invalid_target "Now I'm not cheating or anything, but I know that's out of range!"
+load_string ill_guess "I'll guess "
+load_string too_low ", and that's too low"
+load_string too_high ", and that's too high"
 
 print "Enter a number between 1 and 100 and I'll try to guess it!"
 
 begin_loop
-    get_option r0 "Enter your number here: "
+    get_option target "Enter your number here: "
 
     ; If the user enters a number outside the acceptable range,
     ; display a message stating so and request a new number
-    if_greater r0 100
-        print r8
-        assign r0 0
+    if_greater target 100
+        print invalid_target
+        assign target 0
         continue
     end_if
-    if_less r0 1
-        print r8
-        assign r0 0
+    if_less target 1
+        print invalid_target
+        assign target 0
         continue
     end_if
 
@@ -31,38 +32,34 @@ begin_loop
 ; the entered number is within range
 end_loop_if_equal 0 0
 
-; Since the range of numbers is 1 to 100 inclusive, we'll set our
-; outer bounds to 0 and 101
-; We'll use r2 for the lower bound and r3 for the upper bound
-assign r3 101
 begin_loop
-    print_n r9
-    subtract r1 r1
-    add r1 r2
-    add r1 r3
-    divide r1 2
-    print_n r1
+    print_n ill_guess
+    ; Resets guess to 0
+    subtract guess guess
+    add guess lower_bound
+    add guess upper_bound
+    divide guess 2
+    print_n guess
 
     ; The guess is the midpoint between the upper and lower bounds,
     ; rounded down. Here we update either the upper or lower bound
     ; based on whether the guess was higher or lower than the answer
-    if_less r1 r0
-        print r10
-        assign r2 r1
+    if_less guess target
+        print too_low
+        assign lower_bound guess
     end_if
-    if_greater r1 r0
-        print r11
-        assign r3 r1
+    if_greater guess target
+        print too_high
+        assign upper_bound guess
     end_if
 
-    ; Increment the guess counter
-    increment r7
-end_loop_if_equal r0 r1
+    increment counter
+end_loop_if_equal guess target
 
 ; Prints the success message
 print ", and that's it!"
 print_n "It took me "
-print_n r7
+print_n counter
 print " guesses"
 
 done

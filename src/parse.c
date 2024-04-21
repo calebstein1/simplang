@@ -30,6 +30,8 @@ void get_opcode(operation *op, char *tok) {
 }
 
 void parse_op(operation *op) {
+    static char *reg_lbls[MAX_REGISTERS] = {};
+
     char *cur_arg = NULL;
     int i, j, num_args;
     j = num_args = 0;
@@ -56,41 +58,57 @@ void parse_op(operation *op) {
 
     do {
         cur_arg = strtok(NULL, " \t");
-        if (*cur_arg == 'r') {
-            int target_reg = atoi(cur_arg + 1);
-            if (target_reg >= MAX_REGISTERS) {
-                printf("Invalid register number\n");
-                if (pe) exit(-1);
-                op->opcode = INVLD;
-                return;
+        if (('a' <= *cur_arg && *cur_arg <= 'z') || ('A' <= *cur_arg && *cur_arg <= 'Z')) {
+            int l, arg_len = strlen(cur_arg);
+            i = l = 0;
+
+            if (cur_arg[arg_len - 1] == '\n') {
+                cur_arg[--arg_len] = 0x0;
             }
 
-            op->target[j] = target_reg;
-        } else {
-            if (*cur_arg == '"') {
-                i = 0;
-                cur_arg++;
-                while (*cur_arg != '"') {
-                    if (!*cur_arg) {
-                        *cur_arg = ' ';
-                    }
-                    if (i >= GLOBAL_BUFF_SIZE - 1) {
-                        printf("String buffer overflow\n");
-                        if (pe) exit(-1);
-                        return;
-                    }
-                    s_buff[i++] = *cur_arg++;
+            for (; i < MAX_REGISTERS; i++) {
+                if (!reg_lbls[i]) {
+                    reg_lbls[i] = simp_alloc(arg_len, STR);
+                    strcpy(reg_lbls[i], cur_arg);
+                    op->target[j] = i;
+                    break;
                 }
-                s_buff[i] = 0x0;
-                args[j]->type = TRANSIENT_STR;
-                args[j]->ptr.str_ptr = simp_alloc(i, TRANSIENT_STR);
-                strcpy(args[j]->ptr.str_ptr, s_buff);
-                strtok(cur_arg, " \t");
-            } else {
-                args[j]->type = TRANSIENT_INT;
-                args[j]->ptr.int_ptr = simp_alloc(sizeof(long), TRANSIENT_INT);
-                *args[j]->ptr.int_ptr = atoi(cur_arg);
+                if (memcmp(cur_arg, reg_lbls[i], (l = strlen(reg_lbls[i])) > arg_len ? l : arg_len) == 0) {
+                    op->target[j] = i;
+                    break;
+                }
             }
+            if (i == MAX_REGISTERS) {
+                printf("Too many variables assigned\n");
+                if (pe) exit(-1);
+            }
+        } else if (*cur_arg == '"') {
+            i = 0;
+            cur_arg++;
+            while (*cur_arg != '"') {
+                if (!*cur_arg) {
+                    *cur_arg = ' ';
+                }
+                if (i >= GLOBAL_BUFF_SIZE - 1) {
+                    printf("String buffer overflow\n");
+                    if (pe) exit(-1);
+                    return;
+                }
+                s_buff[i++] = *cur_arg++;
+            }
+            s_buff[i] = 0x0;
+            args[j]->type = TRANSIENT_STR;
+            args[j]->ptr.str_ptr = simp_alloc(i, TRANSIENT_STR);
+            strcpy(args[j]->ptr.str_ptr, s_buff);
+            strtok(cur_arg, " \t");
+        } else if ('0' <= *cur_arg && *cur_arg <= '9') {
+            args[j]->type = TRANSIENT_INT;
+            args[j]->ptr.int_ptr = simp_alloc(sizeof(long), TRANSIENT_INT);
+            *args[j]->ptr.int_ptr = atoi(cur_arg);
+        } else {
+            printf("Unknown type for argument: %s\n", cur_arg);
+            if (pe) exit(-1);
+            return;
         }
     } while (++j < num_args);
 
