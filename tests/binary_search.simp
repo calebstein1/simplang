@@ -5,10 +5,10 @@ assign guess 0
 assign lower_bound 0
 assign upper_bound 101
 assign counter 0
-load_string invalid_target "Now I'm not cheating or anything, but I know that's out of range!"
-load_string ill_guess "I'll guess "
-load_string too_low ", and that's too low"
-load_string too_high ", and that's too high"
+assign invalid_target "Now I'm not cheating or anything, but I know that's out of range!"
+assign ill_guess "I'll guess "
+assign too_low ", and that's too low"
+assign too_high ", and that's too high"
 
 print "Enter a number between 1 and 100 and I'll try to guess it!"
 

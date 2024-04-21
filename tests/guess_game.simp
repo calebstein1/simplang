@@ -2,7 +2,7 @@
 
 ; Initialize iterator and string literals
 assign counter 0
-load_string invalid_guess "Remember, the range of the randomom number is 1 to 100 inclusive"
+assign invalid_guess "Remember, the range of the randomom number is 1 to 100 inclusive"
 
 ; Generates the randomom number
 ; Since Simplang's random instruction generates a number

@@ -13,13 +13,18 @@ void eval_op(operation *op) {
         OPCODE_TABLE
         #undef X
     };
+    static void *asgn_jmp_tbl[] = {
+        #define X(type, ld_fn, ...) ld_fn,
+        PTR_TYPE_TABLE
+        #undef X
+    };
     static void *print_jmp_tbl[] = {
-        #define X(type) &&PRINT_##type,
+        #define X(type, ...) &&PRINT_##type,
         PTR_TYPE_TABLE
         #undef X
     };
     static void *printn_jmp_tbl[] = {
-        #define X(type) &&PRINTN_##type,
+        #define X(type, ...) &&PRINTN_##type,
         PTR_TYPE_TABLE
         #undef X
     };
@@ -40,6 +45,16 @@ void eval_op(operation *op) {
     goto *eval_jmp_tbl[op->opcode];
 
     ASGN:
+        goto *asgn_jmp_tbl[op->a2.type];
+    RAND:
+        if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
+        op->a1.type = INT;
+        op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
+        *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
+        if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
+        simp_free(op->a2.ptr.int_ptr);
+        goto END;
+    LDINT:
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         op->a1.type = INT;
         if (op->target[1] >= 0) {
@@ -50,14 +65,6 @@ void eval_op(operation *op) {
         }
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         if (!pe) goto PRINT;
-        goto END;
-    RAND:
-        if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
-        op->a1.type = INT;
-        op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
-        *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
-        if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
-        simp_free(op->a2.ptr.int_ptr);
         goto END;
     LDSTR:
         if (op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);

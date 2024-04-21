@@ -15,7 +15,7 @@ Here's an example Simplang script:
 ```
 #!/usr/bin/env simplang
 
-load_string welcome_msg "Welcome to Simplang!"
+assign welcome_msg "Welcome to Simplang!"
 print welcome_msg
 assign num1 6
 assign num2 3
@@ -48,23 +48,21 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 ## Reference
 
-`assign <a1> <a2>` - stores the value specified by a2 in the register specified by a1
+`assign <a1> <a2>` - stores the value specified by a2 in the variable specified by a1
 
-`random <a1> <a2>` - stores a pseudo-randomly generated number in the register specified by a1 between 0 and a2 - 1, a2 may be a register or a number
+`random <a1> <a2>` - stores a pseudo-randomly generated number in the variable specified by a1 between 0 and a2 - 1
 
-`load_string <a1> <a2>` - stores the string literal specified by a2 in the register specified by a1
+`get_option <a1> <a2>` - prints a string literal prompt specified by a2 and gets and integer from the user to store in the variable specified by a1 if that variable hasn't already been filled
 
-`get_option <a1> <a2>` - prints a string literal prompt specified by a2 and gets and integer from the user to store in the regester specified by a1 if that register hasn't already been filled
+`get_number <a1>` - gets an integer from the user and stores it in the variable specified by a1
 
-`get_number <a1>` - gets an integer from the user and stores it in the register specified by a1
+`get_string <a1>` - gets a string from the user and stoes it in the variable specified by a1
 
-`get_string <a1>` - gets a string from the user and stoes it in the register specified by a1
+`(add, subtract, multiply, divide, modulo) <a1> <a2>` - perform the arithmetic operation specified on the value stored in the a1 variable with the number specified by a2, then store the result back in a1
 
-`(add, subtract, multiply, divide, modulo) <a1> <a2>` - perform the arithmetic operation specified on the value stored in the a1 register with the number specified by a2, then store the result back in a1
+`(increment, decrement) <a1>` - increment or decrement the value stored at the variable specified by a1
 
-`(increment, decrement) <a1>` - increment or decrement the value stored at the register specified by a1
-
-`swap <a1> <a2>` - swap the values stored in the registers specified by a1 and a2
+`swap <a1> <a2>` - swap the values stored in the variables specified by a1 and a2
 
 `begin_loop` - begins a loop
 
@@ -76,11 +74,9 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 `end_if` - signifies the end of an if block
 
-`(print, print_n) <a1>` - prints the integer value or string stored in the register specified by a1, or print a number or string literal passed directly as an argument, the n variant omits the trailing newline
+`(print, print_n) <a1>` - prints the integer value or string stored in the variable specified by a1, or print a number or string literal passed directly as an argument, the n variant omits the trailing newline
 
 `done` - ends execution of the program
 
-Hint: all int registers (r0 - r7) are initialized to 0 by default, so you can immediately use any of them as a loop counter with the `incr` instruction without having to explicitly initialize them.
-
 ## Known Bugs:
-- Trying to assign a register to a constant number within a loop doesn't seem to be working properly
+- Trying to assign a variable to a constant number within a loop doesn't seem to be working properly

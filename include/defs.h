@@ -11,7 +11,6 @@
 X(INVLD, "", &&parse_no_args)                                \
 X(ASGN, "assign", &&parse_two_args)                           \
 X(RAND, "random", &&parse_two_args)                          \
-X(LDSTR, "load_string", &&parse_two_args)                    \
 X(GETOPT, "get_option", &&parse_two_args)                    \
 X(GETI, "get_number", &&parse_one_arg)                       \
 X(GETS, "get_string", &&parse_one_arg)                       \
@@ -43,12 +42,12 @@ X(PRINTN, "print_n", &&parse_one_arg)                        \
 X(CMNT, ";", &&parse_no_args)                                \
 X(DONE, "done", &&parse_no_args)
 
-#define PTR_TYPE_TABLE \
-X(NONE)                \
-X(TRANSIENT_STR)       \
-X(STR)                 \
-X(TRANSIENT_INT)       \
-X(INT)
+#define PTR_TYPE_TABLE          \
+X(NONE, &&INVLD)                \
+X(TRANSIENT_STR, &&LDSTR)       \
+X(STR, &&LDSTR)                 \
+X(TRANSIENT_INT, &&LDINT)       \
+X(INT, &&LDINT)
 
 typedef enum {
     #define X(opcode, ...) opcode,
