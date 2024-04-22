@@ -13,8 +13,7 @@ assign orig_num2 num2
 ; Calculate the GCD using Euclid's algorithm
 begin_loop
     assign temp num2
-    modulo num1 num2
-    assign num2 num1
+    assign num2 (modulo num1 num2)
     assign num1 temp
 end_loop_if_equal num2 0
 

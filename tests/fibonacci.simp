@@ -32,8 +32,7 @@ end_if
 if_greater target_digit 2
     begin_loop
        subtract current_digit current_digit
-       add current_digit previous_digit
-       add current_digit last_previous_digit
+       add current_digit (add previous_digit last_previous_digit)
        assign last_previous_digit previous_digit
        assign previous_digit current_digit
        print current_digit

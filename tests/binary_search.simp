@@ -37,8 +37,7 @@ begin_loop
     print_n ill_guess
     ; Resets guess to 0
     subtract guess guess
-    add guess lower_bound
-    add guess upper_bound
+    add guess (add lower_bound upper_bound)
     divide guess 2
     print_n guess
 

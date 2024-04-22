@@ -13,6 +13,7 @@
 #include "heap.h"
 
 dyn_ptr_t g_registers[MAX_REGISTERS] = {};
+long i_buff;
 char s_buff[GLOBAL_BUFF_SIZE] = {};
 operation *j_stack[GLOBAL_STACK_SIZE] = {};
 operation **j_sp, **j_bp;

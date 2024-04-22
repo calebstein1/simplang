@@ -4,6 +4,7 @@
 
 #include "defs.h"
 #include "parse.h"
+#include "eval.h"
 #include "heap.h"
 
 char *opcode_lit[] = {
@@ -42,7 +43,7 @@ void parse_op(operation *op, char **tok_pos) {
     };
 
     static void *parse_fn_tbl[] = {
-        #define X(opcode, lit, parse_fn) parse_fn,
+        #define X(opcode, lit, parse_fn, ...) parse_fn,
         OPCODE_TABLE
         #undef X
     };
@@ -102,6 +103,39 @@ void parse_op(operation *op, char **tok_pos) {
             args[j]->ptr.str_ptr = simp_alloc(i, STR);
             strcpy(args[j]->ptr.str_ptr, s_buff);
             strtok(cur_arg, " \t");
+        } else if (*cur_arg == '(') {
+            operation embedded_op = { .embedded = true, .target = { -1, -1, -1 } };
+            char *embedded_tok_r = NULL;
+            i = 0;
+            cur_arg++;
+            while (*cur_arg != ')') {
+                if (!*cur_arg) {
+                    *cur_arg = ' ';
+                }
+                if (i >= GLOBAL_BUFF_SIZE - 1) {
+                    printf("String buffer overflow\n");
+                    if (pe) exit(-1);
+                    return;
+                }
+                s_buff[i++] = *cur_arg++;
+            }
+            s_buff[i] = 0x0;
+
+            get_opcode(&embedded_op, s_buff, &embedded_tok_r);
+            if (j == 0) {
+                printf("Embedded operation cannot be first argument\n");
+                if (pe) exit(-1);
+                return;
+            }
+            if (embedded_op.opcode < ADD || MOD < embedded_op.opcode) {
+                printf("Embedded operation must be an arithmetic instruction\n");
+                if (pe) exit(-1);
+                return;
+            }
+            parse_op(&embedded_op, &embedded_tok_r);
+            if (!pe) eval_op(&embedded_op);
+            args[j]->type = INT;
+            args[j]->ptr.int_ptr = &i_buff;
         } else if ('0' <= *cur_arg && *cur_arg <= '9') {
             args[j]->type = INT;
             args[j]->transient = true;

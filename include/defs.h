@@ -78,9 +78,11 @@ typedef struct {
     dyn_ptr_t a1;
     dyn_ptr_t a2;
     dyn_ptr_t a3;
+    bool embedded;
 } operation;
 
 extern dyn_ptr_t g_registers[MAX_REGISTERS];
+extern long i_buff;
 extern char s_buff[GLOBAL_BUFF_SIZE];
 extern operation **j_sp, **j_bp;
 extern operation *pp, *pe;
