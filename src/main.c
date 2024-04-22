@@ -69,11 +69,12 @@ int main(int argc, char **argv) {
 
     do {
         operation op = { .target = { -1, -1, -1 } };
+        char *tok_pos = NULL;
         cur_tok = start_adv ? strtok_r(NULL, "\n", &tok_r) : strtok_r(script, "\n", &tok_r);
         start_adv = true;
-        get_opcode(&op, cur_tok);
+        get_opcode(&op, cur_tok, &tok_pos);
         if (op.opcode == CMNT) continue;
-        parse_op(&op);
+        parse_op(&op, &tok_pos);
     } while ((pe - 1)->opcode != DONE);
 
     do {

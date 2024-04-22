@@ -12,9 +12,9 @@ char *opcode_lit[] = {
     #undef X
 };
 
-void get_opcode(operation *op, char *tok) {
+void get_opcode(operation *op, char *tok, char **tok_pos) {
     int i = 1, l = 0;
-    char *lit = strtok(tok, " \n");
+    char *lit = strtok_r(tok, " \n", tok_pos);
     int lit_len = strlen(lit);
     for (; memcmp(opcode_lit[i], lit, (l = strlen(opcode_lit[i])) > lit_len ? l : lit_len) != 0; i++) {
         if (i >= DONE) {
@@ -29,7 +29,7 @@ void get_opcode(operation *op, char *tok) {
     op->opcode = i;
 }
 
-void parse_op(operation *op) {
+void parse_op(operation *op, char **tok_pos) {
     static char *reg_lbls[MAX_REGISTERS] = {};
 
     char *cur_arg = NULL;
@@ -57,7 +57,7 @@ void parse_op(operation *op) {
         ++num_args;
 
     do {
-        cur_arg = strtok(NULL, " \t");
+        cur_arg = strtok_r(NULL, " \t", tok_pos);
         if (('a' <= *cur_arg && *cur_arg <= 'z') || ('A' <= *cur_arg && *cur_arg <= 'Z')) {
             int l, arg_len = strlen(cur_arg);
             i = l = 0;
