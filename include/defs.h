@@ -14,8 +14,7 @@ X(INVLD, "", &&parse_no_args)                                \
 X(ASGN, "assign", &&parse_two_args)                           \
 X(RAND, "random", &&parse_two_args)                          \
 X(GETOPT, "get_option", &&parse_two_args)                    \
-X(GETI, "get_number", &&parse_one_arg)                       \
-X(GETS, "get_string", &&parse_one_arg)                       \
+X(GET, "get_input", &&parse_one_arg)                       \
 X(ADD, "add", &&parse_two_args)                              \
 X(SUBTR, "subtract", &&parse_two_args)                       \
 X(MUL, "multiply", &&parse_two_args)                         \

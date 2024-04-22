@@ -74,32 +74,30 @@ void eval_op(operation *op) {
         if (!pe) goto PRINT;
         goto END;
     GETOPT:
-        if (op->a1.ptr.int_ptr && *op->a1.ptr.int_ptr) {
+        if (op->a1.type && *op->a1.ptr.int_ptr) {
             simp_free(op->a2.ptr.str_ptr);
             goto END;
         }
         printf("%s", op->a2.ptr.str_ptr);
         simp_free(op->a2.ptr.str_ptr);
-    GETI:
+    GET:
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
-        op->a1.type = INT;
-        op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
-        *op->a1.ptr.int_ptr = atoi(s_buff);
-        if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
-        goto END;
-    GETS:
-        if (op->a1.ptr.str_ptr) simp_free(op->a1.ptr.str_ptr);
-        fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
-        for (; s_buff[i]; i++) {
-            if (s_buff[i] == '\n') {
-                s_buff[i] = 0x0;
-                break;
+        if ('0' <= s_buff[0] && s_buff[0] <= '9') {
+            op->a1.type = INT;
+            op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
+            *op->a1.ptr.int_ptr = atoi(s_buff);
+        } else {
+            for (; s_buff[i]; i++) {
+                if (s_buff[i] == '\n') {
+                    s_buff[i] = 0x0;
+                    break;
+                }
             }
+            op->a1.type = STR;
+            op->a1.ptr.str_ptr = simp_alloc(i, STR);
+            strcpy(op->a1.ptr.str_ptr, s_buff);
         }
-        op->a1.type = STR;
-        op->a1.ptr.str_ptr = simp_alloc(i, STR);
-        strcpy(op->a1.ptr.str_ptr, s_buff);
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         goto END;
     ADD:

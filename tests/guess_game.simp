@@ -14,7 +14,7 @@ increment target
 print "Welcome to Guess the Number, see how many guesses it takes to guess a number between 1 and 100!"
 begin_loop
     print_n "Enter your guess: "
-    get_number guess
+    get_input guess
 
     ; If the user guesses a number that's not between 1-100,
     ; print a message stating such and restart the loop without

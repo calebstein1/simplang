@@ -52,11 +52,9 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 `random <a1> <a2>` - stores a pseudo-randomly generated number in the variable specified by a1 between 0 and a2 - 1
 
-`get_option <a1> <a2>` - prints a string literal prompt specified by a2 and gets and integer from the user to store in the variable specified by a1 if that variable hasn't already been filled
+`get_option <a1> <a2>` - prints a string literal prompt specified by a2 and gets and input from the user to store in the variable specified by a1 if that variable hasn't already been filled
 
-`get_number <a1>` - gets an integer from the user and stores it in the variable specified by a1
-
-`get_string <a1>` - gets a string from the user and stoes it in the variable specified by a1
+`get_input <a1>` - gets a value from the user and stores it in the variable specified by a1
 
 `(add, subtract, multiply, divide, modulo) <a1> <a2>` - perform the arithmetic operation specified on the value stored in the a1 variable with the number specified by a2, then store the result back in a1
 

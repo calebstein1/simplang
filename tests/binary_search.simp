@@ -13,7 +13,8 @@ assign too_high ", and that's too high"
 print "Enter a number between 1 and 100 and I'll try to guess it!"
 
 begin_loop
-    get_option target "Enter your number here: "
+    print_n "Enter your number here: "
+    get_input target
 
     ; If the user enters a number outside the acceptable range,
     ; display a message stating so and request a new number
