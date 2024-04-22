@@ -1,6 +1,8 @@
 #ifndef SIMPSCRIPT_DEFS_H
 #define SIMPSCRIPT_DEFS_H
 
+#include <stdbool.h>
+
 #define MAX_PROGRAM_SIZE 2048
 #define MAX_REGISTERS 24
 #define GLOBAL_STACK_SIZE 16
@@ -44,9 +46,7 @@ X(DONE, "done", &&parse_no_args)
 
 #define PTR_TYPE_TABLE          \
 X(NONE, &&INVLD)                \
-X(TRANSIENT_STR, &&LDSTR)       \
 X(STR, &&LDSTR)                 \
-X(TRANSIENT_INT, &&LDINT)       \
 X(INT, &&LDINT)
 
 typedef enum {
@@ -70,6 +70,7 @@ typedef enum {
 typedef struct {
     dyn_ptr_u ptr;
     ptr_type_e type;
+    bool transient;
 } dyn_ptr_t;
 
 typedef struct {

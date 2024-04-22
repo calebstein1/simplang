@@ -97,13 +97,15 @@ void parse_op(operation *op) {
                 s_buff[i++] = *cur_arg++;
             }
             s_buff[i] = 0x0;
-            args[j]->type = TRANSIENT_STR;
-            args[j]->ptr.str_ptr = simp_alloc(i, TRANSIENT_STR);
+            args[j]->type = STR;
+            args[j]->transient = true;
+            args[j]->ptr.str_ptr = simp_alloc(i, STR);
             strcpy(args[j]->ptr.str_ptr, s_buff);
             strtok(cur_arg, " \t");
         } else if ('0' <= *cur_arg && *cur_arg <= '9') {
-            args[j]->type = TRANSIENT_INT;
-            args[j]->ptr.int_ptr = simp_alloc(sizeof(long), TRANSIENT_INT);
+            args[j]->type = INT;
+            args[j]->transient = true;
+            args[j]->ptr.int_ptr = simp_alloc(sizeof(long), INT);
             *args[j]->ptr.int_ptr = atoi(cur_arg);
         } else {
             printf("Unknown type for argument: %s\n", cur_arg);
