@@ -103,34 +103,66 @@ void eval_op(operation *op) {
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         goto END;
     ADD:
+        if (op->a1.type != INT || op->a2.type != INT) {
+            printf("Type error: cannot add non-numerical values\n");
+            goto END;
+        }
         *op->a1.ptr.int_ptr += *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     SUBTR:
+        if (op->a1.type != INT || op->a2.type != INT) {
+            printf("Type error: cannot subtract non-numerical values\n");
+            goto END;
+        }
         *op->a1.ptr.int_ptr -= *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     MUL:
+        if (op->a1.type != INT || op->a2.type != INT) {
+            printf("Type error: cannot multiply non-numerical values\n");
+            goto END;
+        }
         *op->a1.ptr.int_ptr *= *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     DIV:
+        if (op->a1.type != INT || op->a2.type != INT) {
+            printf("Type error: cannot divide non-numerical values\n");
+            goto END;
+        }
         *op->a1.ptr.int_ptr /= *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     MOD:
+        if (op->a1.type != INT || op->a2.type != INT) {
+            printf("Type error: cannot take modulo non-numerical values\n");
+            goto END;
+        }
         *op->a1.ptr.int_ptr %= *op->a2.ptr.int_ptr;
         if (!pe) goto PRINT;
         goto END;
     INCR:
+        if (op->a1.type != INT) {
+            printf("Type error: cannot increment non-numerical values\n");
+            goto END;
+        }
         (*op->a1.ptr.int_ptr)++;
         if (!pe) goto PRINT;
         goto END;
     DECR:
+        if (op->a1.type != INT) {
+            printf("Type error: cannot decrement non-numerical value\n");
+            goto END;
+        }
         (*op->a1.ptr.int_ptr)--;
         if (!pe) goto PRINT;
         goto END;
     SWP:
+        if (op->a1.type != INT || op->a2.type != INT) {
+            printf("Type error: cannot swap non-numerical values\n");
+            goto END;
+        }
         (*op->a1.ptr.int_ptr) ^= (*op->a2.ptr.int_ptr);
         (*op->a2.ptr.int_ptr) ^= (*op->a1.ptr.int_ptr);
         (*op->a1.ptr.int_ptr) ^= (*op->a2.ptr.int_ptr);
