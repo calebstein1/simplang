@@ -48,7 +48,7 @@ X(DONE, "done", &&parse_no_args)
 X(NONE, &&INVLD)                \
 X(STR, &&LDSTR)                 \
 X(INT, &&LDINT)                 \
-X(ARR, &&LDARR)
+X(ARR, &&LDINT)
 
 typedef enum {
     #define X(opcode, ...) opcode,
@@ -72,6 +72,7 @@ typedef struct {
     dyn_ptr_u ptr;
     ptr_type_e type;
     int arr_size;
+    int idx;
     bool transient;
 } dyn_ptr_t;
 

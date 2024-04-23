@@ -38,7 +38,9 @@ void eval_op(operation *op) {
 
     for (; i < 3; i++) {
         if (op->target[i] >= 0) {
+            int idx = args[i]->idx;
             memcpy(args[i], &g_registers[op->target[i]], sizeof(dyn_ptr_t));
+            args[i]->idx = idx;
         }
     }
 
@@ -52,7 +54,7 @@ void eval_op(operation *op) {
         op->a1.ptr.int_ptr = simp_alloc(sizeof(long) * *op->a2.ptr.int_ptr, ARR);
         op->a1.arr_size = (int)*op->a2.ptr.int_ptr;
         if (op->a2.transient) simp_free(op->a2.ptr.int_ptr);
-        printf("New array created of size %d\n", op->a1.arr_size);
+        if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         goto END;
     RAND:
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
@@ -63,15 +65,24 @@ void eval_op(operation *op) {
         simp_free(op->a2.ptr.int_ptr);
         goto END;
     LDINT:
-        if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
-        op->a1.type = INT;
-        if (op->target[1] >= 0) {
-            op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
-            *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
+        if (op->a1.type == INT && op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
+        if (op->a1.type == ARR) {
+            printf("Pre-load idx: %d\n", op->a1.idx);
+            if (op->a1.idx >= op->a1.arr_size) {
+                goto ARR_OOB_ERR;
+            }
+            *(op->a1.ptr.int_ptr + op->a1.idx) = *op->a2.ptr.int_ptr;
+            if (op->a2.transient) simp_free(op->a2.ptr.int_ptr);
         } else {
-            op->a1.ptr.int_ptr = op->a2.ptr.int_ptr;
+            op->a1.type = INT;
+            if (op->target[1] >= 0) {
+                op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
+                *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
+            } else {
+                op->a1.ptr.int_ptr = op->a2.ptr.int_ptr;
+            }
+            if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         }
-        if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         if (!pe) goto PRINT;
         goto END;
     LDSTR:
@@ -80,9 +91,6 @@ void eval_op(operation *op) {
         op->a1.ptr.str_ptr = op->a2.ptr.str_ptr;
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         if (!pe) goto PRINT;
-        goto END;
-    LDARR:
-        printf("Uhhh... here have an array\n");
         goto END;
     GETOPT:
         if (op->a1.type && *op->a1.ptr.int_ptr) {
@@ -112,7 +120,8 @@ void eval_op(operation *op) {
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         goto END;
     ADD:
-        if (op->a1.type != INT || op->a2.type != INT) {
+        // TODO: arithmetic needs to index into arrays properly
+        if (op->a1.type == STR || op->a2.type == STR) {
             printf("Type error: cannot add non-numerical values\n");
             goto END;
         }
@@ -124,7 +133,7 @@ void eval_op(operation *op) {
         if (!pe) goto PRINT;
         goto END;
     SUBTR:
-        if (op->a1.type != INT || op->a2.type != INT) {
+        if (op->a1.type == STR || op->a2.type == STR) {
             printf("Type error: cannot subtract non-numerical values\n");
             goto END;
         }
@@ -136,7 +145,7 @@ void eval_op(operation *op) {
         if (!pe) goto PRINT;
         goto END;
     MUL:
-        if (op->a1.type != INT || op->a2.type != INT) {
+        if (op->a1.type == STR || op->a2.type == STR) {
             printf("Type error: cannot multiply non-numerical values\n");
             goto END;
         }
@@ -148,7 +157,7 @@ void eval_op(operation *op) {
         if (!pe) goto PRINT;
         goto END;
     DIV:
-        if (op->a1.type != INT || op->a2.type != INT) {
+        if (op->a1.type == STR || op->a2.type == STR) {
             printf("Type error: cannot divide non-numerical values\n");
             goto END;
         }
@@ -160,7 +169,7 @@ void eval_op(operation *op) {
         if (!pe) goto PRINT;
         goto END;
     MOD:
-        if (op->a1.type != INT || op->a2.type != INT) {
+        if (op->a1.type == STR || op->a2.type == STR) {
             printf("Type error: cannot take modulo non-numerical values\n");
             goto END;
         }
@@ -172,7 +181,7 @@ void eval_op(operation *op) {
         if (!pe) goto PRINT;
         goto END;
     INCR:
-        if (op->a1.type != INT) {
+        if (op->a1.type == STR) {
             printf("Type error: cannot increment non-numerical values\n");
             goto END;
         }
@@ -180,7 +189,7 @@ void eval_op(operation *op) {
         if (!pe) goto PRINT;
         goto END;
     DECR:
-        if (op->a1.type != INT) {
+        if (op->a1.type == STR) {
             printf("Type error: cannot decrement non-numerical value\n");
             goto END;
         }
@@ -188,7 +197,7 @@ void eval_op(operation *op) {
         if (!pe) goto PRINT;
         goto END;
     SWP:
-        if (op->a1.type != INT || op->a2.type != INT) {
+        if (op->a1.type == STR || op->a2.type == STR) {
             printf("Type error: cannot swap non-numerical values\n");
             goto END;
         }
@@ -334,8 +343,12 @@ void eval_op(operation *op) {
             simp_free(op->a1.ptr.int_ptr);
             goto END;
         PRINT_ARR:
-            printf("Cannot yet print an array\n");
-            goto END;
+            if (op->a1.idx >= op->a1.arr_size) {
+                goto ARR_OOB_ERR;
+            }
+            printf("Index %d\n", op->a1.idx);
+            op->a1.ptr.int_ptr += op->a1.idx;
+            goto PRINT_INT;
     PRINTN:
         goto *printn_jmp_tbl[op->a1.type];
         PRINTN_STR:
@@ -355,8 +368,14 @@ void eval_op(operation *op) {
             simp_free(op->a1.ptr.int_ptr);
             goto END;
         PRINTN_ARR:
-            printf("Cannot yet print an array");
-            goto END;
+            if (op->a1.idx >= op->a1.arr_size) {
+                goto ARR_OOB_ERR;
+            }
+            goto PRINTN_INT;
+    ARR_OOB_ERR:
+        printf("Out of bounds access error\n");
+        if (pe) exit(-1);
+        goto END;
     END: CMNT: DONE: ENDIF: PRINT_NONE: PRINTN_NONE: INVLD: NOP:
         return;
 }
