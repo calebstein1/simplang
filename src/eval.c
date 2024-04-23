@@ -46,6 +46,14 @@ void eval_op(operation *op) {
 
     ASGN:
         goto *asgn_jmp_tbl[op->a2.type];
+    NEWARR:
+        if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
+        op->a1.type = ARR;
+        op->a1.ptr.int_ptr = simp_alloc(sizeof(long) * *op->a2.ptr.int_ptr, ARR);
+        op->a1.arr_size = (int)*op->a2.ptr.int_ptr;
+        if (op->a2.transient) simp_free(op->a2.ptr.int_ptr);
+        printf("New array created of size %d\n", op->a1.arr_size);
+        goto END;
     RAND:
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         op->a1.type = INT;

@@ -12,6 +12,7 @@
 #define OPCODE_TABLE                                         \
 X(INVLD, "", &&parse_no_args)                                \
 X(ASGN, "assign", &&parse_two_args)                          \
+X(NEWARR, "new_array", &&parse_two_args)                     \
 X(RAND, "random", &&parse_two_args)                          \
 X(GETOPT, "get_option", &&parse_two_args)                    \
 X(GET, "get_input", &&parse_one_arg)                         \
@@ -70,6 +71,7 @@ typedef enum {
 typedef struct {
     dyn_ptr_u ptr;
     ptr_type_e type;
+    int arr_size;
     bool transient;
 } dyn_ptr_t;
 
