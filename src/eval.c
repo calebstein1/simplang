@@ -31,9 +31,9 @@ void eval_op(operation *op) {
     int i = 0;
     unsigned int nested_if = 0;
     dyn_ptr_t *args[] = {
-            &op->a1,
-            &op->a2,
-            &op->a3,
+        &op->a1,
+        &op->a2,
+        &op->a3,
     };
 
     for (; i < 3; i++) {
@@ -72,6 +72,9 @@ void eval_op(operation *op) {
         op->a1.ptr.str_ptr = op->a2.ptr.str_ptr;
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         if (!pe) goto PRINT;
+        goto END;
+    LDARR:
+        printf("Uhhh... here have an array\n");
         goto END;
     GETOPT:
         if (op->a1.type && *op->a1.ptr.int_ptr) {
@@ -322,6 +325,9 @@ void eval_op(operation *op) {
             printf("%ld\n", *op->a1.ptr.int_ptr);
             simp_free(op->a1.ptr.int_ptr);
             goto END;
+        PRINT_ARR:
+            printf("Cannot yet print an array\n");
+            goto END;
     PRINTN:
         goto *printn_jmp_tbl[op->a1.type];
         PRINTN_STR:
@@ -339,6 +345,9 @@ void eval_op(operation *op) {
         PRINTN_TRANSIENT_INT:
             printf("%ld\n", *op->a1.ptr.int_ptr);
             simp_free(op->a1.ptr.int_ptr);
+            goto END;
+        PRINTN_ARR:
+            printf("Cannot yet print an array");
             goto END;
     END: CMNT: DONE: ENDIF: PRINT_NONE: PRINTN_NONE: INVLD: NOP:
         return;

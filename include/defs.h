@@ -11,10 +11,10 @@
 
 #define OPCODE_TABLE                                         \
 X(INVLD, "", &&parse_no_args)                                \
-X(ASGN, "assign", &&parse_two_args)                           \
+X(ASGN, "assign", &&parse_two_args)                          \
 X(RAND, "random", &&parse_two_args)                          \
 X(GETOPT, "get_option", &&parse_two_args)                    \
-X(GET, "get_input", &&parse_one_arg)                       \
+X(GET, "get_input", &&parse_one_arg)                         \
 X(ADD, "add", &&parse_two_args)                              \
 X(SUBTR, "subtract", &&parse_two_args)                       \
 X(MUL, "multiply", &&parse_two_args)                         \
@@ -46,7 +46,8 @@ X(DONE, "done", &&parse_no_args)
 #define PTR_TYPE_TABLE          \
 X(NONE, &&INVLD)                \
 X(STR, &&LDSTR)                 \
-X(INT, &&LDINT)
+X(INT, &&LDINT)                 \
+X(ARR, &&LDARR)
 
 typedef enum {
     #define X(opcode, ...) opcode,
