@@ -50,6 +50,8 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 `assign <a1> <a2>` - stores the value specified by a2 in the variable specified by a1
 
+`new_array <a1> <a2>` - create a new array named a1 of size a2
+
 `random <a1> <a2>` - stores a pseudo-randomly generated number in the variable specified by a1 between 0 and a2 - 1
 
 `get_option <a1> <a2>` - prints a string literal prompt specified by a2 and gets and input from the user to store in the variable specified by a1 if that variable hasn't already been filled
@@ -64,7 +66,11 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 `begin_loop` - begins a loop
 
+`for_each <a1> <a2>` - iterate over each item in the array a2, with a1 being the named reference to the current item and "next" being the next item
+
 `continue` - jump back to the beginning of the current loop
+
+`end_loop` - end a for_each loop
 
 `(end_loop_if_equal, end_loop_if_not_equal, end_loop_if_less, end_loop_if_less_or_equal, end_loop_if_greater, end_loop_if_greater_or_equal) <a1> <a2>` - ends execution of a loop based on the condition comparing a1 and a2, otherwise jump back to `beglp`
 
