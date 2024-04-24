@@ -17,10 +17,10 @@ void launch_repl() {
         get_opcode(&op, s_buff, &tok_pos);
         if (op.opcode == DONE) break;
         if (!op.opcode || op.opcode == CMNT) continue;
-        if (op.opcode == BEGLP || (ENDLPEQ <= op.opcode && op.opcode <= ENDLPGE)) {
+        if (BEGLP <= op.opcode && op.opcode <= ENDLPGE) {
             printf("Looping not yet supported in repl mode\n");
             continue;
-        } else if (op.opcode == ENDIF || (IFEQ <= op.opcode && op.opcode <= IFGE)) {
+        } else if (IFEQ <= op.opcode && op.opcode <= ENDIF) {
             printf("Conditional statements not yet supported in repl mode\n");
             continue;
         }
