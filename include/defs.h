@@ -25,7 +25,9 @@ X(INCR, "increment", &&parse_one_arg)                        \
 X(DECR, "decrement", &&parse_one_arg)                        \
 X(SWP, "swap", &&parse_two_args)                             \
 X(BEGLP, "begin_loop", &&parse_no_args)                      \
+X(FOREACH, "for_each", &&parse_two_args)                     \
 X(CONT, "continue", &&parse_no_args)                         \
+X(ENDLP, "end_loop", &&parse_no_args)                        \
 X(ENDLPEQ, "end_loop_if_equal", &&parse_two_args)            \
 X(ENDLPNE, "end_loop_if_not_equal", &&parse_two_args)        \
 X(ENDLPLT, "end_loop_if_less", &&parse_two_args)             \
@@ -86,6 +88,7 @@ typedef struct {
 } operation;
 
 extern dyn_ptr_t g_registers[MAX_REGISTERS];
+extern dyn_ptr_t loop_next;
 extern long i_buff;
 extern char s_buff[GLOBAL_BUFF_SIZE];
 extern operation **j_sp, **j_bp;

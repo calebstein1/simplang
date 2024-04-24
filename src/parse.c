@@ -59,7 +59,9 @@ void parse_op(operation *op, char **tok_pos) {
 
     do {
         cur_arg = strtok_r(NULL, " \t", tok_pos);
-        if (('a' <= *cur_arg && *cur_arg <= 'z') || ('A' <= *cur_arg && *cur_arg <= 'Z')) {
+        if (memcmp(cur_arg, "next", 4) == 0) {
+            op->target[j] = MAX_REGISTERS;
+        } else if (('a' <= *cur_arg && *cur_arg <= 'z') || ('A' <= *cur_arg && *cur_arg <= 'Z')) {
             int l, arg_len = strlen(cur_arg);
             i = l = 0;
 

@@ -6,7 +6,6 @@
 #include "eval.h"
 #include "heap.h"
 
-
 void eval_op(operation *op) {
     static void *eval_jmp_tbl[] = {
         #define X(opcode, ...) &&opcode,
@@ -28,6 +27,7 @@ void eval_op(operation *op) {
         PTR_TYPE_TABLE
         #undef X
     };
+    static int foreach_counter = 0, foreach_max = 0;
     int i = 0;
     unsigned int nested_if = 0;
     dyn_ptr_t *args[] = {
@@ -37,7 +37,9 @@ void eval_op(operation *op) {
     };
 
     for (; i < 3; i++) {
-        if (op->target[i] >= 0) {
+        if (op->target[i] == MAX_REGISTERS) {
+            memcpy(args[i], &loop_next, sizeof(dyn_ptr_t));
+        } else if (op->target[i] >= 0) {
             int idx = args[i]->idx;
             memcpy(args[i], &g_registers[op->target[i]], sizeof(dyn_ptr_t));
             args[i]->idx = idx;
@@ -71,6 +73,11 @@ void eval_op(operation *op) {
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         goto END;
     RAND:
+        if (foreach_max > 0) {
+            *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
+            simp_free(op->a2.ptr.int_ptr);
+            goto END;
+        }
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         op->a1.type = INT;
         op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
@@ -79,6 +86,11 @@ void eval_op(operation *op) {
         simp_free(op->a2.ptr.int_ptr);
         goto END;
     LDINT:
+        if (foreach_max > 0) {
+            *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
+            simp_free(op->a2.ptr.int_ptr);
+            goto END;
+        }
         if (op->a1.type == INT && op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         if (op->a1.type == ARR) {
             *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
@@ -221,11 +233,44 @@ void eval_op(operation *op) {
             exit(-1);
         }
         goto END;
+    FOREACH:
+        if (j_sp == j_bp || *(j_sp - 1) != pp) {
+            *j_sp = pp;
+            if (++j_sp > j_bp + GLOBAL_STACK_SIZE) {
+                printf("Jump stack overflow\n");
+                exit(-1);
+            }
+        }
+        if (op->a2.type != ARR) {
+            printf("No array to operate on\n");
+            exit(-1);
+        }
+        foreach_max = op->a2.arr_size;
+        op->a1.type = INT;
+        op->a1.ptr.int_ptr = op->a2.ptr.int_ptr + foreach_counter++;
+        memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
+        op->a1.ptr.int_ptr++;
+        if (foreach_counter < foreach_max) {
+            memcpy(&loop_next, &op->a1, sizeof(dyn_ptr_t));
+        }
+        goto END;
     CONT:
         if (j_sp == j_bp) {
             goto END;
         }
         pp = *(j_sp - 1);
+        goto END;
+    ENDLP:
+        if (j_sp == j_bp) {
+            goto END;
+        }
+        if (foreach_counter >= foreach_max) {
+            foreach_counter = foreach_max = 0;
+            j_sp--;
+        } else {
+            pp = *(j_sp - 1);
+            pp--;
+        }
         goto END;
     ENDLPEQ:
         if (j_sp == j_bp) {

@@ -1,83 +1,34 @@
 #!/usr/bin/env simplang
 
-; Initialize string literals
-random num1 1000
-random num2 1000
-random num3 1000
-random num4 1000
-random num5 1000
-random num6 1000
-random num7 1000
+; Initialize and populate number array
+new_array nums 25
+for_each num nums
+    random num 1000
+end_loop
 
 print "Unsorted:"
-print_n num1
-print_n " "
-print_n num2
-print_n " "
-print_n num3
-print_n " "
-print_n num4
-print_n " "
-print_n num5
-print_n " "
-print_n num6
-print_n " "
-print num7
+for_each num nums
+    print_n num
+    print_n " "
+end_loop
+print ""
 
-assign counter 7
+assign counter 25
 
-; Since Simplang doesn't support arrays, this can't be done using
-; nested loops. Instead, counter is used to track the furthest unsorted
-; register, and the loop will skip iterating over registers it's
-; already sorted as it sorts num1 - num7
 begin_loop
-    if_less_or_equal 2 counter
-        if_less num2 num1
-            swap num1 num2
+    for_each num nums
+        if_greater num next
+            swap num next
         end_if
-    end_if
-    if_less_or_equal 3 counter
-        if_less num3 num2
-            swap num2 num3
-        end_if
-    end_if
-    if_less_or_equal 4 counter
-        if_less num4 num3
-            swap num3 num4
-        end_if
-    end_if
-    if_less_or_equal 5 counter
-        if_less num5 num4
-            swap num4 num5
-        end_if
-    end_if
-    if_less_or_equal 6 counter
-        if_less num6 num5
-            swap num5 num6
-        end_if
-    end_if
-    if_less_or_equal 7 counter
-        if_less num7 num6
-            swap num6 num7
-        end_if
-    end_if
-
+    end_loop
     decrement counter
 end_loop_if_equal counter 0
 
 print "Sorted:"
-print_n num1
-print_n " "
-print_n num2
-print_n " "
-print_n num3
-print_n " "
-print_n num4
-print_n " "
-print_n num5
-print_n " "
-print_n num6
-print_n " "
-print num7
+for_each num nums
+    print_n num
+    print_n " "
+end_loop
+print ""
 
 done
