@@ -4,6 +4,8 @@ Simplang is a simple and lightweight interpreted scripting language with an asse
 
 Simplang supports dynamic typing, 64-bit signed integers, string literals, user input, the four main arithmetic operations, increment/decrement, if statements (with nesting support), and do-while loops (with nested loop support).
 
+See the new official VSCode plugin [here](https://github.com/calebstein1/simplang-code)!
+
 ## Usage
 
 Simplang supports executing script files or operating as a repl interactively.
