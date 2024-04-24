@@ -75,7 +75,7 @@ void eval_op(operation *op) {
     RAND:
         if (foreach_max > 0) {
             *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
-            simp_free(op->a2.ptr.int_ptr);
+            if (op->a2.transient) simp_free(op->a2.ptr.int_ptr);
             goto END;
         }
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
@@ -83,12 +83,12 @@ void eval_op(operation *op) {
         op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
         *op->a1.ptr.int_ptr = rand() % *op->a2.ptr.int_ptr;
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
-        simp_free(op->a2.ptr.int_ptr);
+        if (op->a2.transient) simp_free(op->a2.ptr.int_ptr);
         goto END;
     LDINT:
         if (foreach_max > 0) {
             *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
-            simp_free(op->a2.ptr.int_ptr);
+            if (op->a2.transient) simp_free(op->a2.ptr.int_ptr);
             goto END;
         }
         if (op->a1.type == INT && op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
@@ -397,7 +397,6 @@ void eval_op(operation *op) {
             simp_free(op->a1.ptr.int_ptr);
             goto END;
         PRINT_ARR:
-            //op->a1.ptr.int_ptr += op->a1.idx;
             goto PRINT_INT;
     PRINTN:
         goto *printn_jmp_tbl[op->a1.type];
