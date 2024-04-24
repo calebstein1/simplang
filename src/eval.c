@@ -124,7 +124,7 @@ void eval_op(operation *op) {
     GET:
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
-        if ('0' <= s_buff[0] && s_buff[0] <= '9') {
+        if (('0' <= s_buff[0] && s_buff[0] <= '9') || s_buff[0] == '-') {
             op->a1.type = INT;
             op->a1.ptr.int_ptr = simp_alloc(sizeof(long), INT);
             *op->a1.ptr.int_ptr = atoi(s_buff);

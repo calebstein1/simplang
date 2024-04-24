@@ -144,7 +144,7 @@ void parse_op(operation *op, char **tok_pos) {
             if (!pe) eval_op(&embedded_op);
             args[j]->type = INT;
             args[j]->ptr.int_ptr = &i_buff;
-        } else if ('0' <= *cur_arg && *cur_arg <= '9') {
+        } else if (('0' <= *cur_arg && *cur_arg <= '9') || *cur_arg == '-') {
             args[j]->type = INT;
             args[j]->transient = true;
             args[j]->ptr.int_ptr = simp_alloc(sizeof(long), INT);
