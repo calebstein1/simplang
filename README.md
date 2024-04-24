@@ -66,7 +66,7 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 `begin_loop` - begins a loop
 
-`for_each <a1> <a2>` - iterate over each item in the array a2, with a1 being the named reference to the current item and "next" being the next item
+`for_each <a1> in <a3>` - iterate over each item in the array a3, with a1 being the named reference to the current item and "next" being the next item
 
 `continue` - jump back to the beginning of the current loop
 

@@ -11,12 +11,12 @@ end_loop_if_equal 0 0
 
 ; Initialize and populate number array
 new_array nums num_count
-for_each num nums
+for_each num in nums
     random num 1000
 end_loop
 
 print "Unsorted:"
-for_each num nums
+for_each num in nums
     print_n num
     print_n " "
 end_loop
@@ -25,7 +25,7 @@ print ""
 assign counter num_count
 
 begin_loop
-    for_each num nums
+    for_each num in nums
         if_greater num next
             swap num next
         end_if
@@ -34,7 +34,7 @@ begin_loop
 end_loop_if_equal counter 0
 
 print "Sorted:"
-for_each num nums
+for_each num in nums
     print_n num
     print_n " "
 end_loop

@@ -60,6 +60,13 @@ void eval_op(operation *op) {
         op->a2.ptr.int_ptr += op->a2.idx;
     }
 
+    if (op->a3.type == ARR) {
+        if (op->a3.idx >= op->a3.arr_size) {
+            goto ARR_OOB_ERR;
+        }
+        op->a3.ptr.int_ptr += op->a3.idx;
+    }
+
     goto *eval_jmp_tbl[op->opcode];
 
     ASGN:
@@ -241,13 +248,13 @@ void eval_op(operation *op) {
                 exit(-1);
             }
         }
-        if (op->a2.type != ARR) {
+        if (op->a3.type != ARR) {
             printf("No array to operate on\n");
             exit(-1);
         }
-        foreach_max = op->a2.arr_size;
+        foreach_max = op->a3.arr_size;
         op->a1.type = INT;
-        op->a1.ptr.int_ptr = op->a2.ptr.int_ptr + foreach_counter++;
+        op->a1.ptr.int_ptr = op->a3.ptr.int_ptr + foreach_counter++;
         memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         op->a1.ptr.int_ptr++;
         if (foreach_counter < foreach_max) {

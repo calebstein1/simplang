@@ -25,7 +25,7 @@ X(INCR, "increment", &&parse_one_arg)                        \
 X(DECR, "decrement", &&parse_one_arg)                        \
 X(SWP, "swap", &&parse_two_args)                             \
 X(BEGLP, "begin_loop", &&parse_no_args)                      \
-X(FOREACH, "for_each", &&parse_two_args)                     \
+X(FOREACH, "for_each", &&parse_three_args)                   \
 X(CONT, "continue", &&parse_no_args)                         \
 X(ENDLP, "end_loop", &&parse_no_args)                        \
 X(ENDLPEQ, "end_loop_if_equal", &&parse_two_args)            \
