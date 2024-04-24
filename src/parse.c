@@ -71,7 +71,6 @@ void parse_op(operation *op, char **tok_pos) {
                 while (cur_arg[--arg_len] != '[') {}
                 cur_arg[arg_len] = 0x0;
                 args[j]->idx = atoi(cur_arg + arg_len + 1);
-                printf("Parser idx: %d\n", args[j]->idx);
             }
 
             for (; i < MAX_REGISTERS; i++) {

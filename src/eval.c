@@ -44,6 +44,20 @@ void eval_op(operation *op) {
         }
     }
 
+    if (op->a1.type == ARR) {
+        if (op->a1.idx >= op->a1.arr_size) {
+            goto ARR_OOB_ERR;
+        }
+        op->a1.ptr.int_ptr += op->a1.idx;
+    }
+
+    if (op->a2.type == ARR) {
+        if (op->a2.idx >= op->a2.arr_size) {
+            goto ARR_OOB_ERR;
+        }
+        op->a2.ptr.int_ptr += op->a2.idx;
+    }
+
     goto *eval_jmp_tbl[op->opcode];
 
     ASGN:
@@ -67,11 +81,7 @@ void eval_op(operation *op) {
     LDINT:
         if (op->a1.type == INT && op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         if (op->a1.type == ARR) {
-            printf("Pre-load idx: %d\n", op->a1.idx);
-            if (op->a1.idx >= op->a1.arr_size) {
-                goto ARR_OOB_ERR;
-            }
-            *(op->a1.ptr.int_ptr + op->a1.idx) = *op->a2.ptr.int_ptr;
+            *op->a1.ptr.int_ptr = *op->a2.ptr.int_ptr;
             if (op->a2.transient) simp_free(op->a2.ptr.int_ptr);
         } else {
             op->a1.type = INT;
@@ -120,7 +130,6 @@ void eval_op(operation *op) {
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         goto END;
     ADD:
-        // TODO: arithmetic needs to index into arrays properly
         if (op->a1.type == STR || op->a2.type == STR) {
             printf("Type error: cannot add non-numerical values\n");
             goto END;
@@ -343,11 +352,7 @@ void eval_op(operation *op) {
             simp_free(op->a1.ptr.int_ptr);
             goto END;
         PRINT_ARR:
-            if (op->a1.idx >= op->a1.arr_size) {
-                goto ARR_OOB_ERR;
-            }
-            printf("Index %d\n", op->a1.idx);
-            op->a1.ptr.int_ptr += op->a1.idx;
+            //op->a1.ptr.int_ptr += op->a1.idx;
             goto PRINT_INT;
     PRINTN:
         goto *printn_jmp_tbl[op->a1.type];
@@ -368,9 +373,6 @@ void eval_op(operation *op) {
             simp_free(op->a1.ptr.int_ptr);
             goto END;
         PRINTN_ARR:
-            if (op->a1.idx >= op->a1.arr_size) {
-                goto ARR_OOB_ERR;
-            }
             goto PRINTN_INT;
     ARR_OOB_ERR:
         printf("Out of bounds access error\n");
