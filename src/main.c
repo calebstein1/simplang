@@ -56,13 +56,14 @@ int main(int argc, char **argv) {
         perror("fstat");
         return -1;
     }
-    char script[script_stat.st_size];
+    char script[script_stat.st_size + 1];
     operation program[MAX_PROGRAM_SIZE] = {};
     pp = pe = program;
 
     lseek(fd, 0, SEEK_SET);
     read (fd, script, script_stat.st_size);
     close(fd);
+    script[script_stat.st_size] = 0x0;
 
     if (memcmp(script, "#!", 2) == 0) {
         start_adv = true;
