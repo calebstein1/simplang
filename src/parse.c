@@ -58,7 +58,10 @@ void parse_op(operation *op, char **tok_pos) {
         ++num_args;
 
     do {
-        cur_arg = strtok_r(NULL, " \t", tok_pos);
+        if (!(cur_arg = strtok_r(NULL, " \t", tok_pos))) {
+            args[j]->type = NONE;
+            continue;
+        }
         int arg_len = strlen(cur_arg);
         if (memcmp(cur_arg, "in", arg_len > 2 ? arg_len : 2) == 0) {}
         else if (memcmp(cur_arg, "next", arg_len > 4 ? arg_len : 4) == 0) {
