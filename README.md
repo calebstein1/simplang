@@ -1,8 +1,8 @@
 # Simplang
 
-Simplang is a simple and lightweight interpreted scripting language with an assembly-like syntax.
+Simplang is a simple and lightweight, dynamically-typed interpreted scripting language meant to teach the basic concepts of logic and control-flow to beginning programmers without the cognitive overhead of trying to learn a general-purpose language.
 
-Simplang supports dynamic typing, 64-bit signed integers, string literals, user input, the four main arithmetic operations, increment/decrement, if statements (with nesting support), and do-while loops (with nested loop support).
+Official course coming soon to [simplang.dev](https://simplang.dev)
 
 See the new official VSCode plugin [here](https://github.com/calebstein1/simplang-code)!
 
@@ -85,4 +85,4 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 `done` - ends execution of the program
 
 ## Known Bugs:
-- Trying to assign a variable to a constant number within a loop doesn't seem to be working properly
+- Trying to assign a variable to a constant number within a loop doesn't seem to be working properly in certain cases
