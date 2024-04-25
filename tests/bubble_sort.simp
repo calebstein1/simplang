@@ -1,5 +1,7 @@
 #!/usr/bin/env simplang
 
+; Let the user select how many random numbers to sort,
+; or get it from a command line argument if supplied
 begin_loop
     get_option num_count "Enter number of items to sort: "
     if_less_or_equal num_count 1
@@ -15,6 +17,7 @@ for_each num in nums
     random num 1000
 end_loop
 
+; Print the unsorted numbers
 print "Unsorted:"
 for_each num in nums
     print_n num
@@ -22,17 +25,17 @@ for_each num in nums
 end_loop
 print ""
 
-assign counter num_count
-
+; The actual sorting algorithm
 begin_loop
     for_each num in nums
         if_greater num next
             swap num next
         end_if
     end_loop
-    decrement counter
-end_loop_if_equal counter 0
+    decrement num_count 
+end_loop_if_equal num_count 0
 
+; Print the sorted numbers
 print "Sorted:"
 for_each num in nums
     print_n num
