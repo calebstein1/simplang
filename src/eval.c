@@ -121,14 +121,15 @@ void eval_op(operation *op) {
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->a1, sizeof(dyn_ptr_t));
         if (!pe) goto PRINT;
         goto END;
-    GETOPT:
-        if (op->a1.type && *op->a1.ptr.int_ptr) {
+    GET:
+        if (op->a1.type && op->a2.type && *op->a1.ptr.int_ptr) {
             simp_free(op->a2.ptr.str_ptr);
             goto END;
         }
-        printf("%s", op->a2.ptr.str_ptr);
-        simp_free(op->a2.ptr.str_ptr);
-    GET:
+        if (op->a2.type) {
+            printf("%s", op->a2.ptr.str_ptr);
+            simp_free(op->a2.ptr.str_ptr);
+        }
         if (op->a1.ptr.int_ptr) simp_free(op->a1.ptr.int_ptr);
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
         if (('0' <= s_buff[0] && s_buff[0] <= '9') || s_buff[0] == '-') {

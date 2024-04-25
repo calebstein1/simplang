@@ -1,7 +1,7 @@
 #!/usr/bin/env simplang
 
 begin_loop
-    get_option target_digit "Enter Fibonacci digit to calculate up to: "
+    get_input target_digit "Enter Fibonacci digit to calculate up to: "
     if_less_or_equal target_digit 0
         print "Please enter a number greater than 0"
         assign target_digit 0

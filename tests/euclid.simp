@@ -3,8 +3,8 @@
 ; Get the two numbers to operate on from the user
 ; They can be passed in as command line arguments,
 ; in which case we can skip prompting for the number
-get_option num1 "Enter first number: "
-get_option num2 "Enter second number: "
+get_input num1 "Enter first number: "
+get_input num2 "Enter second number: "
 
 ; Copy the initial values that we can print them at the end
 assign orig_num1 num1
