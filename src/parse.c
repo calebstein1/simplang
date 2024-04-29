@@ -143,6 +143,5 @@ void parse_op(operation *op, char **tok_pos) {
 
     if (!pe) return;
 
-    memcpy(pe, op, sizeof(operation));
-    pe++;
+    memcpy(pe++, op, sizeof(operation));
 }

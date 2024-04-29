@@ -17,21 +17,11 @@ void eval_op(operation *op) {
         PTR_TYPE_TABLE
         #undef X
     };
-    static void *print_jmp_tbl[] = {
-        #define X(type, ...) &&PRINT_##type,
-        PTR_TYPE_TABLE
-        #undef X
-    };
-    static void *printn_jmp_tbl[] = {
-        #define X(type, ...) &&PRINTN_##type,
-        PTR_TYPE_TABLE
-        #undef X
-    };
     static int foreach_counter = 0, foreach_max = 0;
-    int cur_arg, args = op->arg_count, i = 0;
+    int i = 0;
     unsigned int nested_if = 0;
 
-    for (; i < args; i++) {
+    for (; i < op->arg_count; i++) {
         if (op->target[i] == MAX_REGISTERS) {
             memcpy(&op->arg_list[i], &loop_next, sizeof(dyn_ptr_t));
         } else if (op->target[i] >= 0) {
@@ -93,14 +83,12 @@ void eval_op(operation *op) {
             }
             if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->arg_list[0], sizeof(dyn_ptr_t));
         }
-        if (!pe) goto PRINT;
         goto END;
     LDSTR:
         if (op->arg_list[0].ptr.str_ptr) simp_free(op->arg_list[0].ptr.str_ptr);
         op->arg_list[0].type = STR;
         op->arg_list[0].ptr.str_ptr = op->arg_list[1].ptr.str_ptr;
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->arg_list[0], sizeof(dyn_ptr_t));
-        if (!pe) goto PRINT;
         goto END;
     GET:
         if (op->arg_list[0].type && op->arg_list[1].type && *op->arg_list[0].ptr.int_ptr) {
@@ -140,7 +128,6 @@ void eval_op(operation *op) {
             goto END;
         }
         *op->arg_list[0].ptr.int_ptr += *op->arg_list[1].ptr.int_ptr;
-        if (!pe) goto PRINT;
         goto END;
     SUBTR:
         if (op->arg_list[0].type == STR || op->arg_list[1].type == STR) {
@@ -152,7 +139,6 @@ void eval_op(operation *op) {
             goto END;
         }
         *op->arg_list[0].ptr.int_ptr -= *op->arg_list[1].ptr.int_ptr;
-        if (!pe) goto PRINT;
         goto END;
     MUL:
         if (op->arg_list[0].type == STR || op->arg_list[1].type == STR) {
@@ -164,7 +150,6 @@ void eval_op(operation *op) {
             goto END;
         }
         *op->arg_list[0].ptr.int_ptr *= *op->arg_list[1].ptr.int_ptr;
-        if (!pe) goto PRINT;
         goto END;
     DIV:
         if (op->arg_list[0].type == STR || op->arg_list[1].type == STR) {
@@ -176,7 +161,6 @@ void eval_op(operation *op) {
             goto END;
         }
         *op->arg_list[0].ptr.int_ptr /= *op->arg_list[1].ptr.int_ptr;
-        if (!pe) goto PRINT;
         goto END;
     MOD:
         if (op->arg_list[0].type == STR || op->arg_list[1].type == STR) {
@@ -188,7 +172,6 @@ void eval_op(operation *op) {
             goto END;
         }
         *op->arg_list[0].ptr.int_ptr %= *op->arg_list[1].ptr.int_ptr;
-        if (!pe) goto PRINT;
         goto END;
     INCR:
         if (op->arg_list[0].type == STR) {
@@ -196,7 +179,6 @@ void eval_op(operation *op) {
             goto END;
         }
         (*op->arg_list[0].ptr.int_ptr)++;
-        if (!pe) goto PRINT;
         goto END;
     DECR:
         if (op->arg_list[0].type == STR) {
@@ -204,7 +186,6 @@ void eval_op(operation *op) {
             goto END;
         }
         (*op->arg_list[0].ptr.int_ptr)--;
-        if (!pe) goto PRINT;
         goto END;
     SWP:
         if (op->arg_list[0].type == STR || op->arg_list[1].type == STR) {
@@ -368,45 +349,22 @@ void eval_op(operation *op) {
         }
         goto END;
     PRINT:
-        goto *print_jmp_tbl[op->arg_list[0].type];
-        PRINT_STR:
-            if (op->arg_list[0].transient) goto PRINT_TRANSIENT_STR;
-            printf("%s\n", op->arg_list[0].ptr.str_ptr);
-            goto END;
-        PRINT_TRANSIENT_STR:
-            printf("%s\n", op->arg_list[0].ptr.str_ptr);
-            simp_free(op->arg_list[0].ptr.str_ptr);
-            goto END;
-        PRINT_INT:
-            if (op->arg_list[0].transient) goto PRINT_TRANSIENT_INT;
-            printf("%ld\n", *op->arg_list[0].ptr.int_ptr);
-            goto END;
-        PRINT_TRANSIENT_INT:
-            printf("%ld\n", *op->arg_list[0].ptr.int_ptr);
-            simp_free(op->arg_list[0].ptr.int_ptr);
-            goto END;
-        PRINT_ARR:
-            goto PRINT_INT;
-    PRINTN:
-        goto *printn_jmp_tbl[op->arg_list[0].type];
-        PRINTN_STR:
-            if (op->arg_list[0].transient) goto PRINTN_TRANSIENT_STR;
-            printf("%s", op->arg_list[0].ptr.str_ptr);
-            goto END;
-        PRINTN_TRANSIENT_STR:
-            printf("%s", op->arg_list[0].ptr.str_ptr);
-            simp_free(op->arg_list[0].ptr.str_ptr);
-            goto END;
-        PRINTN_INT:
-            if (op->arg_list[0].transient) goto PRINTN_TRANSIENT_INT;
-            printf("%ld", *op->arg_list[0].ptr.int_ptr);
-            goto END;
-        PRINTN_TRANSIENT_INT:
-            printf("%ld\n", *op->arg_list[0].ptr.int_ptr);
-            simp_free(op->arg_list[0].ptr.int_ptr);
-            goto END;
-        PRINTN_ARR:
-            goto PRINTN_INT;
+        for (i = 0; i < op->arg_count; i++) {
+            switch (op->arg_list[i].type) {
+            case ARR:
+            case INT:
+                printf("%ld ", *op->arg_list[i].ptr.int_ptr);
+                break;
+            case STR:
+                printf("%s ", op->arg_list[i].ptr.str_ptr);
+                break;
+            default:
+                continue;
+            }
+            if (op->arg_list[i].transient) simp_free(op->arg_list[i].ptr.void_ptr);
+        }
+        printf("\n");
+        goto END;
     ARR_OOB_ERR:
         printf("Out of bounds access error\n");
         if (pe) exit(-1);

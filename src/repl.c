@@ -9,7 +9,11 @@ void launch_repl() {
     printf("Welcome to Simplang! Enter your commands at the prompt (done to exit):\n");
 
     while(1) {
-        operation op = { .target = { -1, -1, -1 } };
+        int i = 0;
+        operation op = {};
+        for (; i < MAX_ARGUMENTS; i++) {
+            op.target[i] = -1;
+        }
         char *tok_pos = NULL;
         printf(">> ");
         fgets(s_buff, GLOBAL_BUFF_SIZE, stdin);
