@@ -13,18 +13,19 @@ increment target
 
 print "Welcome to Guess the Number, see how many guesses it takes to guess a number between 1 and 100!"
 begin_loop
-    print_n "Enter your guess: "
-    get_input guess
+    get_input guess "Enter your guess: "
 
     ; If the user guesses a number that's not between 1-100,
     ; print a message stating such and restart the loop without
     ; a guess penalty
     if_greater guess 100
         print invalid_guess
+        assign guess 0
         continue
     end_if
     if_less_or_equal guess 0
         print invalid_guess
+        assign guess 0
         continue
     end_if
 
@@ -32,9 +33,11 @@ begin_loop
     ; guess was too low or too high
     if_less guess target
         print "Your guess was too low, try again"
+        assign guess 0
     end_if
     if_greater guess target
         print "Your guess was too high, try again"
+        assign guess 0
     end_if
 
     ; Increment the guess counter
@@ -42,8 +45,6 @@ begin_loop
 end_loop_if_equal target guess
 
 ; Print the success message
-print_n "Congratulations, you guessed it in "
-print_n counter
-print " guesses!"
+print "Congratulations, you guessed it in" counter "guesses!"
 
 done

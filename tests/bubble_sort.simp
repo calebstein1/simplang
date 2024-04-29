@@ -20,10 +20,8 @@ end_loop
 ; Print the unsorted numbers
 print "Unsorted:"
 for_each num in nums
-    print_n num
-    print_n " "
+    print num
 end_loop
-print ""
 
 ; The actual sorting algorithm
 begin_loop
@@ -38,9 +36,7 @@ end_loop_if_equal num_count 0
 ; Print the sorted numbers
 print "Sorted:"
 for_each num in nums
-    print_n num
-    print_n " "
+    print num
 end_loop
-print ""
 
 done

@@ -18,11 +18,6 @@ begin_loop
 end_loop_if_equal num2 0
 
 ; Form and print the final output
-print_n "The GCD of "
-print_n orig_num1
-print_n " and "
-print_n orig_num2
-print_n " is "
-print num1
+print "The GCD of" orig_num1 "and" orig_num2 "is" num1
 
 done
