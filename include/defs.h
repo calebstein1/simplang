@@ -5,6 +5,7 @@
 
 #define MAX_PROGRAM_SIZE 2048
 #define MAX_REGISTERS 24
+#define MAX_ARGUMENTS 12
 #define GLOBAL_STACK_SIZE 16
 #define GLOBAL_HEAP_SIZE 4096
 #define GLOBAL_BUFF_SIZE 512
@@ -77,12 +78,12 @@ typedef struct {
     bool transient;
 } dyn_ptr_t;
 
+
 typedef struct {
     instructions_e opcode;
-    int target[3];
-    dyn_ptr_t a1;
-    dyn_ptr_t a2;
-    dyn_ptr_t a3;
+    int target[MAX_ARGUMENTS];
+    dyn_ptr_t arg_list[MAX_ARGUMENTS];
+    int arg_count;
     bool embedded;
 } operation;
 

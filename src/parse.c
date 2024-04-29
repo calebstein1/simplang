@@ -34,13 +34,8 @@ void parse_op(operation *op, char **tok_pos) {
     static char *reg_lbls[MAX_REGISTERS] = {};
 
     char *cur_arg = NULL;
-    int i, j;
-    j = 0;
-    dyn_ptr_t *args[] = {
-        &op->a1,
-        &op->a2,
-        &op->a3,
-    };
+    int i;
+    op->arg_count = 0;
 
     while ((cur_arg = strtok_r(NULL, " \t", tok_pos))) {
         int arg_len = strlen(cur_arg);
@@ -50,7 +45,7 @@ void parse_op(operation *op, char **tok_pos) {
         if (!arg_len) break;
         if (memcmp(cur_arg, "in", arg_len > 2 ? arg_len : 2) == 0) {}
         else if (memcmp(cur_arg, "next", arg_len > 4 ? arg_len : 4) == 0) {
-            op->target[j] = MAX_REGISTERS;
+            op->target[op->arg_count] = MAX_REGISTERS;
         } else if (('a' <= *cur_arg && *cur_arg <= 'z') || ('A' <= *cur_arg && *cur_arg <= 'Z')) {
             int l;
             i = l = 0;
@@ -59,18 +54,18 @@ void parse_op(operation *op, char **tok_pos) {
                 cur_arg[--arg_len] = 0x0;
                 while (cur_arg[--arg_len] != '[') {}
                 cur_arg[arg_len] = 0x0;
-                args[j]->idx = atoi(cur_arg + arg_len + 1);
+                op->arg_list[op->arg_count].idx = atoi(cur_arg + arg_len + 1);
             }
 
             for (; i < MAX_REGISTERS; i++) {
                 if (!reg_lbls[i]) {
                     reg_lbls[i] = simp_alloc(arg_len, STR);
                     strcpy(reg_lbls[i], cur_arg);
-                    op->target[j] = i;
+                    op->target[op->arg_count] = i;
                     break;
                 }
                 if (memcmp(cur_arg, reg_lbls[i], (l = strlen(reg_lbls[i])) > arg_len ? l : arg_len) == 0) {
-                    op->target[j] = i;
+                    op->target[op->arg_count] = i;
                     break;
                 }
             }
@@ -95,10 +90,10 @@ void parse_op(operation *op, char **tok_pos) {
                 s_buff[i++] = *cur_arg++;
             }
             s_buff[i] = 0x0;
-            args[j]->type = STR;
-            args[j]->transient = true;
-            args[j]->ptr.str_ptr = simp_alloc(i, STR);
-            strcpy(args[j]->ptr.str_ptr, s_buff);
+            op->arg_list[op->arg_count].type = STR;
+            op->arg_list[op->arg_count].transient = true;
+            op->arg_list[op->arg_count].ptr.str_ptr = simp_alloc(i, STR);
+            strcpy(op->arg_list[op->arg_count].ptr.str_ptr, s_buff);
             if (has_spaces) strtok_r(NULL, "\"", tok_pos);
         } else if (*cur_arg == '(') {
             operation embedded_op = { .embedded = true, .target = { -1, -1, -1 } };
@@ -119,7 +114,7 @@ void parse_op(operation *op, char **tok_pos) {
             s_buff[i] = 0x0;
 
             get_opcode(&embedded_op, s_buff, &embedded_tok_r);
-            if (j == 0) {
+            if (op->arg_count == 0) {
                 printf("Embedded operation cannot be first argument\n");
                 if (pe) exit(-1);
                 return;
@@ -131,19 +126,19 @@ void parse_op(operation *op, char **tok_pos) {
             }
             parse_op(&embedded_op, &embedded_tok_r);
             if (!pe) eval_op(&embedded_op);
-            args[j]->type = INT;
-            args[j]->ptr.int_ptr = &i_buff;
+            op->arg_list[op->arg_count].type = INT;
+            op->arg_list[op->arg_count].ptr.int_ptr = &i_buff;
         } else if (('0' <= *cur_arg && *cur_arg <= '9') || *cur_arg == '-') {
-            args[j]->type = INT;
-            args[j]->transient = true;
-            args[j]->ptr.int_ptr = simp_alloc(sizeof(long), INT);
-            *args[j]->ptr.int_ptr = atoi(cur_arg);
+            op->arg_list[op->arg_count].type = INT;
+            op->arg_list[op->arg_count].transient = true;
+            op->arg_list[op->arg_count].ptr.int_ptr = simp_alloc(sizeof(long), INT);
+            *op->arg_list[op->arg_count].ptr.int_ptr = atoi(cur_arg);
         } else {
             printf("Unknown type for argument: %s\n", cur_arg);
             if (pe) exit(-1);
             return;
         }
-        ++j;
+        ++op->arg_count;
     }
 
     if (!pe) return;
