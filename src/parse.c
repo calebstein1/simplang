@@ -34,35 +34,20 @@ void parse_op(operation *op, char **tok_pos) {
     static char *reg_lbls[MAX_REGISTERS] = {};
 
     char *cur_arg = NULL;
-    int i, j, num_args;
-    j = num_args = 0;
+    int i, j;
+    j = 0;
     dyn_ptr_t *args[] = {
         &op->a1,
         &op->a2,
         &op->a3,
     };
 
-    static void *parse_fn_tbl[] = {
-        #define X(opcode, lit, parse_fn, ...) parse_fn,
-        OPCODE_TABLE
-        #undef X
-    };
-
-    goto *parse_fn_tbl[op->opcode];
-
-    parse_three_args:
-        ++num_args;
-    parse_two_args:
-        ++num_args;
-    parse_one_arg:
-        ++num_args;
-
-    do {
-        if (!(cur_arg = strtok_r(NULL, " \t", tok_pos))) {
-            args[j]->type = NONE;
-            continue;
-        }
+    while ((cur_arg = strtok_r(NULL, " \t", tok_pos))) {
         int arg_len = strlen(cur_arg);
+        if (cur_arg[arg_len - 1] == '\n') {
+            cur_arg[--arg_len] = 0x0;
+        }
+        if (!arg_len) break;
         if (memcmp(cur_arg, "in", arg_len > 2 ? arg_len : 2) == 0) {}
         else if (memcmp(cur_arg, "next", arg_len > 4 ? arg_len : 4) == 0) {
             op->target[j] = MAX_REGISTERS;
@@ -70,9 +55,6 @@ void parse_op(operation *op, char **tok_pos) {
             int l;
             i = l = 0;
 
-            if (cur_arg[arg_len - 1] == '\n') {
-                cur_arg[--arg_len] = 0x0;
-            }
             if (cur_arg[arg_len - 1] == ']') {
                 cur_arg[--arg_len] = 0x0;
                 while (cur_arg[--arg_len] != '[') {}
@@ -97,11 +79,13 @@ void parse_op(operation *op, char **tok_pos) {
                 if (pe) exit(-1);
             }
         } else if (*cur_arg == '"') {
+            bool has_spaces = false;
             i = 0;
             cur_arg++;
             while (*cur_arg != '"') {
                 if (!*cur_arg) {
                     *cur_arg = ' ';
+                    has_spaces = true;
                 }
                 if (i >= GLOBAL_BUFF_SIZE - 1) {
                     printf("String buffer overflow\n");
@@ -115,7 +99,7 @@ void parse_op(operation *op, char **tok_pos) {
             args[j]->transient = true;
             args[j]->ptr.str_ptr = simp_alloc(i, STR);
             strcpy(args[j]->ptr.str_ptr, s_buff);
-            strtok(cur_arg, " \t");
+            if (has_spaces) strtok_r(NULL, "\"", tok_pos);
         } else if (*cur_arg == '(') {
             operation embedded_op = { .embedded = true, .target = { -1, -1, -1 } };
             char *embedded_tok_r = NULL;
@@ -159,9 +143,8 @@ void parse_op(operation *op, char **tok_pos) {
             if (pe) exit(-1);
             return;
         }
-    } while (++j < num_args);
-
-    parse_no_args:
+        ++j;
+    }
 
     if (!pe) return;
 

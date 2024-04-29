@@ -9,41 +9,41 @@
 #define GLOBAL_HEAP_SIZE 4096
 #define GLOBAL_BUFF_SIZE 512
 
-#define OPCODE_TABLE                                         \
-X(INVLD, "", &&parse_no_args)                                \
-X(ASGN, "assign", &&parse_two_args)                          \
-X(NEWARR, "new_array", &&parse_two_args)                     \
-X(RAND, "random", &&parse_two_args)                          \
-X(GET, "get_input", &&parse_two_args)                        \
-X(ADD, "add", &&parse_two_args)                              \
-X(SUBTR, "subtract", &&parse_two_args)                       \
-X(MUL, "multiply", &&parse_two_args)                         \
-X(DIV, "divide", &&parse_two_args)                           \
-X(MOD, "modulo", &&parse_two_args)                           \
-X(INCR, "increment", &&parse_one_arg)                        \
-X(DECR, "decrement", &&parse_one_arg)                        \
-X(SWP, "swap", &&parse_two_args)                             \
-X(BEGLP, "begin_loop", &&parse_no_args)                      \
-X(FOREACH, "for_each", &&parse_three_args)                   \
-X(CONT, "continue", &&parse_no_args)                         \
-X(ENDLP, "end_loop", &&parse_no_args)                        \
-X(ENDLPEQ, "end_loop_if_equal", &&parse_two_args)            \
-X(ENDLPNE, "end_loop_if_not_equal", &&parse_two_args)        \
-X(ENDLPLT, "end_loop_if_less", &&parse_two_args)             \
-X(ENDLPLE, "end_loop_if_less_or_equal", &&parse_two_args)    \
-X(ENDLPGT, "end_loop_if_greater", &&parse_two_args)          \
-X(ENDLPGE, "end_loop_if_greater_or_equal", &&parse_two_args) \
-X(IFEQ, "if_equal", &&parse_two_args)                        \
-X(IFNE, "if_not_equal", &&parse_two_args)                    \
-X(IFLT, "if_less", &&parse_two_args)                         \
-X(IFLE, "if_less_or_equal", &&parse_two_args)                \
-X(IFGT, "if_greater", &&parse_two_args)                      \
-X(IFGE, "if_greater_or_equal", &&parse_two_args)             \
-X(ENDIF, "end_if", &&parse_no_args)                          \
-X(PRINT, "print", &&parse_one_arg)                           \
-X(PRINTN, "print_n", &&parse_one_arg)                        \
-X(CMNT, ";", &&parse_no_args)                                \
-X(DONE, "done", &&parse_no_args)
+#define OPCODE_TABLE                       \
+X(INVLD, "")                               \
+X(ASGN, "assign")                          \
+X(NEWARR, "new_array")                     \
+X(RAND, "random")                          \
+X(GET, "get_input")                        \
+X(ADD, "add")                              \
+X(SUBTR, "subtract")                       \
+X(MUL, "multiply")                         \
+X(DIV, "divide")                           \
+X(MOD, "modulo")                           \
+X(INCR, "increment")                       \
+X(DECR, "decrement")                       \
+X(SWP, "swap")                             \
+X(BEGLP, "begin_loop",)                    \
+X(FOREACH, "for_each")                     \
+X(CONT, "continue")                        \
+X(ENDLP, "end_loop")                       \
+X(ENDLPEQ, "end_loop_if_equal")            \
+X(ENDLPNE, "end_loop_if_not_equal")        \
+X(ENDLPLT, "end_loop_if_less")             \
+X(ENDLPLE, "end_loop_if_less_or_equal")    \
+X(ENDLPGT, "end_loop_if_greater")          \
+X(ENDLPGE, "end_loop_if_greater_or_equal") \
+X(IFEQ, "if_equal")                        \
+X(IFNE, "if_not_equal")                    \
+X(IFLT, "if_less")                         \
+X(IFLE, "if_less_or_equal")                \
+X(IFGT, "if_greater")                      \
+X(IFGE, "if_greater_or_equal")             \
+X(ENDIF, "end_if")                         \
+X(PRINT, "print")                          \
+X(PRINTN, "print_n")                       \
+X(CMNT, ";")                               \
+X(DONE, "done")
 
 #define PTR_TYPE_TABLE          \
 X(NONE, &&INVLD)                \
