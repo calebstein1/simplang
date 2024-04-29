@@ -78,7 +78,7 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 `end_if` - signifies the end of an if block
 
-`(print, print_n) <a1>` - prints the integer value or string stored in the variable specified by a1, or print a number or string literal passed directly as an argument, the n variant omits the trailing newline
+`print <a1>...<aMax>` - prints the integer value or string stored in each argument, separated by a space
 
 `done` - ends execution of the program
 
