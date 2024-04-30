@@ -11,15 +11,11 @@ begin_loop
     end_if
 end_loop_if_equal 0 0
 
-; Initialize and populate number array
+; Initialize, populate, and print number array
 new_array nums num_count
-for_each num in nums
-    random num 1000
-end_loop
-
-; Print the unsorted numbers
 print "Unsorted:"
 for_each num in nums
+    random num 1000
     print num
 end_loop
 
