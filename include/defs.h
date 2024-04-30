@@ -42,6 +42,7 @@ X(IFGT, "if_greater")                      \
 X(IFGE, "if_greater_or_equal")             \
 X(ENDIF, "end_if")                         \
 X(PRINT, "print")                          \
+X(PRINTARR, "print_array")                 \
 X(CMNT, ";")                               \
 X(DONE, "done")
 
