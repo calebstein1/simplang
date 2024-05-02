@@ -80,6 +80,8 @@ Simplang is self-contained in a single binary, `make install` copies this binary
 
 `print <a1>...<aMax>` - prints the integer value or string stored in each argument, separated by a space
 
+`print_array <a1>` - prints the array specified by a1 as a string
+
 `done` - ends execution of the program
 
 ## Known Bugs:
