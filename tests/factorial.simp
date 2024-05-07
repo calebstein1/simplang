@@ -7,7 +7,7 @@ begin_loop
         print "Number must be a positive number greater than 0"
         continue
     end_if
-end_loop_if_equal 0 0
+end_loop
 
 assign iter (subtract fact 1)
 begin_loop

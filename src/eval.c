@@ -237,6 +237,8 @@ void eval_op(operation *op) {
         if (foreach_counter >= foreach_max) {
             foreach_counter = foreach_max = 0;
             j_sp--;
+        } else if (!foreach_max) {
+            j_sp--;
         } else {
             pp = *(j_sp - 1);
             pp--;

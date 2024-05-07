@@ -7,7 +7,7 @@ begin_loop
         assign target_digit 0
         continue
     end_if
-end_loop_if_equal 0 0
+end_loop
 
 ; current_digit will be the current digit, previous_digit and last_previous_digit will be the prior two,
 ; counter is our iterator

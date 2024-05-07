@@ -31,7 +31,7 @@ begin_loop
 
 ; Always end the loop if we reach this point, as that means that
 ; the entered number is within range
-end_loop_if_equal 0 0
+end_loop
 
 begin_loop
     ; Resets guess to 0
