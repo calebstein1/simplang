@@ -229,6 +229,7 @@ void eval_op(operation *op) {
             goto END;
         }
         pp = *(j_sp - 1);
+        if (foreach_max) pp--;
         goto END;
     ENDLP:
         if (j_sp == j_bp) {
