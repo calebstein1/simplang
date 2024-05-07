@@ -352,6 +352,12 @@ void eval_op(operation *op) {
         for (i = 0; i < op->arg_count; i++) {
             switch (op->arg_list[i].type) {
             case ARR:
+                printf("[");
+                    for (i = 0; i < op->arg_list[0].arr_size - 1; i++) {
+                        printf("%ld, ", *(op->arg_list[0].ptr.int_ptr + i));
+                    }
+                    printf("%ld]", *(op->arg_list[0].ptr.int_ptr + i));
+                    break;
             case INT:
                 printf("%ld ", *op->arg_list[i].ptr.int_ptr);
                 break;
@@ -364,17 +370,6 @@ void eval_op(operation *op) {
             if (op->arg_list[i].transient) simp_free(op->arg_list[i].ptr.void_ptr);
         }
         printf("\n");
-        goto END;
-    PRINTARR:
-        if (op->arg_list[0].type != ARR) {
-            printf("No array to operate on\n");
-            goto END;
-        }
-        printf("[");
-        for (i = 0; i < op->arg_list[0].arr_size - 1; i++) {
-            printf("%ld, ", *(op->arg_list[0].ptr.int_ptr + i));
-        }
-        printf("%ld]\n", *(op->arg_list[0].ptr.int_ptr + i));
         goto END;
     ARR_OOB_ERR:
         printf("Out of bounds access error\n");

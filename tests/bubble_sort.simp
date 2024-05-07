@@ -17,7 +17,7 @@ print "Unsorted:"
 for_each num in nums
     random num 1000
 end_loop
-print_array nums
+print nums
 
 ; The actual sorting algorithm
 begin_loop
@@ -31,6 +31,6 @@ end_loop_if_equal num_count 0
 
 ; Print the sorted numbers
 print "Sorted:"
-print_array nums
+print nums
 
 done
