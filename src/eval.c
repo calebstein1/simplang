@@ -26,8 +26,10 @@ void eval_op(operation *op) {
             memcpy(&op->arg_list[i], &loop_next, sizeof(dyn_ptr_t));
         } else if (op->target[i] >= 0) {
             int idx = op->arg_list[i].idx;
+            bool arr_item = op->arg_list[i].arr_item;
             memcpy(&op->arg_list[i], &g_registers[op->target[i]], sizeof(dyn_ptr_t));
             op->arg_list[i].idx = idx;
+            op->arg_list[i].arr_item = arr_item;
         }
 
         if (op->arg_list[i].type == ARR) {
@@ -355,13 +357,14 @@ void eval_op(operation *op) {
         for (i = 0; i < op->arg_count; i++) {
             switch (op->arg_list[i].type) {
             case ARR:
+                if (op->arg_list[i].arr_item) goto INT;
                 printf("[");
-                    for (i = 0; i < op->arg_list[0].arr_size - 1; i++) {
-                        printf("%ld, ", *(op->arg_list[0].ptr.int_ptr + i));
-                    }
-                    printf("%ld]", *(op->arg_list[0].ptr.int_ptr + i));
-                    break;
-            case INT:
+                for (i = 0; i < op->arg_list[0].arr_size - 1; i++) {
+                    printf("%ld, ", *(op->arg_list[0].ptr.int_ptr + i));
+                }
+                printf("%ld]", *(op->arg_list[0].ptr.int_ptr + i));
+                break;
+            case INT: INT:
                 printf("%ld ", *op->arg_list[i].ptr.int_ptr);
                 break;
             case STR:

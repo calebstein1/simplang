@@ -55,6 +55,7 @@ void parse_op(operation *op, char **tok_pos) {
                 while (cur_arg[--arg_len] != '[') {}
                 cur_arg[arg_len] = 0x0;
                 op->arg_list[op->arg_count].idx = atoi(cur_arg + arg_len + 1);
+                op->arg_list[op->arg_count].arr_item = true;
             }
 
             for (; i < MAX_REGISTERS; i++) {

@@ -74,6 +74,7 @@ typedef struct {
     ptr_type_e type;
     int arr_size;
     int idx;
+    bool arr_item;
     bool transient;
 } dyn_ptr_t;
 
