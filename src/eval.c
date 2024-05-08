@@ -36,7 +36,7 @@ void eval_op(operation *op) {
             if (op->arg_list[i].idx >= op->arg_list[i].arr_size) {
                 goto ARR_OOB_ERR;
             }
-            op->arg_list[i].ptr += op->arg_list[i].idx;
+            op->arg_list[i].ptr += (op->arg_list[i].idx * sizeof(long));
         }
     }
 
@@ -53,7 +53,7 @@ void eval_op(operation *op) {
         if (op->target[0] >= 0) memcpy(&g_registers[op->target[0]], &op->arg_list[0], sizeof(dyn_ptr_t));
         goto END;
     RAND:
-        if (foreach_max > 0) {
+        if (foreach_max > 0 || op->arg_list[0].type == ARR) {
             *(long *)op->arg_list[0].ptr = rand() % *(long *)op->arg_list[1].ptr;
             if (op->arg_list[1].transient) simp_free(op->arg_list[1].ptr);
             goto END;
