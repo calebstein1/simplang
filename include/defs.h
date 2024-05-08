@@ -57,12 +57,6 @@ typedef enum {
     #undef X
 } instructions_e;
 
-typedef union {
-    char *str_ptr;
-    long *int_ptr;
-    void *void_ptr;
-} dyn_ptr_u;
-
 typedef enum {
     #define X(type, ...) type,
     PTR_TYPE_TABLE
@@ -70,7 +64,7 @@ typedef enum {
 } ptr_type_e;
 
 typedef struct {
-    dyn_ptr_u ptr;
+    void *ptr;
     ptr_type_e type;
     int arr_size;
     int idx;

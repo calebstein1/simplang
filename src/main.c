@@ -41,8 +41,8 @@ int main(int argc, char **argv) {
     int i = 2;
     for (; i < argc; i++) {
         g_registers[i - 2].type = INT;
-        g_registers[i - 2].ptr.int_ptr = simp_alloc(sizeof(long), INT);
-        *g_registers[i - 2].ptr.int_ptr = atoi(argv[i]);
+        g_registers[i - 2].ptr = simp_alloc(sizeof(long), INT);
+        *(long *)g_registers[i - 2].ptr = atoi(argv[i]);
     }
     
     int fd;

@@ -93,8 +93,8 @@ void parse_op(operation *op, char **tok_pos) {
             s_buff[i] = 0x0;
             op->arg_list[op->arg_count].type = STR;
             op->arg_list[op->arg_count].transient = true;
-            op->arg_list[op->arg_count].ptr.str_ptr = simp_alloc(i, STR);
-            strcpy(op->arg_list[op->arg_count].ptr.str_ptr, s_buff);
+            op->arg_list[op->arg_count].ptr = simp_alloc(i, STR);
+            strcpy((char *)op->arg_list[op->arg_count].ptr, s_buff);
             if (has_spaces) strtok_r(NULL, "\"", tok_pos);
         } else if (*cur_arg == '(') {
             operation embedded_op = { .embedded = true, .target = { -1, -1, -1 } };
@@ -128,12 +128,12 @@ void parse_op(operation *op, char **tok_pos) {
             parse_op(&embedded_op, &embedded_tok_r);
             if (!pe) eval_op(&embedded_op);
             op->arg_list[op->arg_count].type = INT;
-            op->arg_list[op->arg_count].ptr.int_ptr = &i_buff;
+            op->arg_list[op->arg_count].ptr = &i_buff;
         } else if (('0' <= *cur_arg && *cur_arg <= '9') || *cur_arg == '-') {
             op->arg_list[op->arg_count].type = INT;
             op->arg_list[op->arg_count].transient = true;
-            op->arg_list[op->arg_count].ptr.int_ptr = simp_alloc(sizeof(long), INT);
-            *op->arg_list[op->arg_count].ptr.int_ptr = atoi(cur_arg);
+            op->arg_list[op->arg_count].ptr = simp_alloc(sizeof(long), INT);
+            *(long *)op->arg_list[op->arg_count].ptr = atoi(cur_arg);
         } else {
             printf("Unknown type for argument: %s\n", cur_arg);
             if (pe) exit(-1);
