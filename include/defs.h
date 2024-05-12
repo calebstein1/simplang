@@ -27,6 +27,7 @@ X(SWP, "swap")                             \
 X(BEGLP, "begin_loop",)                    \
 X(FOREACH, "for_each")                     \
 X(CONT, "continue")                        \
+X(BREAK, "break")                          \
 X(ENDLP, "end_loop")                       \
 X(ENDLPEQ, "end_loop_if_equal")            \
 X(ENDLPNE, "end_loop_if_not_equal")        \

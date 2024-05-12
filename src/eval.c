@@ -233,6 +233,11 @@ void eval_op(operation *op) {
         pp = *(j_sp - 1);
         if (foreach_max) pp--;
         goto END;
+    BREAK:
+        while (!(ENDLP <= op->opcode && op->opcode <= ENDLPGE)) {
+            op = ++pp;
+        }
+        goto END;
     ENDLP:
         if (j_sp == j_bp) {
             goto END;

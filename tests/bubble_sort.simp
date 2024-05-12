@@ -20,13 +20,19 @@ end_loop
 print nums
 
 ; The actual sorting algorithm
+assign counter 0
 begin_loop
     for_each num in nums
+        if_equal counter num_count
+            break
+        end_if
         if_greater num next
             swap num next
         end_if
+        increment counter
     end_loop
     decrement num_count 
+    assign counter 0
 end_loop_if_equal num_count 0
 
 ; Print the sorted numbers
