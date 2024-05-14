@@ -363,7 +363,7 @@ void eval_op(operation *op) {
     SKIP_IF:
         while (nested_if) {
             op = ++pp;
-            if (IFEQ <= op->opcode && op->opcode <= IFLE) {
+            if (IFEQ <= op->opcode && op->opcode <= IFNR) {
                 nested_if++;
             } else if (op->opcode == ENDIF) {
                 nested_if--;
