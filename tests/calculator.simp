@@ -1,0 +1,69 @@
+#!/usr/bin/env simplang
+
+print "Welcome to the Simplang Calculator!"
+
+begin_loop
+    print "Operations:"
+    print "1. Add"
+    print "2. Subtract"
+    print "3. Multiply"
+    print "4. Divide"
+    begin_loop
+        get_input op "Select an operation (1-4): "
+        if_less op 1
+            assign op 0
+            print "Please enter a number between 1 and 4"
+            continue
+        end_if
+        if_greater op 4
+            assign op 0
+            print "Please enter a number between 1 and 4"
+            continue
+        end_if
+    end_loop
+
+    get_input num1 "Enter first number: "
+    get_input num2 "Enter second number: "
+
+    if_equal op 1
+        assign res (add num1 num2)
+        print num1 "+" num2 "=" res
+    end_if
+    if_equal op 2
+        assign res (subtract num1 num2)
+        print num1 "-" num2 "=" res
+    end_if
+    if_equal op 3
+        assign res (multiply num1 num2)
+        print num1 "*" num2 "=" res
+    end_if
+    if_equal op 4
+        if_equal num2 0
+            print "You know you shouldn't be trying to divide by zero!"
+            begin_loop
+                get_input num2 "Enter something that ISN'T zero: "
+            end_loop_if_not_equal num2 0
+        end_if
+        assign res (divide num1 num2)
+        assign rem num1
+        modulo rem num2
+        if_equal rem 0
+            print num1 "/" num2 "=" res
+        end_if
+        if_not_equal rem 0
+            print num1 "/" num2 "=" res "r" rem
+        end_if
+    end_if
+
+    get_input again "Perform another operation? (1 for yes): "
+
+    if_equal again 1
+        assign op 0
+        assign num1 0
+        assign num2 0
+        assign again 0
+        continue
+    end_if
+end_loop
+
+done
