@@ -7,12 +7,12 @@ begin_loop
     ; If the user enters a number outside the acceptable range,
     ; display a message stating so and request a new number
     if_greater target 100
-        print invalid_target
+        print "Now I'm not cheating or anything, but I know that" target "is out of range!"
         assign target 0
         continue
     end_if
     if_less target 1
-        print invalid_target
+        print "Now I'm not cheating or anything, but I know that" target "is out of range!"
         assign target 0
         continue
     end_if
@@ -26,7 +26,6 @@ assign guess 0
 assign lower_bound 0
 assign upper_bound 101
 assign counter 0
-assign invalid_target "Now I'm not cheating or anything, but I know that's out of range!"
 assign ill_guess "I'll guess"
 assign too_low "and that's too low"
 assign too_high "and that's too high"
