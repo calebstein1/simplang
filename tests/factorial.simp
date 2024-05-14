@@ -3,7 +3,7 @@
 begin_loop
     get_input fact "Enter number to calculate the factorial of: "
     if_less_or_equal fact 0
-        assign fact 0
+        reset fact
         print "Number must be a positive number greater than 0"
         continue
     end_if

@@ -6,7 +6,7 @@ begin_loop
     get_input num_count "Enter number of items to sort: "
     if_less_or_equal num_count 1
         print "Number must be greater than 1"
-        assign num_count 0
+        reset num_count
         continue
     end_if
 end_loop
@@ -20,19 +20,13 @@ end_loop
 print nums
 
 ; The actual sorting algorithm
-assign counter 0
 begin_loop
     for_each num in nums
-        if_equal counter num_count
-            break
-        end_if
         if_greater num next
             swap num next
         end_if
-        increment counter
     end_loop
-    decrement num_count 
-    assign counter 0
+    decrement num_count
 end_loop_if_equal num_count 0
 
 ; Print the sorted numbers

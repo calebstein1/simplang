@@ -11,7 +11,7 @@ begin_loop
     begin_loop
         get_input op "Select an operation (1-4): "
         if_not_in_range op 1 4
-            assign op 0
+            reset op
             print "Please enter a number between 1 and 4"
             continue
         end_if

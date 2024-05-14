@@ -20,7 +20,7 @@ begin_loop
     ; a guess penalty
     if_not_in_range guess 1 100
         print invalid_guess
-        assign guess 0
+        reset guess
         continue
     end_if
 
@@ -28,11 +28,11 @@ begin_loop
     ; guess was too low or too high
     if_less guess target
         print "Your guess was too low, try again"
-        assign guess 0
+        reset guess
     end_if
     if_greater guess target
         print "Your guess was too high, try again"
-        assign guess 0
+        reset guess
     end_if
 
     ; Increment the guess counter

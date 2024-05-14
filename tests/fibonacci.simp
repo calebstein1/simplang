@@ -4,7 +4,7 @@ begin_loop
     get_input target_digit "Enter Fibonacci digit to calculate up to: "
     if_less_or_equal target_digit 0
         print "Please enter a number greater than 0"
-        assign target_digit 0
+        reset target_digit
         continue
     end_if
 end_loop
@@ -31,12 +31,12 @@ if_equal counter 1
 end_if
 if_greater target_digit 2
     begin_loop
-       subtract current_digit current_digit
-       add current_digit (add previous_digit last_previous_digit)
-       assign last_previous_digit previous_digit
-       assign previous_digit current_digit
-       print current_digit
-       increment counter
+        reset current_digit
+        add current_digit (add previous_digit last_previous_digit)
+        assign last_previous_digit previous_digit
+        assign previous_digit current_digit
+        print current_digit
+        increment counter
     end_loop_if_equal target_digit counter
 end_if
 
