@@ -13,6 +13,7 @@
 #define OPCODE_TABLE                       \
 X(INVLD, "")                               \
 X(ASGN, "assign")                          \
+X(RST, "reset")                            \
 X(NEWARR, "new_array")                     \
 X(RAND, "random")                          \
 X(GET, "get_input")                        \
