@@ -53,10 +53,10 @@ begin_loop
     get_input again "Perform another operation? (1 for yes): "
 
     if_equal again 1
-        assign op 0
-        assign num1 0
-        assign num2 0
-        assign again 0
+        reset op
+        reset num1 0
+        reset num2 0
+        reset again 0
         continue
     end_if
 end_loop
