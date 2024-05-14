@@ -1,20 +1,8 @@
 #!/usr/bin/env simplang
 
-; Set our initial values and string literals
-assign guess 0
-assign lower_bound 0
-assign upper_bound 101
-assign counter 0
-assign invalid_target "Now I'm not cheating or anything, but I know that's out of range!"
-assign ill_guess "I'll guess"
-assign too_low "and that's too low"
-assign too_high "and that's too high"
-assign correct "and that's it!"
-
-print "Enter a number between 1 and 100 and I'll try to guess it!"
-
+; Get the target number from the user or from the command line argument
 begin_loop
-    get_input target "Enter your number here: "
+    get_input target "Enter a number between 1 and 100 and I'll try to guess it: "
 
     ; If the user enters a number outside the acceptable range,
     ; display a message stating so and request a new number
@@ -33,6 +21,18 @@ begin_loop
 ; the entered number is within range
 end_loop
 
+; Set our other initial values and string literals
+assign guess 0
+assign lower_bound 0
+assign upper_bound 101
+assign counter 0
+assign invalid_target "Now I'm not cheating or anything, but I know that's out of range!"
+assign ill_guess "I'll guess"
+assign too_low "and that's too low"
+assign too_high "and that's too high"
+assign correct "and that's it!"
+
+; Guess the number using binary search
 begin_loop
     ; Resets guess to 0
     subtract guess guess
