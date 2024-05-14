@@ -6,12 +6,7 @@ begin_loop
 
     ; If the user enters a number outside the acceptable range,
     ; display a message stating so and request a new number
-    if_greater target 100
-        print "Now I'm not cheating or anything, but I know that" target "is out of range!"
-        assign target 0
-        continue
-    end_if
-    if_less target 1
+    if_not_in_range target 1 100
         print "Now I'm not cheating or anything, but I know that" target "is out of range!"
         assign target 0
         continue

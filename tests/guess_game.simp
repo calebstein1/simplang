@@ -18,12 +18,7 @@ begin_loop
     ; If the user guesses a number that's not between 1-100,
     ; print a message stating such and restart the loop without
     ; a guess penalty
-    if_greater guess 100
-        print invalid_guess
-        assign guess 0
-        continue
-    end_if
-    if_less_or_equal guess 0
+    if_not_in_range guess 1 100
         print invalid_guess
         assign guess 0
         continue
