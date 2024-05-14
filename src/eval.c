@@ -348,6 +348,18 @@ void eval_op(operation *op) {
             goto SKIP_IF;
         }
         goto END;
+    IFRG:
+        nested_if++;
+        if (*(long *)op->arg_list[0].ptr < *(long *)op->arg_list[1].ptr || *(long *)op->arg_list[2].ptr < *(long *)op->arg_list[0].ptr) {
+            goto SKIP_IF;
+        }
+        goto END;
+    IFNR:
+        nested_if++;
+        if (*(long *)op->arg_list[1].ptr <= *(long *)op->arg_list[0].ptr && *(long *)op->arg_list[0].ptr <= *(long *)op->arg_list[2].ptr) {
+            goto SKIP_IF;
+        }
+        goto END;
     SKIP_IF:
         while (nested_if) {
             op = ++pp;

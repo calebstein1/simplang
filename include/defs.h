@@ -41,6 +41,8 @@ X(IFLT, "if_less")                         \
 X(IFLE, "if_less_or_equal")                \
 X(IFGT, "if_greater")                      \
 X(IFGE, "if_greater_or_equal")             \
+X(IFRG, "if_in_range")                     \
+X(IFNR, "if_not_in_range")                 \
 X(ENDIF, "end_if")                         \
 X(PRINT, "print")                          \
 X(CMNT, ";")                               \
