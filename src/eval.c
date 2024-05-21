@@ -405,6 +405,6 @@ void eval_op(operation *op) {
         printf("Out of bounds access error\n");
         if (pe) exit(-1);
         goto END;
-    END: CMNT: DONE: ENDIF: PRINT_NONE: PRINTN_NONE: INVLD: NOP:
+    END: CMNT: DONE: ENDIF: INVLD:
         return;
 }
