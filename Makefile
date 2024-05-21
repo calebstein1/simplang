@@ -1,6 +1,7 @@
 TARGET = bin/simplang
 SRC = $(wildcard src/*.c)
 OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
+CC = cc
 CFLAGS=-Iinclude
 
 all: clean $(TARGET)
@@ -11,11 +12,11 @@ clean:
 
 $(TARGET): $(OBJ)
 	mkdir -p bin
-	cc -o $@ $?
+	$(CC) -o $@ $?
 
 obj/%.o: src/%.c
 	mkdir -p obj
-	cc -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 install:
 	mkdir -p /usr/local/bin
