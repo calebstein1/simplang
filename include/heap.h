@@ -1,6 +1,8 @@
 #ifndef SIMPLANG_HEAP_H
 #define SIMPLANG_HEAP_H
 
+#include <stdint.h>
+
 #define HEADER_SIG 0x5053
 
 typedef struct {
