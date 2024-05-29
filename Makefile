@@ -2,6 +2,7 @@ TARGET = bin/simplang
 SRC = $(wildcard src/*.c)
 OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 CC = cc
+#CFLAGS=-fsanitize=address,undefined -Iinclude
 CFLAGS=-Iinclude
 
 all: clean $(TARGET)
@@ -12,7 +13,7 @@ clean:
 
 $(TARGET): $(OBJ)
 	mkdir -p bin
-	$(CC) -o $@ $?
+	$(CC) -o $@ $? $(CFLAGS)
 
 obj/%.o: src/%.c
 	mkdir -p obj
