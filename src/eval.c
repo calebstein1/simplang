@@ -18,7 +18,8 @@ void eval_op(operation *op) {
         #undef X
     };
     static int foreach_counter = 0, foreach_max = 0;
-    int i = 0;
+    int i, j;
+    i = j = 0;
     unsigned int nested_if = 0;
 
     for (; i < op->arg_count; i++) {
@@ -383,10 +384,10 @@ void eval_op(operation *op) {
             case ARR:
                 if (op->arg_list[i].arr_item) goto INT;
                 printf("[");
-                for (i = 0; i < op->arg_list[0].arr_size - 1; i++) {
-                    printf("%ld, ", *((long *)op->arg_list[0].ptr + i));
+                for (j = 0; j < op->arg_list[0].arr_size - 1; j++) {
+                    printf("%ld, ", *((long *)op->arg_list[0].ptr + j));
                 }
-                printf("%ld]", *((long *)op->arg_list[0].ptr + i));
+                printf("%ld]", *((long *)op->arg_list[0].ptr + j));
                 break;
             case INT: INT:
                 printf("%ld ", *(long *)op->arg_list[i].ptr);

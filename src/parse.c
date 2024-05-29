@@ -17,7 +17,7 @@ void get_opcode(operation *op, char *tok, char **tok_pos) {
     int i = 1, l = 0;
     char *lit = strtok_r(tok, " \n", tok_pos);
     int lit_len = strlen(lit);
-    for (; memcmp(opcode_lit[i], lit, (l = strlen(opcode_lit[i])) > lit_len ? l : lit_len) != 0; i++) {
+    for (; strcmp(opcode_lit[i], lit) != 0; i++) {
         if (i >= DONE) {
             op->opcode = INVLD;
 
@@ -43,8 +43,8 @@ void parse_op(operation *op, char **tok_pos) {
             cur_arg[--arg_len] = 0x0;
         }
         if (!arg_len) break;
-        if (memcmp(cur_arg, "in", arg_len > 2 ? arg_len : 2) == 0) {}
-        else if (memcmp(cur_arg, "next", arg_len > 4 ? arg_len : 4) == 0) {
+        if (strcmp(cur_arg, "in") == 0) {}
+        else if (strcmp(cur_arg, "next") == 0) {
             op->target[op->arg_count] = MAX_REGISTERS;
         } else if (('a' <= *cur_arg && *cur_arg <= 'z') || ('A' <= *cur_arg && *cur_arg <= 'Z')) {
             int l;
@@ -65,7 +65,7 @@ void parse_op(operation *op, char **tok_pos) {
                     op->target[op->arg_count] = i;
                     break;
                 }
-                if (memcmp(cur_arg, reg_lbls[i], (l = strlen(reg_lbls[i])) > arg_len ? l : arg_len) == 0) {
+                if (strcmp(cur_arg, reg_lbls[i]) == 0) {
                     op->target[op->arg_count] = i;
                     break;
                 }

@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
     close(fd);
     script[script_stat.st_size] = 0x0;
 
-    if (memcmp(script, "#!", 2) == 0) {
+    if (strncmp(script, "#!", 2) == 0) {
         start_adv = true;
         strtok_r(script, "\n", &tok_r);
     }
