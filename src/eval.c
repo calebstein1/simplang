@@ -46,11 +46,11 @@ void eval_op(operation *op) {
     ASGN:
         goto *asgn_jmp_tbl[op->arg_list[1].type];
     RST:
-        if (op->arg_list[0].type != INT) {
-            printf("Type error: can only reset int types\n");
-            goto END;
-        }
         for (i = 0; i < op->arg_count; i++) {
+            if (op->arg_list[i].type != INT) {
+                printf("Type error: can only reset int types\n");
+                goto END;
+            }
             *(long *)op->arg_list[i].ptr = 0;
         }
         goto END;
