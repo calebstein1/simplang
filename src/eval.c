@@ -50,7 +50,9 @@ void eval_op(operation *op) {
             printf("Type error: can only reset int types\n");
             goto END;
         }
-        *(long *)op->arg_list[0].ptr = 0;
+        for (i = 0; i < op->arg_count; i++) {
+            *(long *)op->arg_list[i].ptr = 0;
+        }
         goto END;
     NEWARR:
         if (op->arg_list[0].ptr) simp_free(op->arg_list[0].ptr);
