@@ -49,7 +49,7 @@ void eval_op(operation *op) {
         for (i = 0; i < op->arg_count; i++) {
             if (op->arg_list[i].type != INT) {
                 printf("Type error: can only reset int types\n");
-                goto END;
+                continue;
             }
             *(long *)op->arg_list[i].ptr = 0;
         }
