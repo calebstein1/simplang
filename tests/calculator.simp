@@ -22,15 +22,15 @@ begin_loop
 
     if_equal op 1
         assign res (add num1 num2)
-        print num1 "+" num2 "=" res
+        print num1 " + " num2 " = " res
     end_if
     if_equal op 2
         assign res (subtract num1 num2)
-        print num1 "-" num2 "=" res
+        print num1 " - " num2 " = " res
     end_if
     if_equal op 3
         assign res (multiply num1 num2)
-        print num1 "*" num2 "=" res
+        print num1 " * " num2 " = " res
     end_if
     if_equal op 4
         if_equal num2 0
@@ -43,10 +43,10 @@ begin_loop
         assign rem num1
         modulo rem num2
         if_equal rem 0
-            print num1 "/" num2 "=" res
+            print num1 " / " num2 " = " res
         end_if
         if_not_equal rem 0
-            print num1 "/" num2 "=" res "r" rem
+            print num1 " / " num2 " = " res "r" rem
         end_if
     end_if
 

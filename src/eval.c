@@ -392,10 +392,10 @@ void eval_op(operation *op) {
                 printf("%ld]", *((long *)op->arg_list[0].ptr + j));
                 break;
             case INT: INT:
-                printf("%ld ", *(long *)op->arg_list[i].ptr);
+                printf("%ld", *(long *)op->arg_list[i].ptr);
                 break;
             case STR:
-                printf("%s ", (char *)op->arg_list[i].ptr);
+                printf("%s", (char *)op->arg_list[i].ptr);
                 break;
             default:
                 continue;

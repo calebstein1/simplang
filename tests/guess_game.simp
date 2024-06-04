@@ -40,6 +40,6 @@ begin_loop
 end_loop_if_equal target guess
 
 ; Print the success message
-print "Congratulations, you guessed it in" counter "guesses!"
+print "Congratulations, you guessed it in " counter " guesses!"
 
 done

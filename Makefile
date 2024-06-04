@@ -2,8 +2,8 @@ TARGET = bin/simplang
 SRC = $(wildcard src/*.c)
 OBJ = $(patsubst src/%.c, obj/%.o, $(SRC))
 CC = cc
-#CFLAGS=-fsanitize=address,undefined -Iinclude
-CFLAGS=-Iinclude
+CFLAGS=-fsanitize=address,undefined -Iinclude
+#CFLAGS=-Iinclude
 
 all: clean $(TARGET)
 
