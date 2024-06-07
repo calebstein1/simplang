@@ -16,7 +16,6 @@ char *opcode_lit[] = {
 void get_opcode(operation *op, char *tok, char **tok_pos) {
     int i = 1, l = 0;
     char *lit = strtok_r(tok, " \n", tok_pos);
-    int lit_len = strlen(lit);
     for (; strcmp(opcode_lit[i], lit) != 0; i++) {
         if (i >= DONE) {
             op->opcode = INVLD;
