@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #define MAX_PROGRAM_SIZE 2048
+#define HIST_BIN_SIZE 8
 #define MAX_REGISTERS 24
 #define MAX_ARGUMENTS 12
 #define GLOBAL_STACK_SIZE 16
