@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
@@ -19,6 +20,8 @@ char s_buff[GLOBAL_BUFF_SIZE] = {};
 operation *j_stack[GLOBAL_STACK_SIZE] = {};
 operation **j_sp, **j_bp;
 operation *pp, *pe;
+bool repl = false;
+int repl_l_offset = 0;
 
 int main(int argc, char **argv) {
     srand(time(NULL));

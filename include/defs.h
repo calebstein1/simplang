@@ -92,5 +92,7 @@ extern long i_buff;
 extern char s_buff[GLOBAL_BUFF_SIZE];
 extern operation **j_sp, **j_bp;
 extern operation *pp, *pe;
+extern bool repl;
+extern int repl_l_offset;
 
 #endif //SIMPSCRIPT_DEFS_H

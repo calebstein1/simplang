@@ -267,7 +267,7 @@ void eval_op(operation *op) {
             goto END;
         }
         if (*(long *)op->arg_list[0].ptr != *(long *)op->arg_list[1].ptr) {
-            pp = *(j_sp - 1);
+            pp = repl ? pp - repl_l_offset - 1 : *(j_sp - 1);
         } else {
             j_sp--;
         }

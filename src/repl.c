@@ -12,8 +12,11 @@ void launch_repl() {
     int pp_idx = 0, hist_bins = 1;
     malloc_or_fail(hist, HIST_BIN_SIZE * hist_bins, sizeof(operation));
     pp = hist;
+    int l_level;
+    l_level = repl_l_offset = 0;
 
     printf("Welcome to Simplang! Enter your commands at the prompt (done to exit):\n");
+    repl = true;
 
     for(;;) {
         int i = 0;
@@ -31,18 +34,29 @@ void launch_repl() {
             break;
         }
         if (!op.opcode || op.opcode == CMNT) continue;
-        if (BEGLP <= op.opcode && op.opcode <= ENDLPGE) {
-            printf("Looping not yet supported in repl mode\n");
-            continue;
-        } else if (IFEQ <= op.opcode && op.opcode <= ENDIF) {
+        if (op.opcode == BEGLP) {
+            l_level++;
+            goto parse_and_eval;
+        }
+        if (ENDLP <= op.opcode && op.opcode <= ENDLPGE) {
+            l_level--;
+            goto parse_and_eval;
+        }
+        if (IFEQ <= op.opcode && op.opcode <= ENDIF) {
             printf("Conditional statements not yet supported in repl mode\n");
             continue;
         }
+        parse_and_eval:
         parse_op(&op, &tok_pos);
         memcpy(pp, &op, sizeof(op));
         if (++pp_idx >= 8 * hist_bins) {
             realloc_or_fail(hist, HIST_BIN_SIZE * ++hist_bins, sizeof(operation));
             pp = hist + (pp_idx - 1);
+        }
+        if (l_level) {
+            pp++;
+            repl_l_offset++;
+            continue;
         }
         eval_op(pp++);
     }
